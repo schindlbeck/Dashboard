@@ -24,6 +24,22 @@ namespace Dash.Shared
             myCal = CultureInfo.InvariantCulture.Calendar;
         }
 
+        //TODO : what if start > end
+        public void SetUpRange(int cwStart, int cwEnd)
+        {
+            List<WorkWeek> WorkWeeks = new();
+            
+            for(int i = cwStart; i <= cwEnd; i++)
+            {
+                WorkWeek workWeek = new();
+
+                workWeek.CalendarWeek = i;
+                workWeek.workDays = SetUpDefaultWeekSchedule(i);
+
+                WorkWeeks.Add(workWeek);
+            }
+        }
+
         public static List<WorkDay> SetUpDefaultWeekSchedule(int calendarWeek)
         {
             List<WorkDay> workDays = new();
