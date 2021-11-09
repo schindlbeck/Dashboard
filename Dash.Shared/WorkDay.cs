@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Dash.Shared
 {
-    class WorkDay
+    public class WorkDay
     {
-        //List or two seperated Shifts?
         public List<Shift> Shifts { get; set; }
 
         public DateTime Date { get; set; }
