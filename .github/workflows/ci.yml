@@ -1,0 +1,33 @@
+name: CI and CD for Dashboard
+
+on: 
+  push:
+    branches: 
+      - main
+
+env:
+  DOTNET_VERSION: "5.0.x"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code 
+        uses: actions/checkout@v2
+
+      - name: Setup .NET 5
+        uses: actions/setup-dotnet@v1
+        with: 
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies 
+        run:  dotnet restore
+
+      - name: Build app
+        run: dotnet build -c Release --no-restore
+
+      - name: Run automated unit tests
+        run: dotnet test -c Release --no-build
+
+      - name: Publish
+        run: dotnet publish -c Release -o ./out
