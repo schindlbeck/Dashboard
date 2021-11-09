@@ -8,25 +8,13 @@ namespace DashSharedTest
     public class WorkScheduleTest
     {
         [Fact]
-        public void FirstDayOfWeek_Test()
-        {
-            //Arrange
-
-            //Act
-            var date = WorkSchedule.FirstDateOfWeekISO8601(2021, 45);
-
-            //Assert
-            Assert.Equal(new DateTime(2021, 11, 08), date);
-        }
-
-        [Fact]
         public void SetUpDefaultWeekSchedule_Test()
         {
             //Arrange
             WorkSchedule workSchedule = new(new List<DateTime>(), new List<DateTime>(), DateTime.Now);
 
             //Act
-            var result = workSchedule.SetUpDefaultWeekSchedule(45);
+            var result = WorkSchedule.SetUpDefaultWeekSchedule(45);
 
             //Assert
             Assert.Equal(5, result.Count);
