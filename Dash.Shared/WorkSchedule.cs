@@ -28,7 +28,7 @@ namespace Dash.Shared
         {
             List<WorkWeek> WorkWeeks = new();
 
-            var calendarWeeks = ManageCalendar.GetCalendarWeeksInYear(year);
+            var calendarWeeks = ISOWeek.GetWeeksInYear(year);
 
             if (cwStart > cwEnd)
             {
