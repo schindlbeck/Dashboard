@@ -24,27 +24,67 @@ namespace Dash.Shared
             myCal = CultureInfo.InvariantCulture.Calendar;
         }
 
-        //TODO : what if start > end
-        public void SetUpRange(int cwStart, int cwEnd)
+        public static List<WorkWeek> SetUpRange(int cwStart, int cwEnd)
         {
             List<WorkWeek> WorkWeeks = new();
-            
-            for(int i = cwStart; i <= cwEnd; i++)
+
+            var year = ManageCalendar.GetYear(cwStart);
+            var calendarWeeks = ManageCalendar.GetCalendarWeeksInYear(year);
+
+            //TODO : eliminate duplicated code, test function
+            if (cwStart > cwEnd)
+            {
+                for (int i = cwEnd; i <= calendarWeeks; i++)
+                {
+                    WorkWeek workWeek = new();
+
+                    workWeek.CalendarWeek = i;
+                    workWeek.WorkDays = SetUpDefaultWeekSchedule(i);
+
+                    WorkWeeks.Add(workWeek);
+                }
+
+                for (int i = 1; i <= cwStart; i++)
+                {
+                    WorkWeek workWeek = new();
+
+                    workWeek.CalendarWeek = i;
+                    workWeek.WorkDays = SetUpDefaultWeekSchedule(i);
+
+                    WorkWeeks.Add(workWeek);
+                }
+
+                return WorkWeeks;
+            }
+
+            for (int i = cwStart; i <= cwEnd && i <= calendarWeeks; i++)
             {
                 WorkWeek workWeek = new();
 
                 workWeek.CalendarWeek = i;
-                workWeek.workDays = SetUpDefaultWeekSchedule(i);
+                workWeek.WorkDays = SetUpDefaultWeekSchedule(i);
 
                 WorkWeeks.Add(workWeek);
             }
+
+            return WorkWeeks;
         }
+
+        //private static int[] CheckCalendarWeeks(int cwStart, int cwEnd)
+        //{
+        //    if(cwStart> cw )
+        //    {
+        //        return new int[] { cwStart, cwEnd };
+        //    }
+
+
+        //}
 
         public static List<WorkDay> SetUpDefaultWeekSchedule(int calendarWeek)
         {
             List<WorkDay> workDays = new();
-            
-            for(int i = 0; i < 5; i++)
+
+            for (int i = 0; i < 5; i++)
             {
                 WorkDay workDay = new();
                 workDay.Shifts = new();
@@ -77,6 +117,6 @@ namespace Dash.Shared
             return morningShift;
         }
 
-        
+
     }
 }

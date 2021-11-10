@@ -48,5 +48,12 @@ namespace Dash.Shared
             // Subtract 3 days from Thursday to get Monday, which is the first weekday in ISO8601
             return result.AddDays(-3);
         }
+
+        public static int GetCalendarWeeksInYear(int year)
+        {
+            DateTime date = new(year, 12, 31);
+
+            return CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        }
     }
 }

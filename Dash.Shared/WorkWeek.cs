@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Dash.Shared
 {
-    class WorkWeek
+    public class WorkWeek
     {
         public int CalendarWeek { get; set; }
-        public List<WorkDay> workDays { get; set }
+        public List<WorkDay> WorkDays { get; set }
     }
 }
