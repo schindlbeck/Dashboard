@@ -17,12 +17,12 @@ namespace DashSharedTest
             var result = WorkSchedule.SetUpDefaultWeekSchedule(1, 2020);
 
             //Assert
-            Assert.Equal(5, result.Count);
-            Assert.Equal(new DateTime(2019, 12, 30), result[0].Date);
-            Assert.Equal(new DateTime(2019, 12, 31), result[1].Date);
-            Assert.Equal(new DateTime(2020, 01, 01), result[2].Date);
-            Assert.Equal(new DateTime(2020, 01, 02), result[3].Date);
-            Assert.Equal(new DateTime(2020, 01, 03), result[4].Date);
+            Assert.Equal(5, result.WorkDays.Count);
+            Assert.Equal(new DateTime(2019, 12, 30), result.WorkDays[0].Date);
+            Assert.Equal(new DateTime(2019, 12, 31), result.WorkDays[1].Date);
+            Assert.Equal(new DateTime(2020, 01, 01), result.WorkDays[2].Date);
+            Assert.Equal(new DateTime(2020, 01, 02), result.WorkDays[3].Date);
+            Assert.Equal(new DateTime(2020, 01, 03), result.WorkDays[4].Date);
         }
 
         [Fact]

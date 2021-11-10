@@ -47,20 +47,17 @@ namespace Dash.Shared
         {
             for (int i = start; i <= end; i++)
             {
-                WorkWeek workWeek = new();
-
-                workWeek.CalendarWeek = i;
-                workWeek.WorkDays = SetUpDefaultWeekSchedule(i, year);
-
-                WorkWeeks.Add(workWeek);
+                WorkWeeks.Add(SetUpDefaultWeekSchedule(i, year));
             }
 
             return WorkWeeks;
         }
 
-        public static List<WorkDay> SetUpDefaultWeekSchedule(int calendarWeek, int year)
+        public static WorkWeek SetUpDefaultWeekSchedule(int calendarWeek, int year)
         {
-            List<WorkDay> workDays = new();
+            WorkWeek workWeek = new();
+            workWeek.WorkDays = new();
+            workWeek.CalendarWeek = calendarWeek;
 
             for (int i = 0; i < 5; i++)
             {
@@ -71,10 +68,10 @@ namespace Dash.Shared
 
                 workDay.Date = ManageCalendar.FirstDateOfWeekISO8601(year, calendarWeek).AddDays(i);
 
-                workDays.Add(workDay);
+                workWeek.WorkDays.Add(workDay);
             }
 
-            return workDays;
+            return workWeek;
         }
 
         private static Shift GetMorningShift()
