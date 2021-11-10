@@ -1,5 +1,6 @@
 using Dash.Shared;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Xunit;
 
@@ -70,5 +71,32 @@ namespace DashSharedTest
             Assert.Equal(new DateTime(2020, 01, 22), result[3].WorkDays[2].Date);
             Assert.Equal(4, result[3].CalendarWeek);
         }
+
+        [Theory]
+        [ClassData(typeof(WorkScheduleTestData))]
+        public void SetupRange_Theory(int year, int startCw, int endCw, int weeks, DateTime firstWorkday, DateTime lastWorkday)
+        {
+            //Arrange
+
+            //Act
+            var result = WorkSchedule.SetUpRange(year, startCw, endCw);
+
+            //Assert
+            Assert.Equal(weeks, result.Count);
+            Assert.Equal(firstWorkday, result[0].WorkDays[0].Date);
+            Assert.Equal(lastWorkday, result[weeks-1].WorkDays[4].Date);
+        }
+    }
+
+    public class WorkScheduleTestData : IEnumerable<object[]>
+    {
+        public IEnumerator<object[]> GetEnumerator()
+        {
+            yield return new object[] { 2020, 1, 53, 53, new DateTime(2019, 12, 30), new DateTime(2021, 01, 01) };
+            yield return new object[] { 2021, 1, 52, 52, new DateTime(2021, 1, 4), new DateTime(2021, 12, 31) };
+            yield return new object[] { 2022, 1, 52, 52, new DateTime(2022, 1, 3), new DateTime(2022, 12, 30) };
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
