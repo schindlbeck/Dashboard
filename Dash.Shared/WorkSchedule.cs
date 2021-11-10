@@ -32,7 +32,7 @@ namespace Dash.Shared
 
             if (cwStart > cwEnd)
             {
-                WorkWeeks = AddWorkDays(cwEnd, WorkWeeks, calendarWeeks, year);
+                WorkWeeks = AddWorkDays(cwStart, WorkWeeks, calendarWeeks, year);
                 WorkWeeks = AddWorkDays(1, WorkWeeks, cwEnd, year+1);
 
                 return WorkWeeks;
@@ -43,7 +43,7 @@ namespace Dash.Shared
             return WorkWeeks;
         }
 
-        private static List<WorkWeek> AddWorkDays(int start, List<WorkWeek> WorkWeeks, int end, int year)
+        internal static List<WorkWeek> AddWorkDays(int start, List<WorkWeek> WorkWeeks, int end, int year)
         {
             for (int i = start; i <= end; i++)
             {

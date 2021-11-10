@@ -25,6 +25,33 @@ namespace DashSharedTest
 
         }
 
+        [Theory]
+        [InlineData(2021)]
+        [InlineData(2022)]
+        [InlineData(2023)]
+        [InlineData(2024)]
+        [InlineData(2025)]
+        public void GetCalendarWeeksInYear_Get52Weeks_Test(int year)
+        {
+            //Act
+            var result = ManageCalendar.GetCalendarWeeksInYear(year);
+
+            //Assert
+            Assert.Equal(52, result);
+        }
+
+        [Theory]
+        [InlineData(2020)]
+        [InlineData(2026)]
+        public void GetCalendarWeeksInYear_Get53Weeks_Test(int year)
+        {
+            //Act
+            var result = ManageCalendar.GetCalendarWeeksInYear(year);
+
+            //Assert
+            Assert.Equal(53, result);
+        }
+
 
         //[Fact]
         //public void GetYear_CW23_GetNextYear_Test()
