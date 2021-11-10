@@ -26,49 +26,46 @@ namespace DashSharedTest
         }
 
 
-        [Fact]
-        public void GetYear_CalendarWeekPassedThisYear_GetNextYear_Test()
-        {
-            //Arrange
-            Calendar myCal = CultureInfo.InvariantCulture.Calendar;
+        //[Fact]
+        //public void GetYear_CW23_GetNextYear_Test()
+        //{
+        //    //Arrange
 
-            var calendarWeek = myCal.GetWeekOfYear(DateTime.Today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        //    //Act
+        //    var year = ManageCalendar.GetYear(23);
 
-            //Act
-            var year = ManageCalendar.GetYear(calendarWeek - 1);
+        //    //Assert
+        //    Assert.Equal(2022, year);
+        //}
 
-            //Assert
-            Assert.Equal(DateTime.Now.Year + 1, year);
-        }
+        //[Fact]
+        //public void GetYear_CurrentCalendarWeek_GetThisYear_Test()
+        //{
+        //    //Arrange
+        //    Calendar myCal = CultureInfo.InvariantCulture.Calendar;
 
-        [Fact]
-        public void GetYear_CurrentCalendarWeek_GetThisYear_Test()
-        {
-            //Arrange
-            Calendar myCal = CultureInfo.InvariantCulture.Calendar;
+        //    var calendarWeek = myCal.GetWeekOfYear(DateTime.Today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
 
-            var calendarWeek = myCal.GetWeekOfYear(DateTime.Today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        //    //Act
+        //    var year = ManageCalendar.GetYear(calendarWeek);
 
-            //Act
-            var year = ManageCalendar.GetYear(calendarWeek);
+        //    //Assert
+        //    Assert.Equal(DateTime.Now.Year, year);
+        //}
 
-            //Assert
-            Assert.Equal(DateTime.Now.Year, year);
-        }
+        //[Fact]
+        //public void GetYear_CalendarWeekNotPassedThisYear_GetThisYear_Test()
+        //{
+        //    //Arrange
+        //    Calendar myCal = CultureInfo.InvariantCulture.Calendar;
 
-        [Fact]
-        public void GetYear_CalendarWeekNotPassedThisYear_GetThisYear_Test()
-        {
-            //Arrange
-            Calendar myCal = CultureInfo.InvariantCulture.Calendar;
+        //    var calendarWeek = myCal.GetWeekOfYear(DateTime.Today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
 
-            var calendarWeek = myCal.GetWeekOfYear(DateTime.Today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        //    //Act
+        //    var year = ManageCalendar.GetYear(calendarWeek + 1);
 
-            //Act
-            var year = ManageCalendar.GetYear(calendarWeek + 1);
-
-            //Assert
-            Assert.Equal(DateTime.Now.Year, year);
-        }
+        //    //Assert
+        //    Assert.Equal(DateTime.Now.Year, year);
+        //}
     }
 }

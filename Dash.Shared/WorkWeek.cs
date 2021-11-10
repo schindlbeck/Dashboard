@@ -9,6 +9,6 @@ namespace Dash.Shared
     public class WorkWeek
     {
         public int CalendarWeek { get; set; }
-        public List<WorkDay> WorkDays { get; set }
+        public List<WorkDay> WorkDays { get; set; }
     }
 }

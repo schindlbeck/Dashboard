@@ -9,22 +9,22 @@ namespace Dash.Shared
 {
     public class ManageCalendar
     {
-        public static int GetYear(int cw)
-        {
-            Calendar myCal = CultureInfo.InvariantCulture.Calendar;
+        //public static int GetYear(int cw)
+        //{
+        //    Calendar myCal = CultureInfo.InvariantCulture.Calendar;
 
-            var today = DateTime.Today;
-            var week = myCal.GetWeekOfYear(today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-            if (week <= cw)
-            {
-                return today.Year;
-            }
-            return today.Year + 1;
-        }
+        //    var today = DateTime.Today;
+        //    var week = myCal.GetWeekOfYear(today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        //    if (week <= cw)
+        //    {
+        //        return today.Year;
+        //    }
+        //    return today.Year + 1;
+        //}
 
         public static DateTime FirstDateOfWeekISO8601(int year, int weekOfYear)
         {
-            DateTime jan1 = new DateTime(year, 1, 1);
+            DateTime jan1 = new(year, 1, 1);
             int daysOffset = DayOfWeek.Thursday - jan1.DayOfWeek;
 
             // Use first Thursday in January to get first week of the year as

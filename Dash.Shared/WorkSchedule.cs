@@ -9,60 +9,48 @@ namespace Dash.Shared
 {
     public class WorkSchedule
     {
-        private readonly List<DateTime> _holidays;
-        private readonly List<DateTime> _saturdays;
+        //private readonly List<DateTime> _holidays;
+        //private readonly List<DateTime> _saturdays;
 
-        private WorkDay CurrentDay = new();
-        private Calendar myCal;
+        //private WorkDay CurrentDay = new();
+        //private Calendar myCal;
 
 
-        public WorkSchedule(List<DateTime> holidays, List<DateTime> saturdays, DateTime start)
-        {
-            _holidays = holidays;
-            _saturdays = saturdays;
-            CurrentDay.Date = start;
-            myCal = CultureInfo.InvariantCulture.Calendar;
-        }
+        //public WorkSchedule(List<DateTime> holidays, List<DateTime> saturdays, DateTime start)
+        //{
+        //    _holidays = holidays;
+        //    _saturdays = saturdays;
+        //    CurrentDay.Date = start;
+        //    myCal = CultureInfo.InvariantCulture.Calendar;
+        //}
 
-        public static List<WorkWeek> SetUpRange(int cwStart, int cwEnd)
+        public static List<WorkWeek> SetUpRange(int year, int cwStart, int cwEnd)
         {
             List<WorkWeek> WorkWeeks = new();
 
-            var year = ManageCalendar.GetYear(cwStart);
             var calendarWeeks = ManageCalendar.GetCalendarWeeksInYear(year);
 
-            //TODO : eliminate duplicated code, test function
             if (cwStart > cwEnd)
             {
-                for (int i = cwEnd; i <= calendarWeeks; i++)
-                {
-                    WorkWeek workWeek = new();
-
-                    workWeek.CalendarWeek = i;
-                    workWeek.WorkDays = SetUpDefaultWeekSchedule(i);
-
-                    WorkWeeks.Add(workWeek);
-                }
-
-                for (int i = 1; i <= cwStart; i++)
-                {
-                    WorkWeek workWeek = new();
-
-                    workWeek.CalendarWeek = i;
-                    workWeek.WorkDays = SetUpDefaultWeekSchedule(i);
-
-                    WorkWeeks.Add(workWeek);
-                }
+                WorkWeeks = AddWorkDays(cwEnd, WorkWeeks, calendarWeeks, year);
+                WorkWeeks = AddWorkDays(1, WorkWeeks, cwEnd, year+1);
 
                 return WorkWeeks;
             }
 
-            for (int i = cwStart; i <= cwEnd && i <= calendarWeeks; i++)
+            WorkWeeks = AddWorkDays(cwStart, WorkWeeks, cwEnd, year);
+           
+            return WorkWeeks;
+        }
+
+        private static List<WorkWeek> AddWorkDays(int start, List<WorkWeek> WorkWeeks, int end, int year)
+        {
+            for (int i = start; i <= end; i++)
             {
                 WorkWeek workWeek = new();
 
                 workWeek.CalendarWeek = i;
-                workWeek.WorkDays = SetUpDefaultWeekSchedule(i);
+                workWeek.WorkDays = SetUpDefaultWeekSchedule(i, year);
 
                 WorkWeeks.Add(workWeek);
             }
@@ -70,17 +58,7 @@ namespace Dash.Shared
             return WorkWeeks;
         }
 
-        //private static int[] CheckCalendarWeeks(int cwStart, int cwEnd)
-        //{
-        //    if(cwStart> cw )
-        //    {
-        //        return new int[] { cwStart, cwEnd };
-        //    }
-
-
-        //}
-
-        public static List<WorkDay> SetUpDefaultWeekSchedule(int calendarWeek)
+        public static List<WorkDay> SetUpDefaultWeekSchedule(int calendarWeek, int year)
         {
             List<WorkDay> workDays = new();
 
@@ -91,7 +69,7 @@ namespace Dash.Shared
                 workDay.Shifts.Add(GetMorningShift());
                 workDay.Shifts.Add(GetEveningShift());
 
-                workDay.Date = ManageCalendar.FirstDateOfWeekISO8601(ManageCalendar.GetYear(calendarWeek), calendarWeek).AddDays(i);
+                workDay.Date = ManageCalendar.FirstDateOfWeekISO8601(year, calendarWeek).AddDays(i);
 
                 workDays.Add(workDay);
             }

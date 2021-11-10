@@ -8,13 +8,12 @@ namespace DashSharedTest
     public class WorkScheduleTest
     {
         [Fact]
-        public void SetUpDefaultWeekSchedule_Test()
+        public void SetUpDefaultWeekSchedule_CW452021_Test()
         {
             //Arrange
-            WorkSchedule workSchedule = new(new List<DateTime>(), new List<DateTime>(), DateTime.Now);
 
             //Act
-            var result = WorkSchedule.SetUpDefaultWeekSchedule(45);
+            var result = WorkSchedule.SetUpDefaultWeekSchedule(45, 2021);
 
             //Assert
             Assert.Equal(5, result.Count);
@@ -24,6 +23,20 @@ namespace DashSharedTest
             Assert.Equal(new DateTime(2021, 11, 11), result[3].Date);
             Assert.Equal(new DateTime(2021, 11, 12), result[4].Date);
 
+        }
+
+        [Fact]
+        public void SetupRange_Cw1To52_Test()
+        {
+            //Arrange
+
+            //Act
+            var result = WorkSchedule.SetUpRange(2021, 1, 52);
+
+            //Assert
+            Assert.Equal(52, result.Count);
+            Assert.Equal(new DateTime(2021, 1, 4), result[0].WorkDays[0].Date);
+            Assert.Equal(new DateTime(2021, 12, 31), result[51].WorkDays[4].Date);
         }
     }
 }
