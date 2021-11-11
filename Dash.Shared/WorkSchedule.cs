@@ -9,9 +9,6 @@ namespace Dash.Shared
 {
     public class WorkSchedule
     {
-        //private readonly List<DateTime> _holidays;
-        //private readonly List<DateTime> _saturdays;
-
         public List<WorkWeek> WorkWeeks { get; set; }
 
 

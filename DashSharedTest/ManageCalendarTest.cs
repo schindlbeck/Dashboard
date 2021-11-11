@@ -11,7 +11,7 @@ namespace DashSharedTest
     {
         [Theory]
         [ClassData(typeof(FirstDayOfWeekTestData))]
-        public void FirstDayOfWeek_Test(int year, int cw, DateTime expected)
+        public void FirstDayOfWeek_Theory(int year, int cw, DateTime expected)
         {
             //Arrange
 

@@ -26,7 +26,7 @@ namespace DashSharedTest
         }
 
         [Fact]
-        public void AddSaturday_Test()
+        public void AddSaturday_SaturdayInCW25_SaturdayAdded_Test()
         {
             //Arrange
             WorkSchedule workSchedule = new(2021, 1, 52);
@@ -41,7 +41,7 @@ namespace DashSharedTest
         }
 
         [Fact]
-        public void SetHolidays_Test()
+        public void SetHolidays_TwoHolidays_DatesRemoved_Test()
         {
             //Arrange
             WorkSchedule workSchedule = new(2021, 1, 10);
