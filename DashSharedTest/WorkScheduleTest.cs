@@ -41,10 +41,30 @@ namespace DashSharedTest
         }
 
         [Fact]
+        public void SetHolidays_Test()
+        {
+            //Arrange
+            WorkSchedule workSchedule = new(2021, 1, 10);
+            List<DateTime> holidays = new();
+            holidays.Add(new DateTime(2021, 01, 06));
+            holidays.Add(new DateTime(2021, 02,16));
+
+            //Act
+            workSchedule.SetHolidays(holidays);
+
+            //Assert
+            Assert.Equal(4, workSchedule.WorkWeeks[0].WorkDays.Count);
+            Assert.Equal(4, workSchedule.WorkWeeks[6].WorkDays.Count);
+
+            Assert.Equal(new DateTime(2021, 01, 07), workSchedule.WorkWeeks[0].WorkDays[2].Date);
+            Assert.Equal(new DateTime(2021, 02, 17), workSchedule.WorkWeeks[6].WorkDays[1].Date);
+
+        }
+
+        [Fact]
         public void AddWorkDays_CW1To5Year2020_Test()
         {
             //Arrange
-
 
             //Act
             var result = WorkSchedule.AddWorkDays(1, new List<WorkWeek>(), 5, 2020);

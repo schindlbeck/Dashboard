@@ -13,8 +13,6 @@ namespace Dash.Shared
         //private readonly List<DateTime> _saturdays;
 
         public List<WorkWeek> WorkWeeks { get; set; }
-        //private WorkDay CurrentDay = new();
-        //private Calendar myCal;
 
 
         public WorkSchedule(int year, int cwStart, int cwEnd)
@@ -73,7 +71,6 @@ namespace Dash.Shared
         {
             if(WorkWeeks.Exists(w => w.CalendarWeek == calenderWeek))
             {
-
                 var saturdayDate = WorkWeeks.Where(w => w.CalendarWeek == calenderWeek).First().WorkDays[4].Date.AddDays(1);
                 WorkDay saturday = new() { Date = saturdayDate, Shifts = new() };
                 saturday.Shifts.Add(GetMorningShift());
@@ -85,6 +82,16 @@ namespace Dash.Shared
                 //Reaction if calendarweek isn't in the workweeks
             }
 
+        }
+
+        public void SetHolidays(List<DateTime> holidays)
+        {
+            foreach(DateTime holiday in holidays)
+            {
+                var week = ISOWeek.GetWeekOfYear(holiday);
+                var obj = WorkWeeks.Where(w => w.CalendarWeek == week).First().WorkDays.Where(w => w.Date == holiday).First();
+                WorkWeeks.Where(w => w.CalendarWeek == week).First().WorkDays.Remove(obj);
+            }
         }
 
         private static Shift GetMorningShift()
