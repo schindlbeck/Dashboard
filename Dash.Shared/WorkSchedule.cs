@@ -12,35 +12,30 @@ namespace Dash.Shared
         //private readonly List<DateTime> _holidays;
         //private readonly List<DateTime> _saturdays;
 
+        public List<WorkWeek> WorkWeeks { get; set; }
         //private WorkDay CurrentDay = new();
         //private Calendar myCal;
 
 
-        //public WorkSchedule(List<DateTime> holidays, List<DateTime> saturdays, DateTime start)
-        //{
-        //    _holidays = holidays;
-        //    _saturdays = saturdays;
-        //    CurrentDay.Date = start;
-        //    myCal = CultureInfo.InvariantCulture.Calendar;
-        //}
-
-        public static List<WorkWeek> SetUpRange(int year, int cwStart, int cwEnd)
+        public WorkSchedule(int year, int cwStart, int cwEnd)
         {
-            List<WorkWeek> WorkWeeks = new();
+            WorkWeeks = new();
+            SetUpRange(year, cwStart, cwEnd);
+        }
 
+        internal void SetUpRange(int year, int cwStart, int cwEnd)
+        {
             var calendarWeeks = ISOWeek.GetWeeksInYear(year);
 
             if (cwStart > cwEnd)
             {
                 WorkWeeks = AddWorkDays(cwStart, WorkWeeks, calendarWeeks, year);
                 WorkWeeks = AddWorkDays(1, WorkWeeks, cwEnd, year+1);
-
-                return WorkWeeks;
             }
-
-            WorkWeeks = AddWorkDays(cwStart, WorkWeeks, cwEnd, year);
-           
-            return WorkWeeks;
+            else
+            {
+                WorkWeeks = AddWorkDays(cwStart, WorkWeeks, cwEnd, year);
+            }
         }
 
         internal static List<WorkWeek> AddWorkDays(int start, List<WorkWeek> WorkWeeks, int end, int year)
@@ -74,6 +69,24 @@ namespace Dash.Shared
             return workWeek;
         }
 
+        public void AddSaturday(int calenderWeek)
+        {
+            if(WorkWeeks.Exists(w => w.CalendarWeek == calenderWeek))
+            {
+
+                var saturdayDate = WorkWeeks.Where(w => w.CalendarWeek == calenderWeek).First().WorkDays[4].Date.AddDays(1);
+                WorkDay saturday = new() { Date = saturdayDate, Shifts = new() };
+                saturday.Shifts.Add(GetMorningShift());
+
+                WorkWeeks.Where(w => w.CalendarWeek == calenderWeek).First().WorkDays.Add(saturday);
+            }
+            else
+            {
+                //Reaction if calendarweek isn't in the workweeks
+            }
+
+        }
+
         private static Shift GetMorningShift()
         {
             Shift morningShift = new();
@@ -91,7 +104,5 @@ namespace Dash.Shared
 
             return morningShift;
         }
-
-
     }
 }

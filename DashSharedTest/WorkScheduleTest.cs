@@ -26,31 +26,18 @@ namespace DashSharedTest
         }
 
         [Fact]
-        public void SetupRange_Cw1To52_Test()
+        public void AddSaturday_Test()
         {
             //Arrange
+            WorkSchedule workSchedule = new(2021, 1, 52);
 
             //Act
-            var result = WorkSchedule.SetUpRange(2021, 1, 52);
+            workSchedule.AddSaturday(25);
 
             //Assert
-            Assert.Equal(52, result.Count);
-            Assert.Equal(new DateTime(2021, 1, 4), result[0].WorkDays[0].Date);
-            Assert.Equal(new DateTime(2021, 12, 31), result[51].WorkDays[4].Date);
-        }
+            Assert.Equal(6, workSchedule.WorkWeeks[24].WorkDays.Count);
+            Assert.Equal(new DateTime(2021, 06, 26), workSchedule.WorkWeeks[24].WorkDays[5].Date);
 
-        [Fact]
-        public void SetupRange_Cw50To05_YearChanged_Test()
-        {
-            //Arrange
-
-            //Act
-            var result = WorkSchedule.SetUpRange(2021, 50, 5);
-
-            //Assert
-            Assert.Equal(8, result.Count);
-            Assert.Equal(new DateTime(2021, 12, 13), result[0].WorkDays[0].Date);
-            Assert.Equal(new DateTime(2022, 02, 04), result[7].WorkDays[4].Date);
         }
 
         [Fact]
@@ -79,12 +66,12 @@ namespace DashSharedTest
             //Arrange
 
             //Act
-            var result = WorkSchedule.SetUpRange(year, startCw, endCw);
+            WorkSchedule workSchedule = new(year, startCw, endCw);
 
             //Assert
-            Assert.Equal(weeks, result.Count);
-            Assert.Equal(firstWorkday, result[0].WorkDays[0].Date);
-            Assert.Equal(lastWorkday, result[weeks-1].WorkDays[4].Date);
+            Assert.Equal(weeks, workSchedule.WorkWeeks.Count);
+            Assert.Equal(firstWorkday, workSchedule.WorkWeeks[0].WorkDays[0].Date);
+            Assert.Equal(lastWorkday, workSchedule.WorkWeeks[weeks-1].WorkDays[4].Date);
         }
     }
 

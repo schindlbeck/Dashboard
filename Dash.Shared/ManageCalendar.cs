@@ -9,19 +9,6 @@ namespace Dash.Shared
 {
     public class ManageCalendar
     {
-        //public static int GetYear(int cw)
-        //{
-        //    Calendar myCal = CultureInfo.InvariantCulture.Calendar;
-
-        //    var today = DateTime.Today;
-        //    var week = myCal.GetWeekOfYear(today, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-        //    if (week <= cw)
-        //    {
-        //        return today.Year;
-        //    }
-        //    return today.Year + 1;
-        //}
-
         public static DateTime FirstDateOfWeekISO8601(int year, int weekOfYear)
         {
             DateTime jan1 = new(year, 1, 1);
