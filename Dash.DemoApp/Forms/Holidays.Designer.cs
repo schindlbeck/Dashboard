@@ -42,10 +42,12 @@
             // 
             // txtBoxYear
             // 
+            this.txtBoxYear.BackColor = System.Drawing.Color.White;
             this.txtBoxYear.Location = new System.Drawing.Point(205, 53);
             this.txtBoxYear.Name = "txtBoxYear";
             this.txtBoxYear.Size = new System.Drawing.Size(103, 31);
             this.txtBoxYear.TabIndex = 0;
+            this.txtBoxYear.TextChanged += new System.EventHandler(this.TxtBoxYear_TextChanged);
             // 
             // label1
             // 
@@ -65,6 +67,7 @@
             this.btnGo.TabIndex = 3;
             this.btnGo.Text = "go";
             this.btnGo.UseVisualStyleBackColor = false;
+            this.btnGo.Click += new System.EventHandler(this.BtnGo_Click);
             // 
             // btnDelete
             // 
@@ -87,6 +90,7 @@
             // 
             // txtBoxMonthFrom
             // 
+            this.txtBoxMonthFrom.BackColor = System.Drawing.Color.White;
             this.txtBoxMonthFrom.Location = new System.Drawing.Point(35, 53);
             this.txtBoxMonthFrom.Name = "txtBoxMonthFrom";
             this.txtBoxMonthFrom.Size = new System.Drawing.Size(65, 31);
@@ -105,6 +109,7 @@
             // 
             // txtBoxMonthTo
             // 
+            this.txtBoxMonthTo.BackColor = System.Drawing.Color.White;
             this.txtBoxMonthTo.Location = new System.Drawing.Point(106, 53);
             this.txtBoxMonthTo.Name = "txtBoxMonthTo";
             this.txtBoxMonthTo.Size = new System.Drawing.Size(65, 31);

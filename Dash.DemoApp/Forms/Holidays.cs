@@ -20,11 +20,11 @@ namespace Dash.DemoApp.Forms
         private void Holidays_Load(object sender, EventArgs e)
         {
             btnGo.Hide();
+            txtBoxYear.Text = DateTime.Now.Year.ToString(); 
         }
 
         private void TxtBoxMonthFrom_TextChanged(object sender, EventArgs e)
         {
-
             CheckNumbers(out int numberFrom, out int numberTo);
 
             if (numberFrom <= 0 
@@ -37,13 +37,11 @@ namespace Dash.DemoApp.Forms
             else
             {
                 txtBoxMonthFrom.BackColor = Color.White;
+                BtnGoState();
             }
-
-            BtnGoState();
-
         }
 
-        
+
         private void TxtBoxMonthTo_TextChanged(object sender, EventArgs e)
         {
             int numberFrom, numberTo;
@@ -60,10 +58,35 @@ namespace Dash.DemoApp.Forms
             else
             {
                 txtBoxMonthTo.BackColor = Color.White;
+                BtnGoState();
+            }
+        }
+
+        private void TxtBoxYear_TextChanged(object sender, EventArgs e)
+        {
+            int year;
+            try
+            {
+                year = Convert.ToInt32(txtBoxYear.Text);
+            }
+            catch
+            {
+                year = 0;
             }
 
-            BtnGoState();
+            if (year < 2000
+                || year > 2999)
+            {
+                txtBoxYear.BackColor = Color.DarkRed;
+                btnGo.Hide();
+            }
+            else
+            {
+                txtBoxYear.BackColor = Color.White;
+                BtnGoState();
+            }
         }
+
         private void CheckNumbers(out int numberFrom, out int numberTo)
         {
             try
@@ -88,10 +111,20 @@ namespace Dash.DemoApp.Forms
         private void BtnGoState()
         {
             if (txtBoxMonthFrom.BackColor == Color.White
-                && txtBoxMonthTo.BackColor == Color.White)
+                && txtBoxMonthTo.BackColor == Color.White
+                && txtBoxYear.BackColor == Color.White)
             {
                 btnGo.Show();
             }
+        }
+
+        private void BtnGo_Click(object sender, EventArgs e)
+        {
+            int year = Convert.ToInt32(txtBoxYear.Text);
+            int monthFrom = Convert.ToInt32(txtBoxMonthFrom.Text);
+            int monthTo = Convert.ToInt32(txtBoxMonthTo.Text);
+
+            Shared.Holidays holidays = new(year);
         }
     }
 }
