@@ -44,9 +44,9 @@ namespace Dash.FormsApp
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(899, 17);
+            this.btnStart.Location = new System.Drawing.Point(762, 20);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(112, 34);
+            this.btnStart.Size = new System.Drawing.Size(169, 71);
             this.btnStart.TabIndex = 0;
             this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -78,6 +78,7 @@ namespace Dash.FormsApp
             // 
             // textBox1
             // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Location = new System.Drawing.Point(8, 20);
             this.textBox1.Name = "textBox1";
@@ -138,6 +139,7 @@ namespace Dash.FormsApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1083, 630);
             this.Controls.Add(this.btnAddHolidays);
             this.Controls.Add(this.btnAddSaturday);
