@@ -34,7 +34,7 @@ namespace Erp.Prototype
             this.buttonPopup = new System.Windows.Forms.Button();
             this.buttonToast = new System.Windows.Forms.Button();
             this.BtnDataOverview = new System.Windows.Forms.Button();
-            this.BtnExcelToJson = new System.Windows.Forms.Button();
+            this.BtnScheduleOverview = new System.Windows.Forms.Button();
             this.BtnHolidays = new System.Windows.Forms.Button();
             this.buttonHome = new System.Windows.Forms.Button();
             this.panelLogo = new System.Windows.Forms.Panel();
@@ -55,7 +55,7 @@ namespace Erp.Prototype
             this.panelLeft.Controls.Add(this.buttonPopup);
             this.panelLeft.Controls.Add(this.buttonToast);
             this.panelLeft.Controls.Add(this.BtnDataOverview);
-            this.panelLeft.Controls.Add(this.BtnExcelToJson);
+            this.panelLeft.Controls.Add(this.BtnScheduleOverview);
             this.panelLeft.Controls.Add(this.BtnHolidays);
             this.panelLeft.Controls.Add(this.buttonHome);
             this.panelLeft.Controls.Add(this.panelLogo);
@@ -123,24 +123,24 @@ namespace Erp.Prototype
             this.BtnDataOverview.UseVisualStyleBackColor = true;
             this.BtnDataOverview.Click += new System.EventHandler(this.BtnDataOverview_Click);
             // 
-            // BtnExcelToJson
+            // BtnScheduleOverview
             // 
-            this.BtnExcelToJson.Dock = System.Windows.Forms.DockStyle.Top;
-            this.BtnExcelToJson.FlatAppearance.BorderSize = 0;
-            this.BtnExcelToJson.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Chocolate;
-            this.BtnExcelToJson.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnExcelToJson.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.BtnExcelToJson.ForeColor = System.Drawing.Color.Gainsboro;
-            this.BtnExcelToJson.Location = new System.Drawing.Point(0, 377);
-            this.BtnExcelToJson.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.BtnExcelToJson.Name = "BtnExcelToJson";
-            this.BtnExcelToJson.Padding = new System.Windows.Forms.Padding(29, 0, 0, 0);
-            this.BtnExcelToJson.Size = new System.Drawing.Size(443, 97);
-            this.BtnExcelToJson.TabIndex = 5;
-            this.BtnExcelToJson.Text = "Compare Excel to Json";
-            this.BtnExcelToJson.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnExcelToJson.UseVisualStyleBackColor = true;
-            this.BtnExcelToJson.Click += new System.EventHandler(this.BtnExcelToJson_Click);
+            this.BtnScheduleOverview.Dock = System.Windows.Forms.DockStyle.Top;
+            this.BtnScheduleOverview.FlatAppearance.BorderSize = 0;
+            this.BtnScheduleOverview.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Chocolate;
+            this.BtnScheduleOverview.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnScheduleOverview.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.BtnScheduleOverview.ForeColor = System.Drawing.Color.Gainsboro;
+            this.BtnScheduleOverview.Location = new System.Drawing.Point(0, 377);
+            this.BtnScheduleOverview.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.BtnScheduleOverview.Name = "BtnScheduleOverview";
+            this.BtnScheduleOverview.Padding = new System.Windows.Forms.Padding(29, 0, 0, 0);
+            this.BtnScheduleOverview.Size = new System.Drawing.Size(443, 97);
+            this.BtnScheduleOverview.TabIndex = 5;
+            this.BtnScheduleOverview.Text = "Schedule Overview";
+            this.BtnScheduleOverview.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnScheduleOverview.UseVisualStyleBackColor = true;
+            this.BtnScheduleOverview.Click += new System.EventHandler(this.BtnExcelToJson_Click);
             // 
             // BtnHolidays
             // 
@@ -260,7 +260,7 @@ namespace Erp.Prototype
         private System.Windows.Forms.Button buttonPopup;
         private System.Windows.Forms.Button buttonToast;
         private System.Windows.Forms.Button BtnDataOverview;
-        private System.Windows.Forms.Button BtnExcelToJson;
+        private System.Windows.Forms.Button BtnScheduleOverview;
         private System.Windows.Forms.Button BtnHolidays;
         private System.Windows.Forms.Button buttonHome;
         private System.Windows.Forms.Panel panelLogo;

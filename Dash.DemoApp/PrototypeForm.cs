@@ -36,6 +36,8 @@ namespace Erp.Prototype
 
         private void BtnExcelToJson_Click(object sender, EventArgs e)
         {
+            OpenChildForm(new WorkDaysOverview(), sender);
+
         }
 
         private void BtnDataOverview_Click(object sender, EventArgs e)

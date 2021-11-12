@@ -15,22 +15,26 @@ namespace Dash.Shared
         public WorkSchedule(int year, int cwStart, int cwEnd)
         {
             WorkWeeks = new();
+            if (cwEnd == 53) cwEnd = WeeksInYear(year);
             SetUpRange(year, cwStart, cwEnd);
         }
 
         internal void SetUpRange(int year, int cwStart, int cwEnd)
         {
-            var calendarWeeks = ISOWeek.GetWeeksInYear(year);
-
             if (cwStart > cwEnd)
             {
-                WorkWeeks = AddWorkDays(cwStart, WorkWeeks, calendarWeeks, year);
+                WorkWeeks = AddWorkDays(cwStart, WorkWeeks, WeeksInYear(year), year);
                 WorkWeeks = AddWorkDays(1, WorkWeeks, cwEnd, year+1);
             }
             else
             {
                 WorkWeeks = AddWorkDays(cwStart, WorkWeeks, cwEnd, year);
             }
+        }
+        
+        private static int WeeksInYear(int year)
+        {
+            return ISOWeek.GetWeeksInYear(year);
         }
 
         internal static List<WorkWeek> AddWorkDays(int start, List<WorkWeek> WorkWeeks, int end, int year)

@@ -24,84 +24,15 @@ namespace Dash.DemoApp.Forms
         {
             HideButtons();
             btnDelete.Hide();
-            txtBoxYear.Text = DateTime.Now.Year.ToString(); 
+            numericUpDownYear.Value = DateTime.Now.Year;
         }
 
-        private void TxtBoxMonthFrom_TextChanged(object sender, EventArgs e)
+
+        private void ShowButtons()
         {
-            CheckNumbers(out int numberFrom, out int numberTo);
+            btnNew.Show();
+            btnAdd.Show();
 
-            if (numberFrom <= 0 
-                || numberFrom > 12
-                || numberFrom > numberTo)
-            {
-                HideButtons();
-                txtBoxMonthFrom.BackColor = Color.DarkRed;
-            }
-            else
-            {
-                txtBoxMonthFrom.BackColor = Color.White;
-                BtnState();
-            }
-        }
-
-        private void TxtBoxMonthTo_TextChanged(object sender, EventArgs e)
-        {
-            int numberFrom, numberTo;
-
-            CheckNumbers(out numberFrom, out numberTo);
-
-            if (numberTo <= 0 
-                || numberTo > 12
-                || numberFrom > numberTo)
-            {
-                HideButtons();
-                txtBoxMonthTo.BackColor = Color.DarkRed;
-            }
-            else
-            {
-                txtBoxMonthTo.BackColor = Color.White;
-                BtnState();
-            }
-        }
-
-        private void TxtBoxYear_TextChanged(object sender, EventArgs e)
-        {
-            int year;
-            try { year = Convert.ToInt32(txtBoxYear.Text); }
-            catch { year = 0; }
-
-            if (year < 2000
-                || year > 2999)
-            {
-                txtBoxYear.BackColor = Color.DarkRed;
-                HideButtons();
-            }
-            else
-            {
-                txtBoxYear.BackColor = Color.White;
-                BtnState();
-            }
-        }
-
-        private void CheckNumbers(out int numberFrom, out int numberTo)
-        {
-            try { numberFrom = Convert.ToInt32(txtBoxMonthFrom.Text); }
-            catch { numberFrom = 0; }
-
-            try { numberTo = Convert.ToInt32(txtBoxMonthTo.Text); }
-            catch { numberTo = 0; }
-        }
-
-        private void BtnState()
-        {
-            if (txtBoxMonthFrom.BackColor == Color.White
-                && txtBoxMonthTo.BackColor == Color.White
-                && txtBoxYear.BackColor == Color.White)
-            {
-                btnNew.Show();
-                btnAdd.Show();
-            }
         }
 
         private void HideButtons()
@@ -112,11 +43,7 @@ namespace Dash.DemoApp.Forms
 
         private void BtnNew_Click(object sender, EventArgs e)
         {
-            int year = Convert.ToInt32(txtBoxYear.Text);
-            int monthFrom = Convert.ToInt32(txtBoxMonthFrom.Text);
-            int monthTo = Convert.ToInt32(txtBoxMonthTo.Text);
-
-            holidays = new(year, monthFrom, monthTo);
+            holidays = new(Convert.ToInt32(numericUpDownYear.Value), Convert.ToInt32(numericUpDownFrom.Value), Convert.ToInt32(numericUpDownTo.Value));
 
             listBoxHolidays.Items.Clear();
             SetUpListBoxHolidays();
@@ -124,11 +51,7 @@ namespace Dash.DemoApp.Forms
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            int year = Convert.ToInt32(txtBoxYear.Text);
-            int monthFrom = Convert.ToInt32(txtBoxMonthFrom.Text);
-            int monthTo = Convert.ToInt32(txtBoxMonthTo.Text);
-
-            holidays = new(year, monthFrom, monthTo);
+            holidays = new(Convert.ToInt32(numericUpDownYear.Value), Convert.ToInt32(numericUpDownFrom.Value), Convert.ToInt32(numericUpDownTo.Value));
 
             SetUpListBoxHolidays();
         }
@@ -144,6 +67,18 @@ namespace Dash.DemoApp.Forms
             foreach (Holiday holiday in holidays.HolidayList)
             {
                 listBoxHolidays.Items.Add(holiday.ToString());
+            }
+        }
+
+        private void NumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDownTo.Value < numericUpDownFrom.Value)
+            {
+                HideButtons();
+            }
+            else
+            {
+                ShowButtons();
             }
         }
     }

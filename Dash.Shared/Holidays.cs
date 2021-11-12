@@ -9,6 +9,7 @@ namespace Dash.Shared
 {
     public class Holidays
     {
+        //TODO : Save in database
         private readonly int year;
         public List<Holiday> HolidayList { get; set; }
         public Holidays(int year)

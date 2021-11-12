@@ -28,31 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtBoxYear = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnNew = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.listBoxHolidays = new System.Windows.Forms.ListBox();
-            this.txtBoxMonthFrom = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtBoxMonthTo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.numericUpDownFrom = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownYear = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownTo = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFrom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownYear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTo)).BeginInit();
             this.SuspendLayout();
-            // 
-            // txtBoxYear
-            // 
-            this.txtBoxYear.BackColor = System.Drawing.Color.White;
-            this.txtBoxYear.Location = new System.Drawing.Point(205, 53);
-            this.txtBoxYear.Name = "txtBoxYear";
-            this.txtBoxYear.Size = new System.Drawing.Size(103, 31);
-            this.txtBoxYear.TabIndex = 0;
-            this.txtBoxYear.TextChanged += new System.EventHandler(this.TxtBoxYear_TextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(205, 27);
+            this.label1.Location = new System.Drawing.Point(205, 25);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(48, 25);
             this.label1.TabIndex = 1;
@@ -67,7 +61,7 @@
             this.btnNew.TabIndex = 3;
             this.btnNew.Text = "New";
             this.btnNew.UseVisualStyleBackColor = false;
-            this.btnNew.Click += new System.EventHandler(this.BtnGo_Click);
+            this.btnNew.Click += new System.EventHandler(this.BtnNew_Click);
             // 
             // btnDelete
             // 
@@ -78,7 +72,6 @@
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // listBoxHolidays
             // 
@@ -90,16 +83,6 @@
             this.listBoxHolidays.Size = new System.Drawing.Size(417, 529);
             this.listBoxHolidays.TabIndex = 5;
             // 
-            // txtBoxMonthFrom
-            // 
-            this.txtBoxMonthFrom.BackColor = System.Drawing.Color.White;
-            this.txtBoxMonthFrom.Location = new System.Drawing.Point(35, 53);
-            this.txtBoxMonthFrom.Name = "txtBoxMonthFrom";
-            this.txtBoxMonthFrom.Size = new System.Drawing.Size(65, 31);
-            this.txtBoxMonthFrom.TabIndex = 6;
-            this.txtBoxMonthFrom.Text = "1";
-            this.txtBoxMonthFrom.TextChanged += new System.EventHandler(this.TxtBoxMonthFrom_TextChanged);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -108,16 +91,6 @@
             this.label3.Size = new System.Drawing.Size(54, 25);
             this.label3.TabIndex = 8;
             this.label3.Text = "From";
-            // 
-            // txtBoxMonthTo
-            // 
-            this.txtBoxMonthTo.BackColor = System.Drawing.Color.White;
-            this.txtBoxMonthTo.Location = new System.Drawing.Point(106, 53);
-            this.txtBoxMonthTo.Name = "txtBoxMonthTo";
-            this.txtBoxMonthTo.Size = new System.Drawing.Size(65, 31);
-            this.txtBoxMonthTo.TabIndex = 9;
-            this.txtBoxMonthTo.Text = "12";
-            this.txtBoxMonthTo.TextChanged += new System.EventHandler(this.TxtBoxMonthTo_TextChanged);
             // 
             // label2
             // 
@@ -137,7 +110,76 @@
             this.btnAdd.TabIndex = 11;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
+            // 
+            // numericUpDownFrom
+            // 
+            this.numericUpDownFrom.Location = new System.Drawing.Point(37, 51);
+            this.numericUpDownFrom.Maximum = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            this.numericUpDownFrom.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownFrom.Name = "numericUpDownFrom";
+            this.numericUpDownFrom.Size = new System.Drawing.Size(52, 31);
+            this.numericUpDownFrom.TabIndex = 12;
+            this.numericUpDownFrom.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownFrom.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
+            // 
+            // numericUpDownYear
+            // 
+            this.numericUpDownYear.Location = new System.Drawing.Point(205, 51);
+            this.numericUpDownYear.Maximum = new decimal(new int[] {
+            2999,
+            0,
+            0,
+            0});
+            this.numericUpDownYear.Minimum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.numericUpDownYear.Name = "numericUpDownYear";
+            this.numericUpDownYear.Size = new System.Drawing.Size(81, 31);
+            this.numericUpDownYear.TabIndex = 13;
+            this.numericUpDownYear.Value = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.numericUpDownYear.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
+            // 
+            // numericUpDownTo
+            // 
+            this.numericUpDownTo.Location = new System.Drawing.Point(106, 51);
+            this.numericUpDownTo.Maximum = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            this.numericUpDownTo.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownTo.Name = "numericUpDownTo";
+            this.numericUpDownTo.Size = new System.Drawing.Size(52, 31);
+            this.numericUpDownTo.TabIndex = 14;
+            this.numericUpDownTo.Value = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            this.numericUpDownTo.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
             // 
             // Holidays
             // 
@@ -145,35 +187,37 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(981, 676);
+            this.Controls.Add(this.numericUpDownTo);
+            this.Controls.Add(this.numericUpDownYear);
+            this.Controls.Add(this.numericUpDownFrom);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.txtBoxMonthTo);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtBoxMonthFrom);
             this.Controls.Add(this.listBoxHolidays);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtBoxYear);
             this.Name = "Holidays";
             this.Text = "Holidays";
             this.Load += new System.EventHandler(this.Holidays_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownFrom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownYear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox txtBoxYear;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.ListBox listBoxHolidays;
-        private System.Windows.Forms.TextBox txtBoxMonthFrom;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtBoxMonthTo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.NumericUpDown numericUpDownFrom;
+        private System.Windows.Forms.NumericUpDown numericUpDownYear;
+        private System.Windows.Forms.NumericUpDown numericUpDownTo;
     }
 }
