@@ -14,8 +14,8 @@ namespace Dash.FormsApp
 {
     public partial class Form1 : Form
     {
-        private List<DateTime> saturdays = new();
-        private List<DateTime> holidays = new();
+        private readonly List<DateTime> saturdays = new();
+        private readonly List<DateTime> holidays = new();
         public Form1()
         {
             InitializeComponent();
