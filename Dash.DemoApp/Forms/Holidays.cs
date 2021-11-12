@@ -22,7 +22,8 @@ namespace Dash.DemoApp.Forms
 
         private void Holidays_Load(object sender, EventArgs e)
         {
-            btnGo.Hide();
+            HideButtons();
+            btnDelete.Hide();
             txtBoxYear.Text = DateTime.Now.Year.ToString(); 
         }
 
@@ -34,16 +35,15 @@ namespace Dash.DemoApp.Forms
                 || numberFrom > 12
                 || numberFrom > numberTo)
             {
-                btnGo.Hide();
+                HideButtons();
                 txtBoxMonthFrom.BackColor = Color.DarkRed;
             }
             else
             {
                 txtBoxMonthFrom.BackColor = Color.White;
-                BtnGoState();
+                BtnState();
             }
         }
-
 
         private void TxtBoxMonthTo_TextChanged(object sender, EventArgs e)
         {
@@ -55,73 +55,62 @@ namespace Dash.DemoApp.Forms
                 || numberTo > 12
                 || numberFrom > numberTo)
             {
-                btnGo.Hide();
+                HideButtons();
                 txtBoxMonthTo.BackColor = Color.DarkRed;
             }
             else
             {
                 txtBoxMonthTo.BackColor = Color.White;
-                BtnGoState();
+                BtnState();
             }
         }
 
         private void TxtBoxYear_TextChanged(object sender, EventArgs e)
         {
             int year;
-            try
-            {
-                year = Convert.ToInt32(txtBoxYear.Text);
-            }
-            catch
-            {
-                year = 0;
-            }
+            try { year = Convert.ToInt32(txtBoxYear.Text); }
+            catch { year = 0; }
 
             if (year < 2000
                 || year > 2999)
             {
                 txtBoxYear.BackColor = Color.DarkRed;
-                btnGo.Hide();
+                HideButtons();
             }
             else
             {
                 txtBoxYear.BackColor = Color.White;
-                BtnGoState();
+                BtnState();
             }
         }
 
         private void CheckNumbers(out int numberFrom, out int numberTo)
         {
-            try
-            {
-                numberFrom = Convert.ToInt32(txtBoxMonthFrom.Text);
-            }
-            catch
-            {
-                numberFrom = 0;
-            }
+            try { numberFrom = Convert.ToInt32(txtBoxMonthFrom.Text); }
+            catch { numberFrom = 0; }
 
-            try
-            {
-                numberTo = Convert.ToInt32(txtBoxMonthTo.Text);
-            }
-            catch
-            {
-                numberTo = 0;
-            }
+            try { numberTo = Convert.ToInt32(txtBoxMonthTo.Text); }
+            catch { numberTo = 0; }
         }
 
-        private void BtnGoState()
+        private void BtnState()
         {
             if (txtBoxMonthFrom.BackColor == Color.White
                 && txtBoxMonthTo.BackColor == Color.White
                 && txtBoxYear.BackColor == Color.White)
             {
-                btnGo.Show();
+                btnNew.Show();
+                btnAdd.Show();
             }
         }
 
-        private void BtnGo_Click(object sender, EventArgs e)
+        private void HideButtons()
+        {
+            btnAdd.Hide();
+            btnNew.Hide();
+        }
+
+        private void BtnNew_Click(object sender, EventArgs e)
         {
             int year = Convert.ToInt32(txtBoxYear.Text);
             int monthFrom = Convert.ToInt32(txtBoxMonthFrom.Text);
@@ -131,15 +120,6 @@ namespace Dash.DemoApp.Forms
 
             listBoxHolidays.Items.Clear();
             SetUpListBoxHolidays();
-        }
-
-        private void SetUpListBoxHolidays()
-        {
-
-            foreach(Holiday holiday in holidays.HolidayList)
-            {
-                listBoxHolidays.Items.Add(holiday.ToString());
-            }
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)
@@ -153,9 +133,18 @@ namespace Dash.DemoApp.Forms
             SetUpListBoxHolidays();
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void BtnDelete_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void SetUpListBoxHolidays()
+        {
+
+            foreach (Holiday holiday in holidays.HolidayList)
+            {
+                listBoxHolidays.Items.Add(holiday.ToString());
+            }
         }
     }
 }

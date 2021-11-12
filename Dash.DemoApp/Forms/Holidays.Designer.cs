@@ -30,7 +30,7 @@
         {
             this.txtBoxYear = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnGo = new System.Windows.Forms.Button();
+            this.btnNew = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.listBoxHolidays = new System.Windows.Forms.ListBox();
             this.txtBoxMonthFrom = new System.Windows.Forms.TextBox();
@@ -58,21 +58,21 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Year:";
             // 
-            // btnGo
+            // btnNew
             // 
-            this.btnGo.BackColor = System.Drawing.Color.PaleGreen;
-            this.btnGo.Location = new System.Drawing.Point(485, 45);
-            this.btnGo.Name = "btnGo";
-            this.btnGo.Size = new System.Drawing.Size(219, 47);
-            this.btnGo.TabIndex = 3;
-            this.btnGo.Text = "New";
-            this.btnGo.UseVisualStyleBackColor = false;
-            this.btnGo.Click += new System.EventHandler(this.BtnGo_Click);
+            this.btnNew.BackColor = System.Drawing.Color.PaleGreen;
+            this.btnNew.Location = new System.Drawing.Point(485, 45);
+            this.btnNew.Name = "btnNew";
+            this.btnNew.Size = new System.Drawing.Size(219, 47);
+            this.btnNew.TabIndex = 3;
+            this.btnNew.Text = "New";
+            this.btnNew.UseVisualStyleBackColor = false;
+            this.btnNew.Click += new System.EventHandler(this.BtnGo_Click);
             // 
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.IndianRed;
-            this.btnDelete.Location = new System.Drawing.Point(485, 158);
+            this.btnDelete.Location = new System.Drawing.Point(458, 617);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(219, 47);
             this.btnDelete.TabIndex = 4;
@@ -86,6 +86,7 @@
             this.listBoxHolidays.ItemHeight = 25;
             this.listBoxHolidays.Location = new System.Drawing.Point(35, 135);
             this.listBoxHolidays.Name = "listBoxHolidays";
+            this.listBoxHolidays.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.listBoxHolidays.Size = new System.Drawing.Size(417, 529);
             this.listBoxHolidays.TabIndex = 5;
             // 
@@ -151,7 +152,7 @@
             this.Controls.Add(this.txtBoxMonthFrom);
             this.Controls.Add(this.listBoxHolidays);
             this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnGo);
+            this.Controls.Add(this.btnNew);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtBoxYear);
             this.Name = "Holidays";
@@ -166,7 +167,7 @@
 
         private System.Windows.Forms.TextBox txtBoxYear;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnGo;
+        private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.ListBox listBoxHolidays;
         private System.Windows.Forms.TextBox txtBoxMonthFrom;

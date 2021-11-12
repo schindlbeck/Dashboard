@@ -23,10 +23,10 @@ namespace Dash.Shared
             this.year = year;
             HolidayList = new();
             SetHolidayList();
-            RemoveMonths(monthStart, monthEnd);
+            SelectedMonths(monthStart, monthEnd);
         }
 
-        private void RemoveMonths(int monthStart, int monthEnd)
+        internal void SelectedMonths(int monthStart, int monthEnd)
         {
             List<Holiday> newHolidayList = new();
 
@@ -53,7 +53,7 @@ namespace Dash.Shared
             HolidayList.Add(new Holiday() { Date = easterSunday.AddDays(60), Name = "Fronleichnam" });
             HolidayList.Add(new Holiday() { Date = new DateTime(year, 8, 15), Name = "Mariä Himmelfahrt " });
             HolidayList.Add(new Holiday() { Date = new DateTime(year, 10, 3), Name = "Tag der deutschen Einheit" });
-            HolidayList.Add(new Holiday() { Date = new DateTime(year, 11, 11), Name = "Allerheiligen" });
+            HolidayList.Add(new Holiday() { Date = new DateTime(year, 11, 01), Name = "Allerheiligen" });
             HolidayList.Add(new Holiday() { Date = new DateTime(year, 12, 25), Name = "1. Weihnachsfeiertag" });
             HolidayList.Add(new Holiday() { Date = new DateTime(year, 12, 26), Name = "2. Weihnachsfeiertag" });
         }

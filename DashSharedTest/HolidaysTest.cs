@@ -1,5 +1,6 @@
 ﻿using Dash.Shared;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -104,6 +105,33 @@ namespace DashSharedTest
 
         }
 
+        [Theory]
+        [ClassData(typeof(SelectedMonthsTestData))]
+        public void SelectedMonths_Theory(int year, int count, DateTime firstDate, DateTime seventhDate)
+        {
+            //Arrange
+            Holidays holidays = new(year);
 
+            //Act
+            holidays.SelectedMonths(6, 12);
+
+            //Assert
+            Assert.Equal(count, holidays.HolidayList.Count);
+            Assert.Equal(firstDate, holidays.HolidayList[0].Date);
+            Assert.Equal(seventhDate, holidays.HolidayList[4].Date);
+        }
+    }
+
+    public class SelectedMonthsTestData : IEnumerable<object[]>
+    {
+        public IEnumerator<object[]> GetEnumerator()
+        {
+            yield return new object[] { 2022, 7, new DateTime(2022, 06, 06), new DateTime(2022, 11, 01) };
+            yield return new object[] { 2023, 6, new DateTime(2023, 06, 08), new DateTime(2023, 12, 25) };
+            yield return new object[] { 2024, 5, new DateTime(2024, 08, 15), new DateTime(2024, 12, 26) };
+            yield return new object[] { 2025, 7, new DateTime(2025, 06, 09), new DateTime(2025, 11, 01) };
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
