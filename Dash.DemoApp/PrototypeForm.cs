@@ -1,4 +1,5 @@
-﻿using Erp.Prototype.Forms;
+﻿
+using Dash.DemoApp.Forms;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using System;
@@ -27,8 +28,10 @@ namespace Erp.Prototype
             activeForm?.Close();
         }
 
-        private void BtnCompareJsonData_Click(object sender, EventArgs e)
+        private void BtnHolidays_Click(object sender, EventArgs e)
         {
+            OpenChildForm(new Holidays(), sender);
+
         }
 
         private void BtnExcelToJson_Click(object sender, EventArgs e)
@@ -37,7 +40,7 @@ namespace Erp.Prototype
 
         private void BtnDataOverview_Click(object sender, EventArgs e)
         {
-//            OpenChildForm(new DataOverview(Configuration), sender);
+            //            OpenChildForm(new DataOverview(Configuration), sender);
         }
 
         private void OpenChildForm(Form childForm, object sender)
@@ -75,5 +78,6 @@ namespace Erp.Prototype
 
             }
         }
+
     }
 }

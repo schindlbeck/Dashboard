@@ -35,7 +35,7 @@ namespace Erp.Prototype
             this.buttonToast = new System.Windows.Forms.Button();
             this.BtnDataOverview = new System.Windows.Forms.Button();
             this.BtnExcelToJson = new System.Windows.Forms.Button();
-            this.BtnCompareJsonData = new System.Windows.Forms.Button();
+            this.BtnHolidays = new System.Windows.Forms.Button();
             this.buttonHome = new System.Windows.Forms.Button();
             this.panelLogo = new System.Windows.Forms.Panel();
             this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
@@ -56,13 +56,14 @@ namespace Erp.Prototype
             this.panelLeft.Controls.Add(this.buttonToast);
             this.panelLeft.Controls.Add(this.BtnDataOverview);
             this.panelLeft.Controls.Add(this.BtnExcelToJson);
-            this.panelLeft.Controls.Add(this.BtnCompareJsonData);
+            this.panelLeft.Controls.Add(this.BtnHolidays);
             this.panelLeft.Controls.Add(this.buttonHome);
             this.panelLeft.Controls.Add(this.panelLogo);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 0);
+            this.panelLeft.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(310, 771);
+            this.panelLeft.Size = new System.Drawing.Size(443, 1050);
             this.panelLeft.TabIndex = 1;
             this.panelLeft.DragDrop += new System.Windows.Forms.DragEventHandler(this.PanelLeft_DragDrop);
             this.panelLeft.DragEnter += new System.Windows.Forms.DragEventHandler(this.PanelLeft_DragEnter);
@@ -75,10 +76,11 @@ namespace Erp.Prototype
             this.buttonPopup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonPopup.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.buttonPopup.ForeColor = System.Drawing.Color.Gainsboro;
-            this.buttonPopup.Location = new System.Drawing.Point(0, 655);
+            this.buttonPopup.Location = new System.Drawing.Point(0, 856);
+            this.buttonPopup.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonPopup.Name = "buttonPopup";
-            this.buttonPopup.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.buttonPopup.Size = new System.Drawing.Size(310, 58);
+            this.buttonPopup.Padding = new System.Windows.Forms.Padding(29, 0, 0, 0);
+            this.buttonPopup.Size = new System.Drawing.Size(443, 97);
             this.buttonPopup.TabIndex = 8;
             this.buttonPopup.Text = "Popup";
             this.buttonPopup.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -92,10 +94,11 @@ namespace Erp.Prototype
             this.buttonToast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonToast.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.buttonToast.ForeColor = System.Drawing.Color.Gainsboro;
-            this.buttonToast.Location = new System.Drawing.Point(0, 713);
+            this.buttonToast.Location = new System.Drawing.Point(0, 953);
+            this.buttonToast.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonToast.Name = "buttonToast";
-            this.buttonToast.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.buttonToast.Size = new System.Drawing.Size(310, 58);
+            this.buttonToast.Padding = new System.Windows.Forms.Padding(29, 0, 0, 0);
+            this.buttonToast.Size = new System.Drawing.Size(443, 97);
             this.buttonToast.TabIndex = 7;
             this.buttonToast.Text = "Toast";
             this.buttonToast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -109,10 +112,11 @@ namespace Erp.Prototype
             this.BtnDataOverview.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnDataOverview.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.BtnDataOverview.ForeColor = System.Drawing.Color.Gainsboro;
-            this.BtnDataOverview.Location = new System.Drawing.Point(0, 284);
+            this.BtnDataOverview.Location = new System.Drawing.Point(0, 474);
+            this.BtnDataOverview.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnDataOverview.Name = "BtnDataOverview";
-            this.BtnDataOverview.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.BtnDataOverview.Size = new System.Drawing.Size(310, 58);
+            this.BtnDataOverview.Padding = new System.Windows.Forms.Padding(29, 0, 0, 0);
+            this.BtnDataOverview.Size = new System.Drawing.Size(443, 97);
             this.BtnDataOverview.TabIndex = 6;
             this.BtnDataOverview.Text = "Data Overview";
             this.BtnDataOverview.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -127,33 +131,35 @@ namespace Erp.Prototype
             this.BtnExcelToJson.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnExcelToJson.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.BtnExcelToJson.ForeColor = System.Drawing.Color.Gainsboro;
-            this.BtnExcelToJson.Location = new System.Drawing.Point(0, 226);
+            this.BtnExcelToJson.Location = new System.Drawing.Point(0, 377);
+            this.BtnExcelToJson.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnExcelToJson.Name = "BtnExcelToJson";
-            this.BtnExcelToJson.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.BtnExcelToJson.Size = new System.Drawing.Size(310, 58);
+            this.BtnExcelToJson.Padding = new System.Windows.Forms.Padding(29, 0, 0, 0);
+            this.BtnExcelToJson.Size = new System.Drawing.Size(443, 97);
             this.BtnExcelToJson.TabIndex = 5;
             this.BtnExcelToJson.Text = "Compare Excel to Json";
             this.BtnExcelToJson.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BtnExcelToJson.UseVisualStyleBackColor = true;
             this.BtnExcelToJson.Click += new System.EventHandler(this.BtnExcelToJson_Click);
             // 
-            // BtnCompareJsonData
+            // BtnHolidays
             // 
-            this.BtnCompareJsonData.Dock = System.Windows.Forms.DockStyle.Top;
-            this.BtnCompareJsonData.FlatAppearance.BorderSize = 0;
-            this.BtnCompareJsonData.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Chocolate;
-            this.BtnCompareJsonData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnCompareJsonData.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.BtnCompareJsonData.ForeColor = System.Drawing.Color.Gainsboro;
-            this.BtnCompareJsonData.Location = new System.Drawing.Point(0, 168);
-            this.BtnCompareJsonData.Name = "BtnCompareJsonData";
-            this.BtnCompareJsonData.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.BtnCompareJsonData.Size = new System.Drawing.Size(310, 58);
-            this.BtnCompareJsonData.TabIndex = 4;
-            this.BtnCompareJsonData.Text = "Compare Json Data";
-            this.BtnCompareJsonData.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnCompareJsonData.UseVisualStyleBackColor = true;
-            this.BtnCompareJsonData.Click += new System.EventHandler(this.BtnCompareJsonData_Click);
+            this.BtnHolidays.Dock = System.Windows.Forms.DockStyle.Top;
+            this.BtnHolidays.FlatAppearance.BorderSize = 0;
+            this.BtnHolidays.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Chocolate;
+            this.BtnHolidays.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnHolidays.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.BtnHolidays.ForeColor = System.Drawing.Color.Gainsboro;
+            this.BtnHolidays.Location = new System.Drawing.Point(0, 280);
+            this.BtnHolidays.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.BtnHolidays.Name = "BtnHolidays";
+            this.BtnHolidays.Padding = new System.Windows.Forms.Padding(29, 0, 0, 0);
+            this.BtnHolidays.Size = new System.Drawing.Size(443, 97);
+            this.BtnHolidays.TabIndex = 4;
+            this.BtnHolidays.Text = "Holidays";
+            this.BtnHolidays.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnHolidays.UseVisualStyleBackColor = true;
+            this.BtnHolidays.Click += new System.EventHandler(this.BtnHolidays_Click);
             // 
             // buttonHome
             // 
@@ -163,10 +169,11 @@ namespace Erp.Prototype
             this.buttonHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonHome.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.buttonHome.ForeColor = System.Drawing.Color.Gainsboro;
-            this.buttonHome.Location = new System.Drawing.Point(0, 108);
+            this.buttonHome.Location = new System.Drawing.Point(0, 180);
+            this.buttonHome.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonHome.Name = "buttonHome";
-            this.buttonHome.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.buttonHome.Size = new System.Drawing.Size(310, 60);
+            this.buttonHome.Padding = new System.Windows.Forms.Padding(29, 0, 0, 0);
+            this.buttonHome.Size = new System.Drawing.Size(443, 100);
             this.buttonHome.TabIndex = 1;
             this.buttonHome.Text = "Home";
             this.buttonHome.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -178,8 +185,9 @@ namespace Erp.Prototype
             this.panelLogo.Controls.Add(this.pictureBoxLogo);
             this.panelLogo.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelLogo.Location = new System.Drawing.Point(0, 0);
+            this.panelLogo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelLogo.Name = "panelLogo";
-            this.panelLogo.Size = new System.Drawing.Size(310, 108);
+            this.panelLogo.Size = new System.Drawing.Size(443, 180);
             this.panelLogo.TabIndex = 0;
             // 
             // pictureBoxLogo
@@ -187,8 +195,9 @@ namespace Erp.Prototype
             this.pictureBoxLogo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxLogo.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLogo.Image")));
             this.pictureBoxLogo.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxLogo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pictureBoxLogo.Name = "pictureBoxLogo";
-            this.pictureBoxLogo.Size = new System.Drawing.Size(310, 108);
+            this.pictureBoxLogo.Size = new System.Drawing.Size(443, 180);
             this.pictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBoxLogo.TabIndex = 0;
             this.pictureBoxLogo.TabStop = false;
@@ -196,18 +205,20 @@ namespace Erp.Prototype
             // panelTop
             // 
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTop.Location = new System.Drawing.Point(310, 0);
+            this.panelTop.Location = new System.Drawing.Point(443, 0);
+            this.panelTop.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1105, 108);
+            this.panelTop.Size = new System.Drawing.Size(1481, 180);
             this.panelTop.TabIndex = 2;
             // 
             // panelDesk
             // 
             this.panelDesk.Controls.Add(this.pictureBoxDesk);
             this.panelDesk.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelDesk.Location = new System.Drawing.Point(310, 108);
+            this.panelDesk.Location = new System.Drawing.Point(443, 180);
+            this.panelDesk.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelDesk.Name = "panelDesk";
-            this.panelDesk.Size = new System.Drawing.Size(1105, 663);
+            this.panelDesk.Size = new System.Drawing.Size(1481, 870);
             this.panelDesk.TabIndex = 3;
             // 
             // pictureBoxDesk
@@ -215,21 +226,23 @@ namespace Erp.Prototype
             this.pictureBoxDesk.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxDesk.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxDesk.Image")));
             this.pictureBoxDesk.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxDesk.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pictureBoxDesk.Name = "pictureBoxDesk";
-            this.pictureBoxDesk.Size = new System.Drawing.Size(1105, 663);
+            this.pictureBoxDesk.Size = new System.Drawing.Size(1481, 870);
             this.pictureBoxDesk.TabIndex = 0;
             this.pictureBoxDesk.TabStop = false;
             // 
             // PrototypeForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1415, 771);
+            this.ClientSize = new System.Drawing.Size(1924, 1050);
             this.Controls.Add(this.panelDesk);
             this.Controls.Add(this.panelTop);
             this.Controls.Add(this.panelLeft);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "PrototypeForm";
             this.Text = "PrototypeMainForm";
             this.panelLeft.ResumeLayout(false);
@@ -248,7 +261,7 @@ namespace Erp.Prototype
         private System.Windows.Forms.Button buttonToast;
         private System.Windows.Forms.Button BtnDataOverview;
         private System.Windows.Forms.Button BtnExcelToJson;
-        private System.Windows.Forms.Button BtnCompareJsonData;
+        private System.Windows.Forms.Button BtnHolidays;
         private System.Windows.Forms.Button buttonHome;
         private System.Windows.Forms.Panel panelLogo;
         private System.Windows.Forms.PictureBox pictureBoxLogo;
