@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dash.Shared.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +13,8 @@ namespace Dash.DemoApp.Forms
 {
     public partial class Holidays : Form
     {
+        private Shared.Holidays holidays;
+
         public Holidays()
         {
             InitializeComponent();
@@ -124,7 +127,35 @@ namespace Dash.DemoApp.Forms
             int monthFrom = Convert.ToInt32(txtBoxMonthFrom.Text);
             int monthTo = Convert.ToInt32(txtBoxMonthTo.Text);
 
-            Shared.Holidays holidays = new(year);
+            holidays = new(year, monthFrom, monthTo);
+
+            listBoxHolidays.Items.Clear();
+            SetUpListBoxHolidays();
+        }
+
+        private void SetUpListBoxHolidays()
+        {
+
+            foreach(Holiday holiday in holidays.HolidayList)
+            {
+                listBoxHolidays.Items.Add(holiday.ToString());
+            }
+        }
+
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            int year = Convert.ToInt32(txtBoxYear.Text);
+            int monthFrom = Convert.ToInt32(txtBoxMonthFrom.Text);
+            int monthTo = Convert.ToInt32(txtBoxMonthTo.Text);
+
+            holidays = new(year, monthFrom, monthTo);
+
+            SetUpListBoxHolidays();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

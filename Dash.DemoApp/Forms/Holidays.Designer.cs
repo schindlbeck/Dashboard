@@ -37,7 +37,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtBoxMonthTo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtBoxYear
@@ -61,23 +61,24 @@
             // btnGo
             // 
             this.btnGo.BackColor = System.Drawing.Color.PaleGreen;
-            this.btnGo.Location = new System.Drawing.Point(343, 52);
+            this.btnGo.Location = new System.Drawing.Point(485, 45);
             this.btnGo.Name = "btnGo";
-            this.btnGo.Size = new System.Drawing.Size(109, 34);
+            this.btnGo.Size = new System.Drawing.Size(219, 47);
             this.btnGo.TabIndex = 3;
-            this.btnGo.Text = "go";
+            this.btnGo.Text = "New";
             this.btnGo.UseVisualStyleBackColor = false;
             this.btnGo.Click += new System.EventHandler(this.BtnGo_Click);
             // 
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.IndianRed;
-            this.btnDelete.Location = new System.Drawing.Point(642, 53);
+            this.btnDelete.Location = new System.Drawing.Point(485, 158);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(219, 47);
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // listBoxHolidays
             // 
@@ -126,15 +127,16 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "To";
             // 
-            // button1
+            // btnAdd
             // 
-            this.button1.BackColor = System.Drawing.Color.MediumSeaGreen;
-            this.button1.Location = new System.Drawing.Point(642, 106);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(219, 47);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnAdd.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.btnAdd.Location = new System.Drawing.Point(485, 105);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(219, 47);
+            this.btnAdd.TabIndex = 11;
+            this.btnAdd.Text = "Add";
+            this.btnAdd.UseVisualStyleBackColor = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // Holidays
             // 
@@ -142,7 +144,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(981, 676);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtBoxMonthTo);
             this.Controls.Add(this.label3);
@@ -171,6 +173,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtBoxMonthTo;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnAdd;
     }
 }

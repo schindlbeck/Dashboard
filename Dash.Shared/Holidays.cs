@@ -10,13 +10,32 @@ namespace Dash.Shared
     public class Holidays
     {
         private readonly int year;
-        public List<Holiday> HolidayList { get; init; }
-
+        public List<Holiday> HolidayList { get; set; }
         public Holidays(int year)
         {
             this.year = year;
             HolidayList = new();
             SetHolidayList();
+        }
+
+        public Holidays(int year, int monthStart, int monthEnd)
+        {
+            this.year = year;
+            HolidayList = new();
+            SetHolidayList();
+            RemoveMonths(monthStart, monthEnd);
+        }
+
+        private void RemoveMonths(int monthStart, int monthEnd)
+        {
+            List<Holiday> newHolidayList = new();
+
+            for (int i = monthStart; i <= monthEnd; i++)
+            {
+                newHolidayList.AddRange(HolidayList.Where(h => h.Date.Month == i).ToList());
+            }
+
+            HolidayList = newHolidayList;
         }
 
         private void SetHolidayList()
@@ -29,9 +48,9 @@ namespace Dash.Shared
             HolidayList.Add(new Holiday() { Date = easterSunday, Name = "Ostersonntag" });
             HolidayList.Add(new Holiday() { Date = easterSunday.AddDays(1), Name = "Ostermontag" });
             HolidayList.Add(new Holiday() { Date = new DateTime(year, 5, 1), Name = "Tag der Arbeit" });
-            HolidayList.Add(new Holiday() { Date = easterSunday.AddDays(39), Name = "christi Himmelfahrt"});
-            HolidayList.Add(new Holiday() { Date = easterSunday.AddDays(50), Name = "Pfingstmontag"});
-            HolidayList.Add(new Holiday() { Date = easterSunday.AddDays(60), Name = "Fronleichnam"});
+            HolidayList.Add(new Holiday() { Date = easterSunday.AddDays(39), Name = "christi Himmelfahrt" });
+            HolidayList.Add(new Holiday() { Date = easterSunday.AddDays(50), Name = "Pfingstmontag" });
+            HolidayList.Add(new Holiday() { Date = easterSunday.AddDays(60), Name = "Fronleichnam" });
             HolidayList.Add(new Holiday() { Date = new DateTime(year, 8, 15), Name = "Mariä Himmelfahrt " });
             HolidayList.Add(new Holiday() { Date = new DateTime(year, 10, 3), Name = "Tag der deutschen Einheit" });
             HolidayList.Add(new Holiday() { Date = new DateTime(year, 11, 11), Name = "Allerheiligen" });
