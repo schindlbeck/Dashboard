@@ -36,9 +36,14 @@
             this.numericUpDownCwEnd = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownYearStart = new System.Windows.Forms.NumericUpDown();
             this.listBoxDayInfos = new System.Windows.Forms.ListBox();
+            this.buttonDeleteDay = new System.Windows.Forms.Button();
+            this.groupBoxDayOptions = new System.Windows.Forms.GroupBox();
+            this.buttonDeleteShift = new System.Windows.Forms.Button();
+            this.buttonAddShift = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCwStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCwEnd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownYearStart)).BeginInit();
+            this.groupBoxDayOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -152,8 +157,51 @@
             this.listBoxDayInfos.ItemHeight = 25;
             this.listBoxDayInfos.Location = new System.Drawing.Point(409, 150);
             this.listBoxDayInfos.Name = "listBoxDayInfos";
-            this.listBoxDayInfos.Size = new System.Drawing.Size(214, 229);
+            this.listBoxDayInfos.Size = new System.Drawing.Size(214, 254);
             this.listBoxDayInfos.TabIndex = 11;
+            this.listBoxDayInfos.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListBoxDayInfos_MouseClick);
+            // 
+            // buttonDeleteDay
+            // 
+            this.buttonDeleteDay.Location = new System.Drawing.Point(6, 30);
+            this.buttonDeleteDay.Name = "buttonDeleteDay";
+            this.buttonDeleteDay.Size = new System.Drawing.Size(145, 52);
+            this.buttonDeleteDay.TabIndex = 12;
+            this.buttonDeleteDay.Text = "Delete Day";
+            this.buttonDeleteDay.UseVisualStyleBackColor = true;
+            this.buttonDeleteDay.Click += new System.EventHandler(this.ButtonDeleteDay_Click);
+            // 
+            // groupBoxDayOptions
+            // 
+            this.groupBoxDayOptions.Controls.Add(this.buttonDeleteShift);
+            this.groupBoxDayOptions.Controls.Add(this.buttonAddShift);
+            this.groupBoxDayOptions.Controls.Add(this.buttonDeleteDay);
+            this.groupBoxDayOptions.Location = new System.Drawing.Point(629, 150);
+            this.groupBoxDayOptions.Name = "groupBoxDayOptions";
+            this.groupBoxDayOptions.Size = new System.Drawing.Size(155, 239);
+            this.groupBoxDayOptions.TabIndex = 13;
+            this.groupBoxDayOptions.TabStop = false;
+            this.groupBoxDayOptions.Text = "Options";
+            // 
+            // buttonDeleteShift
+            // 
+            this.buttonDeleteShift.Location = new System.Drawing.Point(6, 177);
+            this.buttonDeleteShift.Name = "buttonDeleteShift";
+            this.buttonDeleteShift.Size = new System.Drawing.Size(145, 52);
+            this.buttonDeleteShift.TabIndex = 14;
+            this.buttonDeleteShift.Text = "Delete Shift";
+            this.buttonDeleteShift.UseVisualStyleBackColor = true;
+            this.buttonDeleteShift.Click += new System.EventHandler(this.ButtonDeleteShift_Click);
+            // 
+            // buttonAddShift
+            // 
+            this.buttonAddShift.Location = new System.Drawing.Point(6, 119);
+            this.buttonAddShift.Name = "buttonAddShift";
+            this.buttonAddShift.Size = new System.Drawing.Size(145, 52);
+            this.buttonAddShift.TabIndex = 13;
+            this.buttonAddShift.Text = "Add Shift";
+            this.buttonAddShift.UseVisualStyleBackColor = true;
+            this.buttonAddShift.Click += new System.EventHandler(this.ButtonAddShift_Click);
             // 
             // WorkDaysOverview
             // 
@@ -161,6 +209,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1350, 674);
+            this.Controls.Add(this.groupBoxDayOptions);
             this.Controls.Add(this.listBoxDayInfos);
             this.Controls.Add(this.numericUpDownYearStart);
             this.Controls.Add(this.numericUpDownCwEnd);
@@ -175,6 +224,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCwStart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCwEnd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownYearStart)).EndInit();
+            this.groupBoxDayOptions.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -189,5 +239,9 @@
         private System.Windows.Forms.NumericUpDown numericUpDownCwEnd;
         private System.Windows.Forms.NumericUpDown numericUpDownYearStart;
         private System.Windows.Forms.ListBox listBoxDayInfos;
+        private System.Windows.Forms.Button buttonDeleteDay;
+        private System.Windows.Forms.GroupBox groupBoxDayOptions;
+        private System.Windows.Forms.Button buttonDeleteShift;
+        private System.Windows.Forms.Button buttonAddShift;
     }
 }

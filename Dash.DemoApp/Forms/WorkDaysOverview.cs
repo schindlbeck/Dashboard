@@ -14,6 +14,8 @@ namespace Dash.DemoApp.Forms
     public partial class WorkDaysOverview : Form
     {
         private WorkSchedule workSchedule;
+        private WorkWeek selectedWorkWeek;
+
         public WorkDaysOverview()
         {
             InitializeComponent();
@@ -23,6 +25,7 @@ namespace Dash.DemoApp.Forms
         {
             numericUpDownYearStart.Value = DateTime.Now.Year;
             listBoxDayInfos.Hide();
+            groupBoxDayOptions.Hide();
         }
 
         private void BtnGo_Click(object sender, EventArgs e)
@@ -30,11 +33,12 @@ namespace Dash.DemoApp.Forms
             workSchedule = new(Convert.ToInt32(numericUpDownYearStart.Value), Convert.ToInt32(numericUpDownCwStart.Value), Convert.ToInt32(numericUpDownCwEnd.Value));
 
             listBoxWorkSchedule.Items.Clear();
-            FillListBox();
+            FillListBoxSchedule();
         }
 
-        private void FillListBox()
+        private void FillListBoxSchedule()
         {
+            listBoxWorkSchedule.Items.Clear();
             foreach(WorkWeek workWeek in workSchedule.WorkWeeks)
             {
                 listBoxWorkSchedule.Items.Add(workWeek.ToString());
@@ -48,12 +52,38 @@ namespace Dash.DemoApp.Forms
             listBoxDayInfos.Items.Clear();
             listBoxDayInfos.Show();
 
-            var infos = workSchedule.WorkWeeks.Where(w => w.ToString() == item.Text).First();
+            selectedWorkWeek = workSchedule.WorkWeeks.Where(w => w.ToString().Equals(item.Text)).First();
 
-            foreach(WorkDay workDay in infos.WorkDays)
+            foreach(WorkDay workDay in selectedWorkWeek.WorkDays)
             {
                 listBoxDayInfos.Items.Add(workDay.ToString());
             }
+
+        }
+
+        private void ListBoxDayInfos_MouseClick(object sender, MouseEventArgs e)
+        {
+            groupBoxDayOptions.Show();
+        }
+
+        private void ButtonDeleteDay_Click(object sender, EventArgs e)
+        {
+            var day = selectedWorkWeek.WorkDays.Where(w => w.ToString().Equals(listBoxDayInfos.Text)).First();
+
+            workSchedule.DeleteWorkday(day, selectedWorkWeek);
+
+            listBoxDayInfos.Hide();
+            groupBoxDayOptions.Hide();
+            FillListBoxSchedule();
+        }
+
+        private void ButtonAddShift_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ButtonDeleteShift_Click(object sender, EventArgs e)
+        {
 
         }
     }

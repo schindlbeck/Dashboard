@@ -82,7 +82,11 @@ namespace Dash.Shared
             {
                 //Reaction if calendarweek isn't in the workweeks
             }
+        }
 
+        public void DeleteWorkday(WorkDay day, WorkWeek week)
+        {
+            WorkWeeks.Where(w => w.CalendarWeek == week.CalendarWeek).First().WorkDays.Remove(day);
         }
 
         public void SetHolidays(List<DateTime> holidays)
