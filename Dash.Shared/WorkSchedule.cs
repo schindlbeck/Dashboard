@@ -89,6 +89,28 @@ namespace Dash.Shared
             WorkWeeks.Where(w => w.CalendarWeek == week.CalendarWeek).First().WorkDays.Remove(day);
         }
 
+        public void AddShift(Shifts shift, WorkDay day, WorkWeek week)
+        {
+            WorkWeeks.Where(w => w.CalendarWeek == week.CalendarWeek).First().WorkDays.Where(w => w.Date == day.Date).First().Shifts.Add(GetShift(shift));
+        }
+
+        public void DeleteShift(Shifts shift, WorkDay day, WorkWeek week)
+        {
+            var dShift = WorkWeeks.Where(w => w.CalendarWeek == week.CalendarWeek).First().WorkDays.Where(w => w.Date == day.Date).First().Shifts.Where(s => s.Type == shift).First();
+            WorkWeeks.Where(w => w.CalendarWeek == week.CalendarWeek).First().WorkDays.Where(w => w.Date == day.Date).First().Shifts.Remove(dShift);
+        }
+
+        private static Shift GetShift(Shifts shifts)
+        {
+            return shifts switch
+            {
+                Shifts.morning => GetMorningShift(),
+                Shifts.evening => GetEveningShift(),
+                Shifts.night => GetNightShift(),
+                _ => null
+            };
+        }
+
         public void SetHolidays(List<DateTime> holidays)
         {
             foreach(DateTime holiday in holidays)
@@ -117,6 +139,16 @@ namespace Dash.Shared
             eveningShift.Type = Shifts.evening;
 
             return eveningShift;
+        }
+
+        private static Shift GetNightShift()
+        {
+            Shift nightSchift = new();
+            nightSchift.ActiveMinutes = 480;
+            nightSchift.NumberEquipments = 3;
+            nightSchift.Type = Shifts.night;
+
+            return nightSchift;
         }
     }
 }

@@ -231,10 +231,13 @@
             this.checkBoxNight.TabIndex = 2;
             this.checkBoxNight.Text = "Night Shift";
             this.checkBoxNight.UseVisualStyleBackColor = true;
+            this.checkBoxNight.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CheckBox_CheckedChanged);
             // 
             // checkBoxeEvening
             // 
             this.checkBoxeEvening.AutoSize = true;
+            this.checkBoxeEvening.Checked = true;
+            this.checkBoxeEvening.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxeEvening.Location = new System.Drawing.Point(17, 75);
             this.checkBoxeEvening.Name = "checkBoxeEvening";
             this.checkBoxeEvening.Size = new System.Drawing.Size(147, 29);
@@ -245,6 +248,8 @@
             // checkBoxMorning
             // 
             this.checkBoxMorning.AutoSize = true;
+            this.checkBoxMorning.Checked = true;
+            this.checkBoxMorning.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxMorning.Location = new System.Drawing.Point(17, 40);
             this.checkBoxMorning.Name = "checkBoxMorning";
             this.checkBoxMorning.Size = new System.Drawing.Size(147, 29);

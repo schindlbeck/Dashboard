@@ -20,6 +20,14 @@ namespace Dash.DemoApp.Forms
         public WorkDaysOverview()
         {
             InitializeComponent();
+            InitializeCheckBoxes();
+        }
+
+        private void InitializeCheckBoxes()
+        {
+            checkBoxMorning.Tag = Shifts.morning;
+            checkBoxeEvening.Tag = Shifts.evening;
+            checkBoxNight.Tag = Shifts.night;
         }
 
         private void WorkDaysOverview_Load(object sender, EventArgs e)
@@ -46,7 +54,7 @@ namespace Dash.DemoApp.Forms
         private void FillListBoxSchedule()
         {
             listBoxWorkSchedule.Items.Clear();
-            foreach(WorkWeek workWeek in workSchedule.WorkWeeks)
+            foreach (WorkWeek workWeek in workSchedule.WorkWeeks)
             {
                 listBoxWorkSchedule.Items.Add(workWeek.ToString());
             }
@@ -55,17 +63,21 @@ namespace Dash.DemoApp.Forms
         private void ListBoxWorkSchedule_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             var item = sender as ListBox;
+            selectedWorkWeek = workSchedule.WorkWeeks.Where(w => w.ToString().Equals(item.Text)).First();
 
+            SetUpListBoxDayInfos();
+
+        }
+
+        private void SetUpListBoxDayInfos()
+        {
             listBoxDayInfos.Items.Clear();
             listBoxDayInfos.Show();
 
-            selectedWorkWeek = workSchedule.WorkWeeks.Where(w => w.ToString().Equals(item.Text)).First();
-
-            foreach(WorkDay workDay in selectedWorkWeek.WorkDays)
+            foreach (WorkDay workDay in selectedWorkWeek.WorkDays)
             {
                 listBoxDayInfos.Items.Add(workDay.ToString());
             }
-
         }
 
         private void ListBoxDayInfos_MouseClick(object sender, MouseEventArgs e)
@@ -94,20 +106,11 @@ namespace Dash.DemoApp.Forms
         {
             var shifts = selectedWorkDay.Shifts;
 
-            if(shifts.Exists(s => s.Type == Shifts.morning))
-            {
-                checkBoxMorning.Checked = true;
-            }
+            if (shifts.Exists(s => s.Type == Shifts.morning)) checkBoxMorning.Checked = true; else checkBoxMorning.Checked = false;
 
-            if (shifts.Exists(s => s.Type == Shifts.evening))
-            {
-                checkBoxeEvening.Checked = true;
-            }
+            if (shifts.Exists(s => s.Type == Shifts.evening)) checkBoxeEvening.Checked = true; else checkBoxeEvening.Checked = false;
 
-            if (shifts.Exists(s => s.Type == Shifts.night))
-            {
-                checkBoxNight.Checked = true;
-            }
+            if (shifts.Exists(s => s.Type == Shifts.night)) checkBoxNight.Checked = true; else checkBoxNight.Checked = false;
         }
 
         private void ButtonDeleteShift_Click(object sender, EventArgs e)
@@ -123,6 +126,11 @@ namespace Dash.DemoApp.Forms
         private void ListBoxDayInfos_SelectedIndexChanged(object sender, EventArgs e)
         {
             groupBoxShifts.Hide();
+        }
+
+        private void CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
