@@ -75,7 +75,7 @@
             this.listBoxWorkSchedule.ItemHeight = 25;
             this.listBoxWorkSchedule.Location = new System.Drawing.Point(32, 150);
             this.listBoxWorkSchedule.Name = "listBoxWorkSchedule";
-            this.listBoxWorkSchedule.Size = new System.Drawing.Size(371, 479);
+            this.listBoxWorkSchedule.Size = new System.Drawing.Size(371, 504);
             this.listBoxWorkSchedule.TabIndex = 6;
             this.listBoxWorkSchedule.SelectedIndexChanged += new System.EventHandler(this.ListBoxWorkSchedule_SelectedIndexChanged);
             this.listBoxWorkSchedule.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListBoxWorkSchedule_MouseDoubleClick);
@@ -231,7 +231,7 @@
             this.checkBoxNight.TabIndex = 2;
             this.checkBoxNight.Text = "Night Shift";
             this.checkBoxNight.UseVisualStyleBackColor = true;
-            this.checkBoxNight.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CheckBox_CheckedChanged);
+            this.checkBoxNight.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
             // 
             // checkBoxeEvening
             // 
@@ -240,10 +240,11 @@
             this.checkBoxeEvening.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxeEvening.Location = new System.Drawing.Point(17, 75);
             this.checkBoxeEvening.Name = "checkBoxeEvening";
-            this.checkBoxeEvening.Size = new System.Drawing.Size(147, 29);
+            this.checkBoxeEvening.Size = new System.Drawing.Size(141, 29);
             this.checkBoxeEvening.TabIndex = 1;
-            this.checkBoxeEvening.Text = "Eventing Shift\r\n";
+            this.checkBoxeEvening.Text = "Evening Shift\r\n";
             this.checkBoxeEvening.UseVisualStyleBackColor = true;
+            this.checkBoxeEvening.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
             // 
             // checkBoxMorning
             // 
@@ -256,6 +257,7 @@
             this.checkBoxMorning.TabIndex = 0;
             this.checkBoxMorning.Text = "Morning Shift";
             this.checkBoxMorning.UseVisualStyleBackColor = true;
+            this.checkBoxMorning.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
             // 
             // WorkDaysOverview
             // 

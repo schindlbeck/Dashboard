@@ -97,9 +97,8 @@ namespace Dash.DemoApp.Forms
 
         private void ButtonChangeShifts_Click(object sender, EventArgs e)
         {
-            groupBoxShifts.Show();
-
             SelectedShifts();
+            groupBoxShifts.Show();
         }
 
         private void SelectedShifts()
@@ -130,7 +129,17 @@ namespace Dash.DemoApp.Forms
 
         private void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            if (groupBoxShifts.Visible)
+            {
+                var shift = sender as CheckBox;
+                var eShift = Enum.Parse<Shifts>(shift.Tag.ToString());
 
+                if (shift.Checked) workSchedule.AddShift(eShift, selectedWorkDay, selectedWorkWeek);
+                else workSchedule.DeleteShift(eShift, selectedWorkDay, selectedWorkWeek);
+            }
+
+            groupBoxShifts.Hide();
+            SetUpListBoxDayInfos();
         }
     }
 }
