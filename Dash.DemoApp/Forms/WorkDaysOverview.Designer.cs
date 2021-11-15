@@ -35,6 +35,7 @@
             this.numericUpDownCwStart = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownCwEnd = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownYearStart = new System.Windows.Forms.NumericUpDown();
+            this.listBoxDayInfos = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCwStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCwEnd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownYearStart)).BeginInit();
@@ -66,6 +67,7 @@
             this.listBoxWorkSchedule.Name = "listBoxWorkSchedule";
             this.listBoxWorkSchedule.Size = new System.Drawing.Size(371, 479);
             this.listBoxWorkSchedule.TabIndex = 6;
+            this.listBoxWorkSchedule.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListBoxWorkSchedule_MouseDoubleClick);
             // 
             // btnGo
             // 
@@ -144,12 +146,22 @@
             0,
             0});
             // 
+            // listBoxDayInfos
+            // 
+            this.listBoxDayInfos.FormattingEnabled = true;
+            this.listBoxDayInfos.ItemHeight = 25;
+            this.listBoxDayInfos.Location = new System.Drawing.Point(409, 150);
+            this.listBoxDayInfos.Name = "listBoxDayInfos";
+            this.listBoxDayInfos.Size = new System.Drawing.Size(214, 229);
+            this.listBoxDayInfos.TabIndex = 11;
+            // 
             // WorkDaysOverview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1350, 674);
+            this.Controls.Add(this.listBoxDayInfos);
             this.Controls.Add(this.numericUpDownYearStart);
             this.Controls.Add(this.numericUpDownCwEnd);
             this.Controls.Add(this.numericUpDownCwStart);
@@ -176,5 +188,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDownCwStart;
         private System.Windows.Forms.NumericUpDown numericUpDownCwEnd;
         private System.Windows.Forms.NumericUpDown numericUpDownYearStart;
+        private System.Windows.Forms.ListBox listBoxDayInfos;
     }
 }

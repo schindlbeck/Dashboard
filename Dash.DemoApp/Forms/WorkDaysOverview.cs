@@ -22,6 +22,7 @@ namespace Dash.DemoApp.Forms
         private void WorkDaysOverview_Load(object sender, EventArgs e)
         {
             numericUpDownYearStart.Value = DateTime.Now.Year;
+            listBoxDayInfos.Hide();
         }
 
         private void BtnGo_Click(object sender, EventArgs e)
@@ -38,6 +39,22 @@ namespace Dash.DemoApp.Forms
             {
                 listBoxWorkSchedule.Items.Add(workWeek.ToString());
             }
+        }
+
+        private void ListBoxWorkSchedule_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var item = sender as ListBox;
+
+            listBoxDayInfos.Items.Clear();
+            listBoxDayInfos.Show();
+
+            var infos = workSchedule.WorkWeeks.Where(w => w.ToString() == item.Text).First();
+
+            foreach(WorkDay workDay in infos.WorkDays)
+            {
+                listBoxDayInfos.Items.Add(workDay.ToString());
+            }
+
         }
     }
 }

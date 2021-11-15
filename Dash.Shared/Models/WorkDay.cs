@@ -12,5 +12,10 @@ namespace Dash.Shared
         public List<Shift> Shifts { get; set; }
 
         public DateTime Date { get; set; }
+
+        public override string ToString()
+        {
+            return Date.ToShortDateString() + " Shifts: " + Shifts.Count.ToString();
+        }
     }
 }
