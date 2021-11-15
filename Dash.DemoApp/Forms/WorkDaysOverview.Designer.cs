@@ -39,11 +39,16 @@
             this.buttonDeleteDay = new System.Windows.Forms.Button();
             this.groupBoxDayOptions = new System.Windows.Forms.GroupBox();
             this.buttonDeleteShift = new System.Windows.Forms.Button();
-            this.buttonAddShift = new System.Windows.Forms.Button();
+            this.buttonChangeShifts = new System.Windows.Forms.Button();
+            this.groupBoxShifts = new System.Windows.Forms.GroupBox();
+            this.checkBoxNight = new System.Windows.Forms.CheckBox();
+            this.checkBoxeEvening = new System.Windows.Forms.CheckBox();
+            this.checkBoxMorning = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCwStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCwEnd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownYearStart)).BeginInit();
             this.groupBoxDayOptions.SuspendLayout();
+            this.groupBoxShifts.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -72,6 +77,7 @@
             this.listBoxWorkSchedule.Name = "listBoxWorkSchedule";
             this.listBoxWorkSchedule.Size = new System.Drawing.Size(371, 479);
             this.listBoxWorkSchedule.TabIndex = 6;
+            this.listBoxWorkSchedule.SelectedIndexChanged += new System.EventHandler(this.ListBoxWorkSchedule_SelectedIndexChanged);
             this.listBoxWorkSchedule.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListBoxWorkSchedule_MouseDoubleClick);
             // 
             // btnGo
@@ -160,10 +166,11 @@
             this.listBoxDayInfos.Size = new System.Drawing.Size(214, 254);
             this.listBoxDayInfos.TabIndex = 11;
             this.listBoxDayInfos.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListBoxDayInfos_MouseClick);
+            this.listBoxDayInfos.SelectedIndexChanged += new System.EventHandler(this.ListBoxDayInfos_SelectedIndexChanged);
             // 
             // buttonDeleteDay
             // 
-            this.buttonDeleteDay.Location = new System.Drawing.Point(6, 30);
+            this.buttonDeleteDay.Location = new System.Drawing.Point(6, 45);
             this.buttonDeleteDay.Name = "buttonDeleteDay";
             this.buttonDeleteDay.Size = new System.Drawing.Size(145, 52);
             this.buttonDeleteDay.TabIndex = 12;
@@ -174,9 +181,9 @@
             // groupBoxDayOptions
             // 
             this.groupBoxDayOptions.Controls.Add(this.buttonDeleteShift);
-            this.groupBoxDayOptions.Controls.Add(this.buttonAddShift);
+            this.groupBoxDayOptions.Controls.Add(this.buttonChangeShifts);
             this.groupBoxDayOptions.Controls.Add(this.buttonDeleteDay);
-            this.groupBoxDayOptions.Location = new System.Drawing.Point(629, 150);
+            this.groupBoxDayOptions.Location = new System.Drawing.Point(409, 410);
             this.groupBoxDayOptions.Name = "groupBoxDayOptions";
             this.groupBoxDayOptions.Size = new System.Drawing.Size(155, 239);
             this.groupBoxDayOptions.TabIndex = 13;
@@ -193,15 +200,57 @@
             this.buttonDeleteShift.UseVisualStyleBackColor = true;
             this.buttonDeleteShift.Click += new System.EventHandler(this.ButtonDeleteShift_Click);
             // 
-            // buttonAddShift
+            // buttonChangeShifts
             // 
-            this.buttonAddShift.Location = new System.Drawing.Point(6, 119);
-            this.buttonAddShift.Name = "buttonAddShift";
-            this.buttonAddShift.Size = new System.Drawing.Size(145, 52);
-            this.buttonAddShift.TabIndex = 13;
-            this.buttonAddShift.Text = "Add Shift";
-            this.buttonAddShift.UseVisualStyleBackColor = true;
-            this.buttonAddShift.Click += new System.EventHandler(this.ButtonAddShift_Click);
+            this.buttonChangeShifts.Location = new System.Drawing.Point(6, 119);
+            this.buttonChangeShifts.Name = "buttonChangeShifts";
+            this.buttonChangeShifts.Size = new System.Drawing.Size(145, 52);
+            this.buttonChangeShifts.TabIndex = 13;
+            this.buttonChangeShifts.Text = "Change Shifts";
+            this.buttonChangeShifts.UseVisualStyleBackColor = true;
+            this.buttonChangeShifts.Click += new System.EventHandler(this.ButtonChangeShifts_Click);
+            // 
+            // groupBoxShifts
+            // 
+            this.groupBoxShifts.Controls.Add(this.checkBoxNight);
+            this.groupBoxShifts.Controls.Add(this.checkBoxeEvening);
+            this.groupBoxShifts.Controls.Add(this.checkBoxMorning);
+            this.groupBoxShifts.Location = new System.Drawing.Point(629, 150);
+            this.groupBoxShifts.Name = "groupBoxShifts";
+            this.groupBoxShifts.Size = new System.Drawing.Size(196, 155);
+            this.groupBoxShifts.TabIndex = 14;
+            this.groupBoxShifts.TabStop = false;
+            this.groupBoxShifts.Text = "Shifts";
+            // 
+            // checkBoxNight
+            // 
+            this.checkBoxNight.AutoSize = true;
+            this.checkBoxNight.Location = new System.Drawing.Point(17, 110);
+            this.checkBoxNight.Name = "checkBoxNight";
+            this.checkBoxNight.Size = new System.Drawing.Size(123, 29);
+            this.checkBoxNight.TabIndex = 2;
+            this.checkBoxNight.Text = "Night Shift";
+            this.checkBoxNight.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxeEvening
+            // 
+            this.checkBoxeEvening.AutoSize = true;
+            this.checkBoxeEvening.Location = new System.Drawing.Point(17, 75);
+            this.checkBoxeEvening.Name = "checkBoxeEvening";
+            this.checkBoxeEvening.Size = new System.Drawing.Size(147, 29);
+            this.checkBoxeEvening.TabIndex = 1;
+            this.checkBoxeEvening.Text = "Eventing Shift\r\n";
+            this.checkBoxeEvening.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxMorning
+            // 
+            this.checkBoxMorning.AutoSize = true;
+            this.checkBoxMorning.Location = new System.Drawing.Point(17, 40);
+            this.checkBoxMorning.Name = "checkBoxMorning";
+            this.checkBoxMorning.Size = new System.Drawing.Size(147, 29);
+            this.checkBoxMorning.TabIndex = 0;
+            this.checkBoxMorning.Text = "Morning Shift";
+            this.checkBoxMorning.UseVisualStyleBackColor = true;
             // 
             // WorkDaysOverview
             // 
@@ -209,6 +258,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1350, 674);
+            this.Controls.Add(this.groupBoxShifts);
             this.Controls.Add(this.groupBoxDayOptions);
             this.Controls.Add(this.listBoxDayInfos);
             this.Controls.Add(this.numericUpDownYearStart);
@@ -225,6 +275,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCwEnd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownYearStart)).EndInit();
             this.groupBoxDayOptions.ResumeLayout(false);
+            this.groupBoxShifts.ResumeLayout(false);
+            this.groupBoxShifts.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -242,6 +294,10 @@
         private System.Windows.Forms.Button buttonDeleteDay;
         private System.Windows.Forms.GroupBox groupBoxDayOptions;
         private System.Windows.Forms.Button buttonDeleteShift;
-        private System.Windows.Forms.Button buttonAddShift;
+        private System.Windows.Forms.Button buttonChangeShifts;
+        private System.Windows.Forms.GroupBox groupBoxShifts;
+        private System.Windows.Forms.CheckBox checkBoxNight;
+        private System.Windows.Forms.CheckBox checkBoxeEvening;
+        private System.Windows.Forms.CheckBox checkBoxMorning;
     }
 }

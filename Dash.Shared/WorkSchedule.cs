@@ -104,17 +104,19 @@ namespace Dash.Shared
             Shift morningShift = new();
             morningShift.ActiveMinutes = 480;
             morningShift.NumberEquipments = 3;
+            morningShift.Type = Shifts.morning;
 
             return morningShift;
         }
 
         private static Shift GetEveningShift()
         {
-            Shift morningShift = new();
-            morningShift.ActiveMinutes = 480;
-            morningShift.NumberEquipments = 3;
+            Shift eveningShift = new();
+            eveningShift.ActiveMinutes = 480;
+            eveningShift.NumberEquipments = 3;
+            eveningShift.Type = Shifts.evening;
 
-            return morningShift;
+            return eveningShift;
         }
     }
 }

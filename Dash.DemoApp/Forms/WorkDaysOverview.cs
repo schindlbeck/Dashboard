@@ -15,6 +15,7 @@ namespace Dash.DemoApp.Forms
     {
         private WorkSchedule workSchedule;
         private WorkWeek selectedWorkWeek;
+        private WorkDay selectedWorkDay;
 
         public WorkDaysOverview()
         {
@@ -24,8 +25,14 @@ namespace Dash.DemoApp.Forms
         private void WorkDaysOverview_Load(object sender, EventArgs e)
         {
             numericUpDownYearStart.Value = DateTime.Now.Year;
+            HideFurtherOptions();
+        }
+
+        private void HideFurtherOptions()
+        {
             listBoxDayInfos.Hide();
             groupBoxDayOptions.Hide();
+            groupBoxShifts.Hide();
         }
 
         private void BtnGo_Click(object sender, EventArgs e)
@@ -64,27 +71,58 @@ namespace Dash.DemoApp.Forms
         private void ListBoxDayInfos_MouseClick(object sender, MouseEventArgs e)
         {
             groupBoxDayOptions.Show();
+            selectedWorkDay = selectedWorkWeek.WorkDays.Where(w => w.ToString().Equals(listBoxDayInfos.Text)).First();
         }
 
         private void ButtonDeleteDay_Click(object sender, EventArgs e)
         {
-            var day = selectedWorkWeek.WorkDays.Where(w => w.ToString().Equals(listBoxDayInfos.Text)).First();
-
-            workSchedule.DeleteWorkday(day, selectedWorkWeek);
+            workSchedule.DeleteWorkday(selectedWorkDay, selectedWorkWeek);
 
             listBoxDayInfos.Hide();
             groupBoxDayOptions.Hide();
             FillListBoxSchedule();
         }
 
-        private void ButtonAddShift_Click(object sender, EventArgs e)
+        private void ButtonChangeShifts_Click(object sender, EventArgs e)
         {
+            groupBoxShifts.Show();
 
+            SelectedShifts();
+        }
+
+        private void SelectedShifts()
+        {
+            var shifts = selectedWorkDay.Shifts;
+
+            if(shifts.Exists(s => s.Type == Shifts.morning))
+            {
+                checkBoxMorning.Checked = true;
+            }
+
+            if (shifts.Exists(s => s.Type == Shifts.evening))
+            {
+                checkBoxeEvening.Checked = true;
+            }
+
+            if (shifts.Exists(s => s.Type == Shifts.night))
+            {
+                checkBoxNight.Checked = true;
+            }
         }
 
         private void ButtonDeleteShift_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void ListBoxWorkSchedule_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            HideFurtherOptions();
+        }
+
+        private void ListBoxDayInfos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            groupBoxShifts.Hide();
         }
     }
 }
