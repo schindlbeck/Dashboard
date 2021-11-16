@@ -1,4 +1,4 @@
-﻿using Dash.Shared;
+﻿using Dash.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -24,17 +24,16 @@ namespace Dash.Data
                                                       //$@"[{nameof(User.Leaving)}] IS NULL OR [{nameof(User.Leaving)}] > [{nameof(User.Entry)}]");
         }
 
-        //TODO : Models in Dash.Data
         public DbSet<WorkDay> WorkDays { get; set; }
 
-        //public DbSet<Holidays> Holidays { get; set; }
-
+        public DbSet<Holiday> Holidays { get; set; }
 
     }
     public class DashDbContextFactory : IDesignTimeDbContextFactory<DashDbContext>
     {
         public DashDbContext CreateDbContext(string[] args)
         {
+            //TODO : .AddJsonFile 
            // var configuration = new ConfigurationBuilder()
            //.AddJsonFile("appsettings.json")
            //.Build();

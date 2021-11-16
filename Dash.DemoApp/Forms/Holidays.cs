@@ -1,4 +1,4 @@
-﻿using Dash.Shared.Models;
+﻿using Dash.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,7 +32,6 @@ namespace Dash.DemoApp.Forms
         {
             btnNew.Show();
             btnAdd.Show();
-
         }
 
         private void HideButtons()

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dash.Shared
+namespace Dash.Data.Models
 {
     public class Shift
     {

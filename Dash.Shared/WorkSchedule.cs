@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dash.Data;
+using Dash.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -10,13 +12,38 @@ namespace Dash.Shared
     public class WorkSchedule
     {
         public List<WorkWeek> WorkWeeks { get; set; }
+        public List<Holiday> Holidays { get; set; }
+
+        public DashDbContext DbContext { get; set; }
 
 
         public WorkSchedule(int year, int cwStart, int cwEnd)
         {
+            //TODO : get db context
             WorkWeeks = new();
             if (cwEnd == 53) cwEnd = WeeksInYear(year);
             SetUpRange(year, cwStart, cwEnd);
+            //SetHolidays();
+            //RemoveHolidays();
+        }
+
+        private void SetHolidays()
+        {
+            Holidays = (from a in DbContext.Holidays
+                        orderby a.Date ascending
+                        select a).ToList();
+        }
+
+        private void RemoveHolidays()
+        {
+            foreach (var holiday in Holidays)
+            {
+                var day = WorkWeeks.Where(w => w.CalendarWeek == ISOWeek.GetWeekOfYear(holiday.Date)).FirstOrDefault().WorkDays.Where(d => d.Date == holiday.Date).FirstOrDefault();
+                if (day != null)
+                {
+                    WorkWeeks.Where(w => w.CalendarWeek == ISOWeek.GetWeekOfYear(holiday.Date)).FirstOrDefault().WorkDays.Remove(day);
+                }
+            }
         }
 
         internal void SetUpRange(int year, int cwStart, int cwEnd)
@@ -24,14 +51,14 @@ namespace Dash.Shared
             if (cwStart > cwEnd)
             {
                 WorkWeeks = AddWorkDays(cwStart, WorkWeeks, WeeksInYear(year), year);
-                WorkWeeks = AddWorkDays(1, WorkWeeks, cwEnd, year+1);
+                WorkWeeks = AddWorkDays(1, WorkWeeks, cwEnd, year + 1);
             }
             else
             {
                 WorkWeeks = AddWorkDays(cwStart, WorkWeeks, cwEnd, year);
             }
         }
-        
+
         private static int WeeksInYear(int year)
         {
             return ISOWeek.GetWeeksInYear(year);
@@ -70,7 +97,7 @@ namespace Dash.Shared
 
         public void AddSaturday(int calenderWeek)
         {
-            if(WorkWeeks.Exists(w => w.CalendarWeek == calenderWeek))
+            if (WorkWeeks.Exists(w => w.CalendarWeek == calenderWeek))
             {
                 var saturdayDate = WorkWeeks.Where(w => w.CalendarWeek == calenderWeek).First().WorkDays[4].Date.AddDays(1);
                 WorkDay saturday = new() { Date = saturdayDate, Shifts = new() };
@@ -111,9 +138,10 @@ namespace Dash.Shared
             };
         }
 
+        //TODO : delete for productive use
         public void SetHolidays(List<DateTime> holidays)
         {
-            foreach(DateTime holiday in holidays)
+            foreach (DateTime holiday in holidays)
             {
                 var week = ISOWeek.GetWeekOfYear(holiday);
                 var obj = WorkWeeks.Where(w => w.CalendarWeek == week).First().WorkDays.Where(w => w.Date == holiday).First();

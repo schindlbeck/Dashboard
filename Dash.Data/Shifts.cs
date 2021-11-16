@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dash.Shared
+namespace Dash.Data
 {
     public enum Shifts
     {

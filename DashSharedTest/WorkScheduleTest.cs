@@ -1,3 +1,4 @@
+using Dash.Data.Models;
 using Dash.Shared;
 using System;
 using System.Collections;

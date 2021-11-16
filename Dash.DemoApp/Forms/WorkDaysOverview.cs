@@ -1,4 +1,6 @@
-﻿using Dash.Shared;
+﻿using Dash.Data;
+using Dash.Data.Models;
+using Dash.Shared;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,8 +41,6 @@ namespace Dash.DemoApp.Forms
             numericUpDownYearStart.Value = DateTime.Now.Year;
             HideFurtherOptions();
         }
-
-
 
         private void BtnGo_Click(object sender, EventArgs e)
         {
