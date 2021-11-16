@@ -24,7 +24,7 @@ namespace Dash.Data
                                                       //$@"[{nameof(User.Leaving)}] IS NULL OR [{nameof(User.Leaving)}] > [{nameof(User.Entry)}]");
         }
 
-        public DbSet<WorkDay> WorkDays { get; set; }
+        public DbSet<DbWorkDay> WorkDays { get; set; }
 
         public DbSet<Holiday> Holidays { get; set; }
 
@@ -33,15 +33,12 @@ namespace Dash.Data
     {
         public DashDbContext CreateDbContext(string[] args)
         {
-            //TODO : .AddJsonFile 
-           // var configuration = new ConfigurationBuilder()
-           //.AddJsonFile("appsettings.json")
-           //.Build();
+            var configuration = new ConfigurationBuilder()
+           .AddJsonFile("appsettings.json")
+           .Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
-            //optionsBuilder.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]);
-            //optionsBuilder.UseSqlServer(configuration["ConnectionStrings:IntegrationConnection"]);//, b => b.MigrationsAssembly("EMobilityPrototype"));
-            //optionsBuilder.UseSqlServer(configuration["ConnectionStrings:FitConnection"]);//, b => b.MigrationsAssembly("EMobilityPrototype"));
+            optionsBuilder.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]);
 
             return new DashDbContext(optionsBuilder.Options);
         }
