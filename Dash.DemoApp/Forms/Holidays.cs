@@ -1,4 +1,5 @@
-﻿using Dash.Data.Models;
+﻿using Dash.Data;
+using Dash.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,9 +15,11 @@ namespace Dash.DemoApp.Forms
     public partial class Holidays : Form
     {
         private Shared.Holidays holidays;
+        public DashDbContext DbContext { get; set; } 
 
-        public Holidays()
+        public Holidays(DashDbContext dbContext)
         {
+            DbContext = dbContext;
             InitializeComponent();
         }
 
@@ -42,7 +45,7 @@ namespace Dash.DemoApp.Forms
 
         private void BtnNew_Click(object sender, EventArgs e)
         {
-            holidays = new(Convert.ToInt32(numericUpDownYear.Value), Convert.ToInt32(numericUpDownFrom.Value), Convert.ToInt32(numericUpDownTo.Value));
+            holidays = new(Convert.ToInt32(numericUpDownYear.Value), Convert.ToInt32(numericUpDownFrom.Value), Convert.ToInt32(numericUpDownTo.Value), DbContext);
 
             listBoxHolidays.Items.Clear();
             SetUpListBoxHolidays();
@@ -50,7 +53,7 @@ namespace Dash.DemoApp.Forms
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            holidays = new(Convert.ToInt32(numericUpDownYear.Value), Convert.ToInt32(numericUpDownFrom.Value), Convert.ToInt32(numericUpDownTo.Value));
+            holidays = new(Convert.ToInt32(numericUpDownYear.Value), Convert.ToInt32(numericUpDownFrom.Value), Convert.ToInt32(numericUpDownTo.Value), DbContext);
 
             SetUpListBoxHolidays();
         }

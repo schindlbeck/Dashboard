@@ -17,14 +17,14 @@ namespace Dash.Shared
         public DashDbContext DbContext { get; set; }
 
 
-        public WorkSchedule(int year, int cwStart, int cwEnd)
+        public WorkSchedule(int year, int cwStart, int cwEnd, DashDbContext dbContext)
         {
-            //TODO : get db context
+            DbContext = dbContext;
             WorkWeeks = new();
             if (cwEnd == 53) cwEnd = WeeksInYear(year);
             SetUpRange(year, cwStart, cwEnd);
-            //SetHolidays();
-            //RemoveHolidays();
+            SetHolidays();
+            RemoveHolidays();
         }
 
         private void SetHolidays()

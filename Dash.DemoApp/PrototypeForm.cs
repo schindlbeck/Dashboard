@@ -1,4 +1,5 @@
 ﻿
+using Dash.Data;
 using Dash.DemoApp.Forms;
 using Microsoft.Extensions.Configuration;
 using Serilog;
@@ -18,9 +19,18 @@ namespace Erp.Prototype
     public partial class PrototypeForm : Form
     {
         Form activeForm;
+        public DashDbContext DbContext { get; set; }
+        
         public PrototypeForm()
         {
             InitializeComponent();
+            SetDbContext();
+        }
+
+        private void SetDbContext()
+        {
+            var factory = new DashDbContextFactory();
+            DbContext = factory.CreateDbContext(Array.Empty<string>());
         }
 
         private void BtnHome_Click(object sender, EventArgs e)
@@ -30,19 +40,19 @@ namespace Erp.Prototype
 
         private void BtnHolidays_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new Holidays(), sender);
+            OpenChildForm(new Holidays(DbContext), sender);
 
         }
 
         private void BtnExcelToJson_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new WorkDaysOverview(), sender);
+            OpenChildForm(new WorkDaysOverview(DbContext), sender);
 
         }
 
         private void BtnDataOverview_Click(object sender, EventArgs e)
         {
-            //            OpenChildForm(new DataOverview(Configuration), sender);
+            // OpenChildForm(new DataOverview(Configuration), sender);
         }
 
         private void OpenChildForm(Form childForm, object sender)

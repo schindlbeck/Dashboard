@@ -1,4 +1,5 @@
 ﻿using Dash.Data.Models;
+using Dash.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,10 @@ namespace Dash.Shared
 {
     public class Holidays
     {
-        //TODO : Save in database
         private readonly int year;
         public List<Holiday> HolidayList { get; set; }
+        public DashDbContext DbContext { get; set; }
+
         public Holidays(int year)
         {
             this.year = year;
@@ -19,12 +21,23 @@ namespace Dash.Shared
             SetHolidayList();
         }
 
-        public Holidays(int year, int monthStart, int monthEnd)
+        public Holidays(int year, int monthStart, int monthEnd, DashDbContext dbContext)
         {
+            DbContext = dbContext;
             this.year = year;
             HolidayList = new();
             SetHolidayList();
             SelectedMonths(monthStart, monthEnd);
+
+            WriteInDatabase();
+        }
+
+        private void WriteInDatabase()
+        {
+            DbContext.Holidays.RemoveRange(DbContext.Holidays);
+            DbContext.SaveChanges();
+
+            DbContext.Holidays.AddRange(HolidayList);
         }
 
         internal void SelectedMonths(int monthStart, int monthEnd)

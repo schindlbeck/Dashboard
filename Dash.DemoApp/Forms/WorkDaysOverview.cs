@@ -19,8 +19,12 @@ namespace Dash.DemoApp.Forms
         private WorkWeek selectedWorkWeek;
         private WorkDay selectedWorkDay;
 
-        public WorkDaysOverview()
+        public DashDbContext DbContext { get; set; }
+
+        public WorkDaysOverview(DashDbContext dbContext)
         {
+            DbContext = dbContext;
+
             InitializeComponent();
             InitializeTags();
         }
@@ -44,7 +48,7 @@ namespace Dash.DemoApp.Forms
 
         private void BtnGo_Click(object sender, EventArgs e)
         {
-            workSchedule = new(Convert.ToInt32(numericUpDownYearStart.Value), Convert.ToInt32(numericUpDownCwStart.Value), Convert.ToInt32(numericUpDownCwEnd.Value));
+            workSchedule = new(Convert.ToInt32(numericUpDownYearStart.Value), Convert.ToInt32(numericUpDownCwStart.Value), Convert.ToInt32(numericUpDownCwEnd.Value), DbContext);
 
             listBoxWorkSchedule.Items.Clear();
             FillListBoxSchedule();
