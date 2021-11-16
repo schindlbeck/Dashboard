@@ -15,22 +15,26 @@ namespace Dash.Shared
         public WorkSchedule(int year, int cwStart, int cwEnd)
         {
             WorkWeeks = new();
+            if (cwEnd == 53) cwEnd = WeeksInYear(year);
             SetUpRange(year, cwStart, cwEnd);
         }
 
         internal void SetUpRange(int year, int cwStart, int cwEnd)
         {
-            var calendarWeeks = ISOWeek.GetWeeksInYear(year);
-
             if (cwStart > cwEnd)
             {
-                WorkWeeks = AddWorkDays(cwStart, WorkWeeks, calendarWeeks, year);
+                WorkWeeks = AddWorkDays(cwStart, WorkWeeks, WeeksInYear(year), year);
                 WorkWeeks = AddWorkDays(1, WorkWeeks, cwEnd, year+1);
             }
             else
             {
                 WorkWeeks = AddWorkDays(cwStart, WorkWeeks, cwEnd, year);
             }
+        }
+        
+        private static int WeeksInYear(int year)
+        {
+            return ISOWeek.GetWeeksInYear(year);
         }
 
         internal static List<WorkWeek> AddWorkDays(int start, List<WorkWeek> WorkWeeks, int end, int year)
@@ -78,7 +82,33 @@ namespace Dash.Shared
             {
                 //Reaction if calendarweek isn't in the workweeks
             }
+        }
 
+        public void DeleteWorkday(WorkDay day, WorkWeek week)
+        {
+            WorkWeeks.Where(w => w.CalendarWeek == week.CalendarWeek).First().WorkDays.Remove(day);
+        }
+
+        public void AddShift(Shifts shift, WorkDay day, WorkWeek week)
+        {
+            WorkWeeks.Where(w => w.CalendarWeek == week.CalendarWeek).First().WorkDays.Where(w => w.Date == day.Date).First().Shifts.Add(GetShift(shift));
+        }
+
+        public void DeleteShift(Shifts shift, WorkDay day, WorkWeek week)
+        {
+            var dShift = WorkWeeks.Where(w => w.CalendarWeek == week.CalendarWeek).First().WorkDays.Where(w => w.Date == day.Date).First().Shifts.Where(s => s.Type == shift).First();
+            WorkWeeks.Where(w => w.CalendarWeek == week.CalendarWeek).First().WorkDays.Where(w => w.Date == day.Date).First().Shifts.Remove(dShift);
+        }
+
+        private static Shift GetShift(Shifts shifts)
+        {
+            return shifts switch
+            {
+                Shifts.morning => GetMorningShift(),
+                Shifts.evening => GetEveningShift(),
+                Shifts.night => GetNightShift(),
+                _ => null
+            };
         }
 
         public void SetHolidays(List<DateTime> holidays)
@@ -96,17 +126,34 @@ namespace Dash.Shared
             Shift morningShift = new();
             morningShift.ActiveMinutes = 480;
             morningShift.NumberEquipments = 3;
+            morningShift.Type = Shifts.morning;
 
             return morningShift;
         }
 
         private static Shift GetEveningShift()
         {
-            Shift morningShift = new();
-            morningShift.ActiveMinutes = 480;
-            morningShift.NumberEquipments = 3;
+            Shift eveningShift = new();
+            eveningShift.ActiveMinutes = 480;
+            eveningShift.NumberEquipments = 3;
+            eveningShift.Type = Shifts.evening;
 
-            return morningShift;
+            return eveningShift;
+        }
+
+        private static Shift GetNightShift()
+        {
+            Shift nightSchift = new();
+            nightSchift.ActiveMinutes = 480;
+            nightSchift.NumberEquipments = 3;
+            nightSchift.Type = Shifts.night;
+
+            return nightSchift;
+        }
+
+        public void ChangeNumberShifts(int value, Shifts shift, WorkWeek week, WorkDay day)
+        {
+            WorkWeeks.Where(w => w.CalendarWeek == week.CalendarWeek).First().WorkDays.Where(d => d.Date == day.Date).First().Shifts.Where(s => s.Type == shift).First().NumberEquipments = value;
         }
     }
 }

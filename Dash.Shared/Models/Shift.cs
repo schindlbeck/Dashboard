@@ -9,5 +9,7 @@ namespace Dash.Shared
         //StartTime and EndTime
 
         public int NumberEquipments { get; set; }
+
+        public Shifts Type { get; set; }
     }
 }
