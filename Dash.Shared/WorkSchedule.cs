@@ -84,6 +84,7 @@ namespace Dash.Shared
             }
         }
 
+        //TODO : tests for functions under TODO
         public void DeleteWorkday(WorkDay day, WorkWeek week)
         {
             WorkWeeks.Where(w => w.CalendarWeek == week.CalendarWeek).First().WorkDays.Remove(day);

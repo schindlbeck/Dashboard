@@ -66,7 +66,6 @@ namespace Dash.DemoApp.Forms
             selectedWorkWeek = workSchedule.WorkWeeks.Where(w => w.ToString().Equals(item.Text)).First();
 
             SetUpListBoxDayInfos();
-
         }
 
         private void SetUpListBoxDayInfos()

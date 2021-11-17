@@ -11,8 +11,6 @@ namespace DashSharedTest
         [Fact]
         public void SetUpDefaultWeekSchedule_CW1Year2020_Test()
         {
-            //Arrange
-
             //Act
             var result = WorkSchedule.SetUpDefaultWeekSchedule(1, 2020);
 
@@ -37,7 +35,6 @@ namespace DashSharedTest
             //Assert
             Assert.Equal(6, workSchedule.WorkWeeks[24].WorkDays.Count);
             Assert.Equal(new DateTime(2021, 06, 26), workSchedule.WorkWeeks[24].WorkDays[5].Date);
-
         }
 
         [Fact]
@@ -58,14 +55,11 @@ namespace DashSharedTest
 
             Assert.Equal(new DateTime(2021, 01, 07), workSchedule.WorkWeeks[0].WorkDays[2].Date);
             Assert.Equal(new DateTime(2021, 02, 17), workSchedule.WorkWeeks[6].WorkDays[1].Date);
-
         }
 
         [Fact]
         public void AddWorkDays_CW1To5Year2020_Test()
         {
-            //Arrange
-
             //Act
             var result = WorkSchedule.AddWorkDays(1, new List<WorkWeek>(), 5, 2020);
 
@@ -79,12 +73,55 @@ namespace DashSharedTest
             Assert.Equal(4, result[3].CalendarWeek);
         }
 
+        [Fact]
+        public void DeleteWorkday_Test()
+        {
+            //Act
+
+
+            //Assert
+
+        }
+
+        [Fact]
+        public void AddShift_morning_AddMorningShift_Test()
+        {
+            //Act
+
+            //Assert
+
+        }
+
+        [Fact]
+        public void AddShift_evening_AddEveningShift_Test()
+        {
+            //Act
+
+            //Assert
+
+        }
+
+        [Fact]
+        public void AddShift_night_AddNightShift_Test()
+        {
+            //Act
+
+            //Assert
+
+        }
+
+        [Fact]
+        public void DeleteShift_Test()
+        {
+            //Act
+
+            //Assert
+
+        }
         [Theory]
         [ClassData(typeof(WorkScheduleTestData))]
         public void SetupRange_Theory(int year, int startCw, int endCw, int weeks, DateTime firstWorkday, DateTime lastWorkday)
         {
-            //Arrange
-
             //Act
             WorkSchedule workSchedule = new(year, startCw, endCw);
 
