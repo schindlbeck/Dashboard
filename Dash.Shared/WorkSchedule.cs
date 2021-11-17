@@ -151,5 +151,10 @@ namespace Dash.Shared
 
             return nightSchift;
         }
+
+        public void ChangeNumberShifts(int value, Shifts shift, WorkWeek week, WorkDay day)
+        {
+            WorkWeeks.Where(w => w.CalendarWeek == week.CalendarWeek).First().WorkDays.Where(d => d.Date == day.Date).First().Shifts.Where(s => s.Type == shift).First().NumberEquipments = value;
+        }
     }
 }
