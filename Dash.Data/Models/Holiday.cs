@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace Dash.Data.Models
 {
@@ -13,6 +15,15 @@ namespace Dash.Data.Models
         public override string ToString()
         {
             return Date.ToShortDateString() + " " + Name;
+        }
+    }
+
+    public class HolidayEntityConfiguration : IEntityTypeConfiguration<Holiday>
+    {
+        public void Configure(EntityTypeBuilder<Holiday> builder)
+        {
+            builder.HasKey(e => e.Id);
+
         }
     }
 }

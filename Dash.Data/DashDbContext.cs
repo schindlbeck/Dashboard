@@ -24,6 +24,7 @@ namespace Dash.Data
                                                       //$@"[{nameof(User.Leaving)}] IS NULL OR [{nameof(User.Leaving)}] > [{nameof(User.Entry)}]");
         }
 
+        /// TODO : public DbSet<WorkWeek> WorkWeeks { get; set; }
         public DbSet<DbWorkDay> WorkDays { get; set; }
 
         public DbSet<Holiday> Holidays { get; set; }
@@ -38,7 +39,7 @@ namespace Dash.Data
            .Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
-            optionsBuilder.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]);
+            optionsBuilder.UseSqlServer(configuration["ConnectionStrings:DefaultSqlConnection"]);
 
             return new DashDbContext(optionsBuilder.Options);
         }

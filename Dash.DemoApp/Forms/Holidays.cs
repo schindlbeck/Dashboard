@@ -1,13 +1,6 @@
 ﻿using Dash.Data;
 using Dash.Data.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Dash.DemoApp.Forms
@@ -28,8 +21,10 @@ namespace Dash.DemoApp.Forms
             HideButtons();
             btnDelete.Hide();
             numericUpDownYear.Value = DateTime.Now.Year;
-        }
 
+            holidays = new(DbContext);
+            SetUpListBoxHolidays();
+        }
 
         private void ShowButtons()
         {
@@ -45,15 +40,15 @@ namespace Dash.DemoApp.Forms
 
         private void BtnNew_Click(object sender, EventArgs e)
         {
-            holidays = new(Convert.ToInt32(numericUpDownYear.Value), Convert.ToInt32(numericUpDownFrom.Value), Convert.ToInt32(numericUpDownTo.Value), DbContext);
-
+            holidays.ChangeHolidays(Convert.ToInt32(numericUpDownYear.Value), Convert.ToInt32(numericUpDownFrom.Value), Convert.ToInt32(numericUpDownTo.Value));
+           
             listBoxHolidays.Items.Clear();
             SetUpListBoxHolidays();
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            holidays = new(Convert.ToInt32(numericUpDownYear.Value), Convert.ToInt32(numericUpDownFrom.Value), Convert.ToInt32(numericUpDownTo.Value), DbContext);
+            holidays.ChangeHolidays(Convert.ToInt32(numericUpDownYear.Value), Convert.ToInt32(numericUpDownFrom.Value), Convert.ToInt32(numericUpDownTo.Value));
 
             SetUpListBoxHolidays();
         }
@@ -65,7 +60,6 @@ namespace Dash.DemoApp.Forms
 
         private void SetUpListBoxHolidays()
         {
-
             foreach (Holiday holiday in holidays.HolidayList)
             {
                 listBoxHolidays.Items.Add(holiday.ToString());

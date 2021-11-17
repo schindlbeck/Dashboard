@@ -10,7 +10,7 @@ namespace Dash.Shared
 {
     public class Holidays
     {
-        private readonly int year;
+        private int year;
         public List<Holiday> HolidayList { get; set; }
         public DashDbContext DbContext { get; set; }
 
@@ -21,11 +21,17 @@ namespace Dash.Shared
             SetHolidayList();
         }
 
-        public Holidays(int year, int monthStart, int monthEnd, DashDbContext dbContext)
+        public Holidays(DashDbContext dbContext)
         {
             DbContext = dbContext;
+            HolidayList = DbContext.Holidays.ToList();
+        }
+
+        public void ChangeHolidays(int year, int monthStart, int monthEnd)
+        {
+            HolidayList.Clear();
             this.year = year;
-            HolidayList = new();
+
             SetHolidayList();
             SelectedMonths(monthStart, monthEnd);
 
@@ -38,6 +44,7 @@ namespace Dash.Shared
             DbContext.SaveChanges();
 
             DbContext.Holidays.AddRange(HolidayList);
+            DbContext.SaveChanges();
         }
 
         internal void SelectedMonths(int monthStart, int monthEnd)
