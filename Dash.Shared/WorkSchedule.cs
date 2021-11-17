@@ -22,9 +22,8 @@ namespace Dash.Shared
             DbContext = dbContext;
             WorkWeeks = new();
             if (cwEnd == 53) cwEnd = WeeksInYear(year);
-            SetUpRange(year, cwStart, cwEnd);
             SetHolidays();
-            RemoveHolidays();
+            SetUpRange(year, cwStart, cwEnd);
         }
 
         private void SetHolidays()
@@ -32,18 +31,6 @@ namespace Dash.Shared
             Holidays = (from a in DbContext.Holidays
                         orderby a.Date ascending
                         select a).ToList();
-        }
-
-        private void RemoveHolidays()
-        {
-            foreach (var holiday in Holidays)
-            {
-                var day = WorkWeeks.Where(w => w.CalendarWeek == ISOWeek.GetWeekOfYear(holiday.Date)).FirstOrDefault().WorkDays.Where(d => d.Date == holiday.Date).FirstOrDefault();
-                if (day != null)
-                {
-                    WorkWeeks.Where(w => w.CalendarWeek == ISOWeek.GetWeekOfYear(holiday.Date)).FirstOrDefault().WorkDays.Remove(day);
-                }
-            }
         }
 
         internal void SetUpRange(int year, int cwStart, int cwEnd)
@@ -64,7 +51,7 @@ namespace Dash.Shared
             return ISOWeek.GetWeeksInYear(year);
         }
 
-        internal static List<WorkWeek> AddWorkDays(int start, List<WorkWeek> WorkWeeks, int end, int year)
+        internal List<WorkWeek> AddWorkDays(int start, List<WorkWeek> WorkWeeks, int end, int year)
         {
             for (int i = start; i <= end; i++)
             {
@@ -74,7 +61,7 @@ namespace Dash.Shared
             return WorkWeeks;
         }
 
-        public static WorkWeek SetUpDefaultWeekSchedule(int calendarWeek, int year)
+        public WorkWeek SetUpDefaultWeekSchedule(int calendarWeek, int year)
         {
             WorkWeek workWeek = new();
             workWeek.WorkDays = new();
@@ -89,7 +76,10 @@ namespace Dash.Shared
 
                 workDay.Date = ManageCalendar.FirstDateOfWeekISO8601(year, calendarWeek).AddDays(i);
 
-                workWeek.WorkDays.Add(workDay);
+                if (!Holidays.Exists(h => h.Date == workDay.Date))
+                {
+                    workWeek.WorkDays.Add(workDay);
+                }
             }
 
             return workWeek;
