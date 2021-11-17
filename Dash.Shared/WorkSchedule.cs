@@ -53,6 +53,9 @@ namespace Dash.Shared
 
         internal List<WorkWeek> AddWorkDays(int start, List<WorkWeek> WorkWeeks, int end, int year)
         {
+            DbContext.WorkDays.RemoveRange(DbContext.WorkDays);
+            DbContext.SaveChanges();
+
             for (int i = start; i <= end; i++)
             {
                 WorkWeeks.Add(SetUpDefaultWeekSchedule(i, year));
@@ -79,6 +82,8 @@ namespace Dash.Shared
                 if (!Holidays.Exists(h => h.Date == workDay.Date))
                 {
                     workWeek.WorkDays.Add(workDay);
+                    DbContext.WorkDays.Add(new DbWorkDay() { Date = workDay.Date, ProductionMinutes = workDay.Shifts.Sum(s => s.ActiveMinutes * s.NumberEquipments), WorkDay = workDay });
+                    DbContext.SaveChanges();
                 }
             }
 
