@@ -61,7 +61,7 @@ namespace Dash.DemoApp.Forms
         private void ListBoxWorkSchedule_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             var item = sender as ListBox;
-            selectedWorkWeek = workSchedule.WorkWeeks.Where(w => w.ToString().Equals(item.Text)).First();
+            selectedWorkWeek = workSchedule.WorkWeeks.First(w => w.ToString().Equals(item.Text));
 
             SetUpListBoxDayInfos();
         }
@@ -80,7 +80,7 @@ namespace Dash.DemoApp.Forms
         private void ListBoxDayInfos_MouseClick(object sender, MouseEventArgs e)
         {
             groupBoxDayOptions.Show();
-            selectedWorkDay = selectedWorkWeek.WorkDays.Where(w => w.ToString().Equals(listBoxDayInfos.Text)).First();
+            selectedWorkDay = selectedWorkWeek.WorkDays.First(w => w.ToString().Equals(listBoxDayInfos.Text));
         }
 
         private void ButtonDeleteDay_Click(object sender, EventArgs e)
@@ -122,9 +122,9 @@ namespace Dash.DemoApp.Forms
             var shifts = selectedWorkDay.Shifts;
             ResetEquipmentNumbers();
 
-            if (shifts.Exists(s => s.Type == Shifts.morning)) numericUpDownEquipMorning.Value = shifts.Where(s => s.Type == Shifts.morning).First().NumberEquipments; else numericUpDownEquipMorning.Hide();
-            if (shifts.Exists(s => s.Type == Shifts.evening)) numericUpDownEquipEvening.Value = shifts.Where(s => s.Type == Shifts.evening).First().NumberEquipments; else numericUpDownEquipEvening.Hide();
-            if (shifts.Exists(s => s.Type == Shifts.night)) numericUpDownEquipNight.Value = shifts.Where(s => s.Type == Shifts.night).First().NumberEquipments; else numericUpDownEquipNight.Hide();
+            if (shifts.Exists(s => s.Type == Shifts.morning)) numericUpDownEquipMorning.Value = shifts.First(s => s.Type == Shifts.morning).NumberEquipments; else numericUpDownEquipMorning.Hide();
+            if (shifts.Exists(s => s.Type == Shifts.evening)) numericUpDownEquipEvening.Value = shifts.First(s => s.Type == Shifts.evening).NumberEquipments; else numericUpDownEquipEvening.Hide();
+            if (shifts.Exists(s => s.Type == Shifts.night)) numericUpDownEquipNight.Value = shifts.First(s => s.Type == Shifts.night).NumberEquipments; else numericUpDownEquipNight.Hide();
 
         }
 
@@ -150,7 +150,7 @@ namespace Dash.DemoApp.Forms
                 var equipment = sender as NumericUpDown;
                 var eEquipment = Enum.Parse<Shifts>(equipment.Tag.ToString());
 
-                workSchedule.ChangeNumberShifts(Convert.ToInt32(equipment.Value), eEquipment, selectedWorkWeek, selectedWorkDay);
+                workSchedule.ChangeNumberEquipments(Convert.ToInt32(equipment.Value), eEquipment, selectedWorkWeek, selectedWorkDay);
             }
 
             groupBoxEquipments.Hide();

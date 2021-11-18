@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace DashSharedTest
@@ -62,7 +63,7 @@ namespace DashSharedTest
             WorkSchedule workSchedule = new(2021, 1, 10, dbContext);
             List<DateTime> holidays = new();
             holidays.Add(new DateTime(2021, 01, 06));
-            holidays.Add(new DateTime(2021, 02,16));
+            holidays.Add(new DateTime(2021, 02, 16));
 
             //Act
             workSchedule.SetHolidays(holidays);
@@ -102,55 +103,91 @@ namespace DashSharedTest
         [Fact]
         public void DeleteWorkday_Test()
         {
-            //Act
+            //Arrange
+            var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
+            optionsBuilder.UseInMemoryDatabase("DashTest5");
+            var dbContext = new DashDbContext(optionsBuilder.Options);
 
+            WorkSchedule workSchedule = new(2021, 1, 52, dbContext);
+            var day = workSchedule.WorkWeeks.First(w => w.CalendarWeek == 46).WorkDays.First(d => d.Date == new DateTime(2021, 11, 18));
+
+            //Act
+            workSchedule.DeleteWorkday(day, new WorkWeek() { CalendarWeek = 46});
 
             //Assert
-
+            Assert.Equal(4 , workSchedule.WorkWeeks.First(w => w.CalendarWeek == 46).WorkDays.Count);
         }
 
-        [Fact]
-        public void AddShift_morning_AddMorningShift_Test()
+        [Theory]
+        [InlineData(Shifts.morning, 480, 3)]
+        [InlineData(Shifts.evening, 480, 3)]
+        [InlineData(Shifts.night, 480, 3)]
+        public void GetShift_Theory(Shifts shift, int activeMinutes, int numberEquipments)
         {
             //Act
+            var result = WorkSchedule.GetShift(shift);
 
             //Assert
-
+            Assert.Equal(shift, result.Type);
+            Assert.Equal(activeMinutes, result.ActiveMinutes);
+            Assert.Equal(numberEquipments, result.NumberEquipments);
         }
 
-        [Fact]
-        public void AddShift_evening_AddEveningShift_Test()
-        {
-            //Act
+        //[Fact]
+        //public void GetShift_null_Test()
+        //{
+        //    //Act
+        //    var result = WorkSchedule.GetShift();
 
-            //Assert
+        //    //Assert
 
-        }
-
-        [Fact]
-        public void AddShift_night_AddNightShift_Test()
-        {
-            //Act
-
-            //Assert
-
-        }
+        //}
 
         [Fact]
         public void DeleteShift_Test()
         {
+            //Arrange
+            var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
+            optionsBuilder.UseInMemoryDatabase("DashTest6");
+            var dbContext = new DashDbContext(optionsBuilder.Options);
+
+            WorkSchedule workSchedule = new(2021, 1, 52, dbContext);
+            var day = workSchedule.WorkWeeks.Where(w => w.CalendarWeek == 46).First().WorkDays.Where(d => d.Date == new DateTime(2021, 11, 18)).First();
+
             //Act
+            workSchedule.DeleteShift(Shifts.morning, day, new WorkWeek() { CalendarWeek = 46 });
 
             //Assert
+            Assert.Single(workSchedule.WorkWeeks.Where(w => w.CalendarWeek == 46).First().WorkDays.Where(d => d.Date == new DateTime(2021, 11, 18)).First().Shifts);
+            Assert.Equal(Shifts.evening, workSchedule.WorkWeeks.First(w => w.CalendarWeek == 46).WorkDays.First(d => d.Date == day.Date).Shifts[0].Type);
+        }
+
+        [Fact]
+        public void ChangeNumberEquipments_Test()
+        {
+            //Arrange
+            var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
+            optionsBuilder.UseInMemoryDatabase("DashTest7");
+            var dbContext = new DashDbContext(optionsBuilder.Options);
+
+            WorkSchedule workSchedule = new(2021, 1, 52, dbContext);
+            var day = workSchedule.WorkWeeks.Where(w => w.CalendarWeek == 46).First().WorkDays.Where(d => d.Date == new DateTime(2021, 11, 18)).First();
+
+            //Act
+            workSchedule.ChangeNumberEquipments(4, Shifts.morning, new WorkWeek() { CalendarWeek = 46 }, day);
+
+            //Assert
+            Assert.Equal(4, workSchedule.WorkWeeks.First(w => w.CalendarWeek == 46).WorkDays.First(d => d.Date == day.Date).Shifts.First(s => s.Type == Shifts.morning).NumberEquipments);
 
         }
+
         [Theory]
         [ClassData(typeof(WorkScheduleTestData))]
         public void SetupRange_Theory(int year, int startCw, int endCw, int weeks, DateTime firstWorkday, DateTime lastWorkday)
         {
             //Arrange
             var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
-            optionsBuilder.UseInMemoryDatabase("DashTest5");
+            optionsBuilder.UseInMemoryDatabase("DashTest8");
             var dbContext = new DashDbContext(optionsBuilder.Options);
 
             //Act
@@ -159,7 +196,7 @@ namespace DashSharedTest
             //Assert
             Assert.Equal(weeks, workSchedule.WorkWeeks.Count);
             Assert.Equal(firstWorkday, workSchedule.WorkWeeks[0].WorkDays[0].Date);
-            Assert.Equal(lastWorkday, workSchedule.WorkWeeks[weeks-1].WorkDays[4].Date);
+            Assert.Equal(lastWorkday, workSchedule.WorkWeeks[weeks - 1].WorkDays[4].Date);
         }
     }
 

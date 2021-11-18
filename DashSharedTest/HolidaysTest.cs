@@ -2,105 +2,41 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace DashSharedTest
 {
     public class HolidaysTest
     {
-        [Fact]
-        public void GetEasterSundayDate_2022_Get17April_Test()
+        [Theory]
+        [ClassData(typeof(GetEasterSundayTestData))]
+        public void GetEasterSunday_Theory(int year, DateTime dateOstersonntag)
         {
             //Arrange
-            Holidays holidays2021 = new(2022);
+            Holidays holidays2021 = new(year);
+
             //Act
             var result = holidays2021.GetEasterSundayDate();
 
             //Assert
-            Assert.Equal(new DateTime(2022, 4, 17), result);
+            Assert.Equal(dateOstersonntag, result);
+
         }
 
-        [Fact]
-        public void GetEasterSundayDate_2023_Get9April_Test()
+        [Theory]
+        [ClassData(typeof(SetHolidayListTestData))]
+        public void SetHolidayList_Theory(int year, DateTime dateKarfreitag, DateTime dateFronleichnam)
         {
-            //Arrange
-            Holidays holidays2021 = new(2023);
             //Act
-            var result = holidays2021.GetEasterSundayDate();
-
-            //Assert
-            Assert.Equal(new DateTime(2023, 4, 9), result);
-        }
-
-        [Fact]
-        public void GetEasterSundayDate_2024_Get17April_Test()
-        {
-            //Arrange
-            Holidays holidays2021 = new(2024);
-            //Act
-            var result = holidays2021.GetEasterSundayDate();
-
-            //Assert
-            Assert.Equal(new DateTime(2024, 3, 31), result);
-        }
-
-        [Fact]
-        public void SetHolidayList_2022_Test()
-        {
-            //Arrange
-
-            //Act
-            Holidays holidays = new(2022);
+            Holidays holidays = new(year);
 
             //Assert
             Assert.Equal(14, holidays.HolidayList.Count);
 
-            Assert.Equal(new DateTime(2022, 04, 15), holidays.HolidayList[2].Date);
+            Assert.Equal(dateKarfreitag, holidays.HolidayList[2].Date);
             Assert.Equal("Karfreitag", holidays.HolidayList[2].Name);
 
-            Assert.Equal(new DateTime(2022, 06, 16), holidays.HolidayList[8].Date);
-            Assert.Equal("Fronleichnam", holidays.HolidayList[8].Name);
-
-        }
-
-        [Fact]
-        public void SetHolidayList_2024_Test()
-        {
-            //Arrange
-
-            //Act
-            Holidays holidays = new(2024);
-
-            //Assert
-            Assert.Equal(14, holidays.HolidayList.Count);
-
-            Assert.Equal(new DateTime(2024, 03, 29), holidays.HolidayList[2].Date);
-            Assert.Equal("Karfreitag", holidays.HolidayList[2].Name);
-
-            Assert.Equal(new DateTime(2024, 05, 30), holidays.HolidayList[8].Date);
-            Assert.Equal("Fronleichnam", holidays.HolidayList[8].Name);
-
-        }
-
-
-        [Fact]
-        public void SetHolidayList_2025_Test()
-        {
-            //Arrange
-
-            //Act
-            Holidays holidays = new(2025);
-
-            //Assert
-            Assert.Equal(14, holidays.HolidayList.Count);
-
-            Assert.Equal(new DateTime(2025, 04, 18), holidays.HolidayList[2].Date);
-            Assert.Equal("Karfreitag", holidays.HolidayList[2].Name);
-
-            Assert.Equal(new DateTime(2025, 06, 19), holidays.HolidayList[8].Date);
+            Assert.Equal(dateFronleichnam, holidays.HolidayList[8].Date);
             Assert.Equal("Fronleichnam", holidays.HolidayList[8].Name);
 
         }
@@ -130,6 +66,32 @@ namespace DashSharedTest
             yield return new object[] { 2023, 6, new DateTime(2023, 06, 08), new DateTime(2023, 12, 25) };
             yield return new object[] { 2024, 5, new DateTime(2024, 08, 15), new DateTime(2024, 12, 26) };
             yield return new object[] { 2025, 7, new DateTime(2025, 06, 09), new DateTime(2025, 11, 01) };
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+
+    public class GetEasterSundayTestData : IEnumerable<object[]>
+    {
+        public IEnumerator<object[]> GetEnumerator()
+        {
+            yield return new object[] { 2022, new DateTime(2022, 4, 17) };
+            yield return new object[] { 2023, new DateTime(2023, 4, 9) };
+            yield return new object[] { 2024, new DateTime(2024, 3, 31) };
+            yield return new object[] { 2025, new DateTime(2025, 4, 20) };
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+
+    public class SetHolidayListTestData : IEnumerable<object[]>
+    {
+        public IEnumerator<object[]> GetEnumerator()
+        {
+            yield return new object[] { 2022, new DateTime(2022, 4, 15), new DateTime(2022, 6, 16) };
+            yield return new object[] { 2023, new DateTime(2023, 4, 7), new DateTime(2023, 6, 8) };
+            yield return new object[] { 2024, new DateTime(2024, 3, 29), new DateTime(2024, 5, 30) };
+            yield return new object[] { 2025, new DateTime(2025, 4, 18), new DateTime(2025, 6, 19) };
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

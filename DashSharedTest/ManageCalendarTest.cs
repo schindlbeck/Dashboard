@@ -13,8 +13,6 @@ namespace DashSharedTest
         [ClassData(typeof(FirstDayOfWeekTestData))]
         public void FirstDayOfWeek_Theory(int year, int cw, DateTime expected)
         {
-            //Arrange
-
             //Act
             var date1 = ManageCalendar.FirstDateOfWeekISO8601(year, cw);
 
