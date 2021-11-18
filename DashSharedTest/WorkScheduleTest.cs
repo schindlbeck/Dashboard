@@ -1,5 +1,7 @@
+using Dash.Data;
 using Dash.Data.Models;
 using Dash.Shared;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,8 +14,15 @@ namespace DashSharedTest
         [Fact]
         public void SetUpDefaultWeekSchedule_CW1Year2020_Test()
         {
+            //Arrange
+            var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
+            optionsBuilder.UseInMemoryDatabase("DashTest1");
+            var dbContext = new DashDbContext(optionsBuilder.Options);
+
+            WorkSchedule workSchedule = new(2020, 1, 52, dbContext);
+
             //Act
-            var result = WorkSchedule.SetUpDefaultWeekSchedule(1, 2020);
+            var result = workSchedule.SetUpDefaultWeekSchedule(1, 2020);
 
             //Assert
             Assert.Equal(5, result.WorkDays.Count);
@@ -28,7 +37,11 @@ namespace DashSharedTest
         public void AddSaturday_SaturdayInCW25_SaturdayAdded_Test()
         {
             //Arrange
-            WorkSchedule workSchedule = new(2021, 1, 52);
+            var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
+            optionsBuilder.UseInMemoryDatabase("DashTest2");
+            var dbContext = new DashDbContext(optionsBuilder.Options);
+
+            WorkSchedule workSchedule = new(2021, 1, 52, dbContext);
 
             //Act
             workSchedule.AddSaturday(25);
@@ -42,7 +55,11 @@ namespace DashSharedTest
         public void SetHolidays_TwoHolidays_DatesRemoved_Test()
         {
             //Arrange
-            WorkSchedule workSchedule = new(2021, 1, 10);
+            var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
+            optionsBuilder.UseInMemoryDatabase("DashTest3");
+            var dbContext = new DashDbContext(optionsBuilder.Options);
+
+            WorkSchedule workSchedule = new(2021, 1, 10, dbContext);
             List<DateTime> holidays = new();
             holidays.Add(new DateTime(2021, 01, 06));
             holidays.Add(new DateTime(2021, 02,16));
@@ -61,8 +78,16 @@ namespace DashSharedTest
         [Fact]
         public void AddWorkDays_CW1To5Year2020_Test()
         {
+            //Arrange
+            var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
+            optionsBuilder.UseInMemoryDatabase("DashTest4");
+            var dbContext = new DashDbContext(optionsBuilder.Options);
+
+            WorkSchedule workSchedule = new(2020, 1, 10, dbContext);
+            workSchedule.WorkWeeks.Clear();
+
             //Act
-            var result = WorkSchedule.AddWorkDays(1, new List<WorkWeek>(), 5, 2020);
+            var result = workSchedule.AddWorkDays(1, 5, 2020);
 
             //Assert
             Assert.Equal(5, result.Count);
@@ -123,8 +148,13 @@ namespace DashSharedTest
         [ClassData(typeof(WorkScheduleTestData))]
         public void SetupRange_Theory(int year, int startCw, int endCw, int weeks, DateTime firstWorkday, DateTime lastWorkday)
         {
+            //Arrange
+            var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
+            optionsBuilder.UseInMemoryDatabase("DashTest5");
+            var dbContext = new DashDbContext(optionsBuilder.Options);
+
             //Act
-            WorkSchedule workSchedule = new(year, startCw, endCw);
+            WorkSchedule workSchedule = new(year, startCw, endCw, dbContext);
 
             //Assert
             Assert.Equal(weeks, workSchedule.WorkWeeks.Count);

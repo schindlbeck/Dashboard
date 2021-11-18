@@ -37,12 +37,12 @@ namespace Dash.Shared
         {
             if (cwStart > cwEnd)
             {
-                WorkWeeks = AddWorkDays(cwStart, WorkWeeks, WeeksInYear(year), year);
-                WorkWeeks = AddWorkDays(1, WorkWeeks, cwEnd, year + 1);
+                WorkWeeks = AddWorkDays(cwStart, WeeksInYear(year), year);
+                WorkWeeks = AddWorkDays(1, cwEnd, year + 1);
             }
             else
             {
-                WorkWeeks = AddWorkDays(cwStart, WorkWeeks, cwEnd, year);
+                WorkWeeks = AddWorkDays(cwStart, cwEnd, year);
             }
         }
 
@@ -51,12 +51,12 @@ namespace Dash.Shared
             return ISOWeek.GetWeeksInYear(year);
         }
 
-        internal List<WorkWeek> AddWorkDays(int start, List<WorkWeek> WorkWeeks, int end, int year)
+        internal List<WorkWeek> AddWorkDays(int cwStart, int cwEnd, int year)
         {
             DbContext.WorkDays.RemoveRange(DbContext.WorkDays);
             DbContext.SaveChanges();
 
-            for (int i = start; i <= end; i++)
+            for (int i = cwStart; i <= cwEnd; i++)
             {
                 WorkWeeks.Add(SetUpDefaultWeekSchedule(i, year));
             }
