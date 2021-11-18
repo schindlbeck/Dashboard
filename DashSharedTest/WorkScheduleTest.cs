@@ -133,15 +133,15 @@ namespace DashSharedTest
             Assert.Equal(numberEquipments, result.NumberEquipments);
         }
 
-        //[Fact]
-        //public void GetShift_null_Test()
-        //{
-        //    //Act
-        //    var result = WorkSchedule.GetShift();
+        [Fact]
+        public void GetShift_null_Test()
+        {
+            //Act
+            var result = WorkSchedule.GetShift((Shifts)Int32.MaxValue);
 
-        //    //Assert
-
-        //}
+            //Assert
+            Assert.Null(result);
+        }
 
         [Fact]
         public void DeleteShift_Test()
