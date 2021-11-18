@@ -39,7 +39,8 @@ namespace Dash.Data
            .Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
-            optionsBuilder.UseSqlServer(configuration["ConnectionStrings:DefaultSqlConnection"]);
+            //TODO: Sql Connection String
+            optionsBuilder.UseSqlServer(configuration["ConnectionStrings:DefaultSqlWorkConnection"]);
 
             return new DashDbContext(optionsBuilder.Options);
         }
