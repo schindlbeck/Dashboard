@@ -29,5 +29,4 @@ jobs:
       - name: Run automated unit tests
         run: dotnet test -c Release --no-build
 
-      - name: Publish
-        run: dotnet publish -c Release -o ./out
+     
