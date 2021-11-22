@@ -14,7 +14,7 @@ namespace Dash.DemoApp.Forms
     public partial class DragDrop : Form
     {
         public DashDbContext DbContext { get; set; }
-        private List<FlowLayoutPanel> flowLayoutPanels = new();
+        private readonly List<FlowLayoutPanel> flowLayoutPanels = new();
         private Label draggedLabel;
         private int i = 1;
 
@@ -27,29 +27,36 @@ namespace Dash.DemoApp.Forms
         private void DragDrop_Load(object sender, EventArgs e)
         {
             AddWeeks();
-
             AddOrders();
         }
-
-        private void AddOrders()
-        {
-            flowLayoutPanels[2].Controls.Add(GetLabel());
-            flowLayoutPanels[2].Controls.Add(GetLabel());
-            flowLayoutPanels[2].Controls.Add(GetLabel());
-            flowLayoutPanels[2].Controls.Add(GetLabel());
-            flowLayoutPanels[2].Controls.Add(GetLabel());
-            flowLayoutPanels[2].Controls.Add(GetLabel());
-            flowLayoutPanels[2].Controls.Add(GetLabel());
-        }
-
+        
         private void AddWeeks()
         {
-            var weeks = DbContext.WorkDays.Select(w => w.CalendarWeek).Distinct().ToList();
+            var weeks = DbContext.WorkWeeks.Select(w => w.CalendarWeek).Distinct();
 
             foreach (var week in weeks)
             {
                 flowLayoutPanelMain.Controls.Add(GetFlowPanel(week));
             }
+        }
+
+        private void AddOrders()
+        {
+            //TODO: get orders
+            flowLayoutPanels[2].Controls.Add(GetLabel());
+            flowLayoutPanels[2].Controls.Add(GetLabel());
+            flowLayoutPanels[2].Controls.Add(GetLabel());
+            flowLayoutPanels[2].Controls.Add(GetLabel());
+            flowLayoutPanels[2].Controls.Add(GetLabel());
+            flowLayoutPanels[2].Controls.Add(GetLabel());
+            flowLayoutPanels[2].Controls.Add(GetLabel());
+        }
+
+        private void FlowPanel_ControlAdded(object sender, ControlEventArgs e)
+        {
+            var panel = sender as FlowLayoutPanel;
+
+
         }
 
         private void Label_MouseDown(object sender, MouseEventArgs e)
@@ -74,11 +81,6 @@ namespace Dash.DemoApp.Forms
 
         private void FlowPanel_DragDrop(object sender, DragEventArgs e)
         {
-           //Label newLabel = new();
-
-           // newLabel.Tag = e.Data.GetData("Tag", true);
-           // newLabel.Text = "Dragged";
-
             FlowLayoutPanel panel = sender as FlowLayoutPanel;
             panel.Controls.Add(draggedLabel);
         }
@@ -89,31 +91,37 @@ namespace Dash.DemoApp.Forms
 
             label.Text = "Test" + i.ToString();
             label.MouseDown += new MouseEventHandler(Label_MouseDown);
-            label.Tag = DateTime.Now;
-            //TODO: Label Tag
+            //TODO: Tag should be order
+            label.Tag = RandomNumber();
+            
             i++;
             return label;
+        }
+
+        private static int RandomNumber()
+        {
+            Random r = new();
+            return r.Next(50, 150);
         }
 
         private FlowLayoutPanel GetFlowPanel(int week)
         {
             FlowLayoutPanel flowPanel = new();
-
             flowPanel.AllowDrop = true;
             flowPanel.AutoSize = true;
             flowPanel.BorderStyle = BorderStyle.FixedSingle;
+            flowPanel.ControlAdded += new ControlEventHandler(FlowPanel_ControlAdded);
             flowPanel.Dock = DockStyle.Top;
             flowPanel.DragDrop += new DragEventHandler(FlowPanel_DragDrop);
             flowPanel.DragEnter += new DragEventHandler(FlowPanel_DragEnter);
             flowPanel.FlowDirection = FlowDirection.TopDown;
-            flowPanel.Name = "flowLayoutPanelFirst";
-            flowPanel.Size = new Size(250, 300);
             flowPanel.TabIndex = 0;
-            flowPanel.Tag = week;
+            flowPanel.Tag = DbContext.WorkWeeks.First(w => w.CalendarWeek == week);
             flowPanel.Controls.Add(new Label() { Text = "Week" + week.ToString(), BackColor = Color.Aquamarine });
 
             flowLayoutPanels.Add(flowPanel);
             return flowPanel;
         }
+
     }
 }

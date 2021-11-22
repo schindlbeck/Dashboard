@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dash.Data.Migrations
 {
     [DbContext(typeof(DashDbContext))]
-    [Migration("20211116135442_initial")]
-    partial class initial
+    [Migration("20211122153506_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,18 +32,48 @@ namespace Dash.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CalendarWeek")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("DetailInfo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProductionMinutes")
                         .HasColumnType("int");
 
+                    b.Property<string>("WorkDay")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("DetailInfo");
+
                     b.HasKey("Id");
 
                     b.ToTable("WorkDays");
+                });
+
+            modelBuilder.Entity("Dash.Data.Models.DbWorkWeek", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CalendarWeek")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductionMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WorkDays")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("DetailInfo");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WorkWeeks");
                 });
 
             modelBuilder.Entity("Dash.Data.Models.Holiday", b =>

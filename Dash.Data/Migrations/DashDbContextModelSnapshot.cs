@@ -48,6 +48,32 @@ namespace Dash.Data.Migrations
                     b.ToTable("WorkDays");
                 });
 
+            modelBuilder.Entity("Dash.Data.Models.DbWorkWeek", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CalendarWeek")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductionMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WorkDays")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("DetailInfo");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WorkWeeks");
+                });
+
             modelBuilder.Entity("Dash.Data.Models.Holiday", b =>
                 {
                     b.Property<int>("Id")
