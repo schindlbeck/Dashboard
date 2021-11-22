@@ -34,6 +34,7 @@
             // flowLayoutPanelMain
             // 
             this.flowLayoutPanelMain.AutoScroll = true;
+            this.flowLayoutPanelMain.AutoSize = true;
             this.flowLayoutPanelMain.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
@@ -51,6 +52,7 @@
             this.Text = "DragDrop";
             this.Load += new System.EventHandler(this.DragDrop_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
