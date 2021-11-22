@@ -69,10 +69,10 @@ namespace Dash.Shared
             HolidayList.Add(new Holiday() { Date = easterSunday, Name = "Ostersonntag" });
             HolidayList.Add(new Holiday() { Date = easterSunday.AddDays(1), Name = "Ostermontag" });
             HolidayList.Add(new Holiday() { Date = new DateTime(year, 5, 1), Name = "Tag der Arbeit" });
-            HolidayList.Add(new Holiday() { Date = easterSunday.AddDays(39), Name = "christi Himmelfahrt" });
+            HolidayList.Add(new Holiday() { Date = easterSunday.AddDays(39), Name = "Christi Himmelfahrt" });
             HolidayList.Add(new Holiday() { Date = easterSunday.AddDays(50), Name = "Pfingstmontag" });
             HolidayList.Add(new Holiday() { Date = easterSunday.AddDays(60), Name = "Fronleichnam" });
-            HolidayList.Add(new Holiday() { Date = new DateTime(year, 8, 15), Name = "Mariä Himmelfahrt " });
+            HolidayList.Add(new Holiday() { Date = new DateTime(year, 8, 15), Name = "Mariä Himmelfahrt" });
             HolidayList.Add(new Holiday() { Date = new DateTime(year, 10, 3), Name = "Tag der deutschen Einheit" });
             HolidayList.Add(new Holiday() { Date = new DateTime(year, 11, 01), Name = "Allerheiligen" });
             HolidayList.Add(new Holiday() { Date = new DateTime(year, 12, 25), Name = "1. Weihnachsfeiertag" });

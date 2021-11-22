@@ -82,7 +82,7 @@ namespace Dash.Shared
                 if (!Holidays.Exists(h => h.Date == workDay.Date))
                 {
                     workWeek.WorkDays.Add(workDay);
-                    DbContext.WorkDays.Add(new DbWorkDay() { Date = workDay.Date, ProductionMinutes = workDay.Shifts.Sum(s => s.ActiveMinutes * s.NumberEquipments), WorkDay = workDay });
+                    DbContext.WorkDays.Add(new DbWorkDay() { Date = workDay.Date, ProductionMinutes = workDay.Shifts.Sum(s => s.ActiveMinutes * s.NumberEquipments), WorkDay = workDay, CalendarWeek = ISOWeek.GetWeekOfYear(workDay.Date) });
                     DbContext.SaveChanges();
                 }
             }

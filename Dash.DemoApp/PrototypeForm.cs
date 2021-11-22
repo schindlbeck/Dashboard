@@ -44,7 +44,7 @@ namespace Erp.Prototype
 
         private void BtnDataOverview_Click(object sender, EventArgs e)
         {
-            // OpenChildForm(new DataOverview(Configuration), sender);
+            OpenChildForm(new DragDrop(DbContext), sender);
         }
 
         private void OpenChildForm(Form childForm, object sender)

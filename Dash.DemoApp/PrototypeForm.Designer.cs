@@ -33,7 +33,7 @@ namespace Erp.Prototype
             this.panelLeft = new System.Windows.Forms.Panel();
             this.buttonPopup = new System.Windows.Forms.Button();
             this.buttonToast = new System.Windows.Forms.Button();
-            this.BtnDataOverview = new System.Windows.Forms.Button();
+            this.BtnDragAndDrop = new System.Windows.Forms.Button();
             this.BtnScheduleOverview = new System.Windows.Forms.Button();
             this.BtnHolidays = new System.Windows.Forms.Button();
             this.buttonHome = new System.Windows.Forms.Button();
@@ -54,7 +54,7 @@ namespace Erp.Prototype
             this.panelLeft.AllowDrop = true;
             this.panelLeft.Controls.Add(this.buttonPopup);
             this.panelLeft.Controls.Add(this.buttonToast);
-            this.panelLeft.Controls.Add(this.BtnDataOverview);
+            this.panelLeft.Controls.Add(this.BtnDragAndDrop);
             this.panelLeft.Controls.Add(this.BtnScheduleOverview);
             this.panelLeft.Controls.Add(this.BtnHolidays);
             this.panelLeft.Controls.Add(this.buttonHome);
@@ -104,24 +104,24 @@ namespace Erp.Prototype
             this.buttonToast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonToast.UseVisualStyleBackColor = true;
             // 
-            // BtnDataOverview
+            // BtnDragAndDrop
             // 
-            this.BtnDataOverview.Dock = System.Windows.Forms.DockStyle.Top;
-            this.BtnDataOverview.FlatAppearance.BorderSize = 0;
-            this.BtnDataOverview.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Chocolate;
-            this.BtnDataOverview.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnDataOverview.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.BtnDataOverview.ForeColor = System.Drawing.Color.Gainsboro;
-            this.BtnDataOverview.Location = new System.Drawing.Point(0, 474);
-            this.BtnDataOverview.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.BtnDataOverview.Name = "BtnDataOverview";
-            this.BtnDataOverview.Padding = new System.Windows.Forms.Padding(29, 0, 0, 0);
-            this.BtnDataOverview.Size = new System.Drawing.Size(443, 97);
-            this.BtnDataOverview.TabIndex = 6;
-            this.BtnDataOverview.Text = "Data Overview";
-            this.BtnDataOverview.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnDataOverview.UseVisualStyleBackColor = true;
-            this.BtnDataOverview.Click += new System.EventHandler(this.BtnDataOverview_Click);
+            this.BtnDragAndDrop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.BtnDragAndDrop.FlatAppearance.BorderSize = 0;
+            this.BtnDragAndDrop.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Chocolate;
+            this.BtnDragAndDrop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnDragAndDrop.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.BtnDragAndDrop.ForeColor = System.Drawing.Color.Gainsboro;
+            this.BtnDragAndDrop.Location = new System.Drawing.Point(0, 474);
+            this.BtnDragAndDrop.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.BtnDragAndDrop.Name = "BtnDragAndDrop";
+            this.BtnDragAndDrop.Padding = new System.Windows.Forms.Padding(29, 0, 0, 0);
+            this.BtnDragAndDrop.Size = new System.Drawing.Size(443, 97);
+            this.BtnDragAndDrop.TabIndex = 6;
+            this.BtnDragAndDrop.Text = "Drag and Drop";
+            this.BtnDragAndDrop.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnDragAndDrop.UseVisualStyleBackColor = true;
+            this.BtnDragAndDrop.Click += new System.EventHandler(this.BtnDataOverview_Click);
             // 
             // BtnScheduleOverview
             // 
@@ -259,7 +259,7 @@ namespace Erp.Prototype
         private System.Windows.Forms.Panel panelLeft;
         private System.Windows.Forms.Button buttonPopup;
         private System.Windows.Forms.Button buttonToast;
-        private System.Windows.Forms.Button BtnDataOverview;
+        private System.Windows.Forms.Button BtnDragAndDrop;
         private System.Windows.Forms.Button BtnScheduleOverview;
         private System.Windows.Forms.Button BtnHolidays;
         private System.Windows.Forms.Button buttonHome;

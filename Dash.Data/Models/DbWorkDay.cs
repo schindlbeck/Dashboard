@@ -14,6 +14,8 @@ namespace Dash.Data.Models
 
         public int ProductionMinutes { get; set; }
 
+        public int CalendarWeek { get; set; }
+
         public WorkDay WorkDay { get; set; }
     }
 
