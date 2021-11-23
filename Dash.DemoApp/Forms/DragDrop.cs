@@ -32,7 +32,7 @@ namespace Dash.DemoApp.Forms
         
         private void AddWeeks()
         {
-            var weeks = DbContext.WorkWeeks.Select(w => w.CalendarWeek).Distinct();
+            var weeks = DbContext.WorkWeeks.Select(w => Convert.ToInt32(w.Year.ToString() + w.CalendarWeek.ToString("00"))).Distinct();
 
             foreach (var week in weeks)
             {
