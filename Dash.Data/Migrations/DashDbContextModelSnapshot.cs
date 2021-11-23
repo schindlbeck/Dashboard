@@ -45,7 +45,7 @@ namespace Dash.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WorkDays");
+                    b.ToTable("WorkDays", (string)null);
                 });
 
             modelBuilder.Entity("Dash.Data.Models.DbWorkWeek", b =>
@@ -71,7 +71,7 @@ namespace Dash.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WorkWeeks");
+                    b.ToTable("WorkWeeks", (string)null);
                 });
 
             modelBuilder.Entity("Dash.Data.Models.Holiday", b =>
@@ -90,7 +90,7 @@ namespace Dash.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Holidays");
+                    b.ToTable("Holidays", (string)null);
                 });
 #pragma warning restore 612, 618
         }

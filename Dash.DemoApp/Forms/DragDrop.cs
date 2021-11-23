@@ -116,7 +116,7 @@ namespace Dash.DemoApp.Forms
             flowPanel.DragEnter += new DragEventHandler(FlowPanel_DragEnter);
             flowPanel.FlowDirection = FlowDirection.TopDown;
             flowPanel.TabIndex = 0;
-            flowPanel.Tag = DbContext.WorkWeeks.First(w => w.CalendarWeek == week);
+            //flowPanel.Tag = DbContext.WorkWeeks.First(w => w.CalendarWeek == week);
             flowPanel.Controls.Add(new Label() { Text = "Week" + week.ToString(), BackColor = Color.Aquamarine });
 
             flowLayoutPanels.Add(flowPanel);

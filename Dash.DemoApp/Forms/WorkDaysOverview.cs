@@ -41,10 +41,11 @@ namespace Dash.DemoApp.Forms
             HideFurtherOptions();
         }
 
-        private void BtnGo_Click(object sender, EventArgs e)
+        private async void BtnGo_Click(object sender, EventArgs e)
         {
-            workSchedule = new(Convert.ToInt32(numericUpDownYearStart.Value), Convert.ToInt32(numericUpDownCwStart.Value), Convert.ToInt32(numericUpDownCwEnd.Value), DbContext);
-
+            workSchedule = new(DbContext);
+            await workSchedule.SetHolidays();
+            await workSchedule.SetUpRangeAsync(Convert.ToInt32(numericUpDownYearStart.Value), Convert.ToInt32(numericUpDownCwStart.Value), Convert.ToInt32(numericUpDownCwEnd.Value));
             listBoxWorkSchedule.Items.Clear();
             FillListBoxSchedule();
         }

@@ -6,6 +6,8 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Dash.Shared
 {
@@ -17,32 +19,35 @@ namespace Dash.Shared
         public DashDbContext DbContext { get; set; }
 
 
-        public WorkSchedule(int year, int cwStart, int cwEnd, DashDbContext dbContext)
+        public WorkSchedule(DashDbContext dbContext)
         {
             DbContext = dbContext;
             WorkWeeks = new();
-            if (cwEnd == 53) cwEnd = WeeksInYear(year);
-            SetHolidays();
-            SetUpRange(year, cwStart, cwEnd);
         }
 
-        private void SetHolidays()
+        public async Task SetHolidays()
         {
-            Holidays = (from a in DbContext.Holidays
+            Holidays = await (from a in DbContext.Holidays
                         orderby a.Date ascending
-                        select a).ToList();
+                        select a).ToListAsync();
         }
 
-        internal void SetUpRange(int year, int cwStart, int cwEnd)
+        public async Task SetUpRangeAsync(int year, int cwStart, int cwEnd)
         {
+            DbContext.WorkDays.RemoveRange(DbContext.WorkDays);
+            DbContext.WorkWeeks.RemoveRange(DbContext.WorkWeeks);
+            await DbContext.SaveChangesAsync();
+
+            if (cwEnd == 53) cwEnd = WeeksInYear(year);
+
             if (cwStart > cwEnd)
             {
-                WorkWeeks = AddWorkDays(cwStart, WeeksInYear(year), year);
-                WorkWeeks = AddWorkDays(1, cwEnd, year + 1);
+                WorkWeeks = await AddWorkDaysAsync(cwStart, WeeksInYear(year), year);
+                WorkWeeks = await AddWorkDaysAsync(1, cwEnd, year + 1);
             }
             else
             {
-                WorkWeeks = AddWorkDays(cwStart, cwEnd, year);
+                WorkWeeks = await AddWorkDaysAsync(cwStart, cwEnd, year);
             }
         }
 
@@ -51,21 +56,17 @@ namespace Dash.Shared
             return ISOWeek.GetWeeksInYear(year);
         }
 
-        internal List<WorkWeek> AddWorkDays(int cwStart, int cwEnd, int year)
+        internal async Task<List<WorkWeek>> AddWorkDaysAsync(int cwStart, int cwEnd, int year)
         {
-            DbContext.WorkDays.RemoveRange(DbContext.WorkDays);
-            DbContext.WorkWeeks.RemoveRange(DbContext.WorkWeeks);
-            DbContext.SaveChanges();
-
             for (int i = cwStart; i <= cwEnd; i++)
             {
-                WorkWeeks.Add(SetUpDefaultWeekSchedule(i, year));
+                WorkWeeks.Add(await SetUpDefaultWeekScheduleAsync(i, year));
             }
 
             return WorkWeeks;
         }
 
-        public WorkWeek SetUpDefaultWeekSchedule(int calendarWeek, int year)
+        public async Task<WorkWeek> SetUpDefaultWeekScheduleAsync(int calendarWeek, int year)
         {
             WorkWeek workWeek = new();
             workWeek.WorkDays = new();
@@ -87,12 +88,12 @@ namespace Dash.Shared
                     workWeek.WorkDays.Add(workDay);
                     productMinutes += workDay.Shifts.Sum(s => s.ActiveMinutes * s.NumberEquipments);
                     DbContext.WorkDays.Add(new DbWorkDay() { Date = workDay.Date, ProductionMinutes = workDay.Shifts.Sum(s => s.ActiveMinutes * s.NumberEquipments), WorkDay = workDay, CalendarWeek = ISOWeek.GetWeekOfYear(workDay.Date) });
-                    DbContext.SaveChanges();
+                    await DbContext.SaveChangesAsync();
                 }
             }
 
             DbContext.WorkWeeks.Add(new DbWorkWeek() { CalendarWeek = calendarWeek, Year = year, ProductionMinutes = productMinutes, WorkDays = workWeek.WorkDays});
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync();
 
             return workWeek;
         }

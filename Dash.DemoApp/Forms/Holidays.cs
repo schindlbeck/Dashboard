@@ -1,6 +1,7 @@
 ﻿using Dash.Data;
 using Dash.Data.Models;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Dash.DemoApp.Forms
@@ -38,17 +39,17 @@ namespace Dash.DemoApp.Forms
             btnNew.Hide();
         }
 
-        private void BtnNew_Click(object sender, EventArgs e)
+        private async void BtnNew_ClickAsync(object sender, EventArgs e)
         {
-            holidays.ChangeHolidays(Convert.ToInt32(numericUpDownYear.Value), Convert.ToInt32(numericUpDownFrom.Value), Convert.ToInt32(numericUpDownTo.Value));
+           await holidays.ChangeHolidaysAsync(Convert.ToInt32(numericUpDownYear.Value), Convert.ToInt32(numericUpDownFrom.Value), Convert.ToInt32(numericUpDownTo.Value));
            
             listBoxHolidays.Items.Clear();
             SetUpListBoxHolidays();
         }
 
-        private void BtnAdd_Click(object sender, EventArgs e)
+        private async void BtnAdd_ClickAsync(object sender, EventArgs e)
         {
-            holidays.ChangeHolidays(Convert.ToInt32(numericUpDownYear.Value), Convert.ToInt32(numericUpDownFrom.Value), Convert.ToInt32(numericUpDownTo.Value));
+            await holidays.ChangeHolidaysAsync(Convert.ToInt32(numericUpDownYear.Value), Convert.ToInt32(numericUpDownFrom.Value), Convert.ToInt32(numericUpDownTo.Value));
 
             SetUpListBoxHolidays();
         }

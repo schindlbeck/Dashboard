@@ -27,7 +27,7 @@ namespace Dash.Shared
             HolidayList = DbContext.Holidays.ToList();
         }
 
-        public void ChangeHolidays(int year, int monthStart, int monthEnd)
+        public async Task ChangeHolidaysAsync(int year, int monthStart, int monthEnd)
         {
             HolidayList.Clear();
             this.year = year;
@@ -35,16 +35,16 @@ namespace Dash.Shared
             SetHolidayList();
             SelectedMonths(monthStart, monthEnd);
 
-            WriteInDatabase();
+            await WriteInDatabaseAsync();
         }
 
-        private void WriteInDatabase()
+        private async Task WriteInDatabaseAsync()
         {
             DbContext.Holidays.RemoveRange(DbContext.Holidays);
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync();
 
             DbContext.Holidays.AddRange(HolidayList);
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync();
         }
 
         internal void SelectedMonths(int monthStart, int monthEnd)

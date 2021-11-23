@@ -61,7 +61,7 @@
             this.btnNew.TabIndex = 3;
             this.btnNew.Text = "New";
             this.btnNew.UseVisualStyleBackColor = false;
-            this.btnNew.Click += new System.EventHandler(this.BtnNew_Click);
+            this.btnNew.Click += new System.EventHandler(this.BtnNew_ClickAsync);
             // 
             // btnDelete
             // 
@@ -110,7 +110,7 @@
             this.btnAdd.TabIndex = 11;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_ClickAsync);
             // 
             // numericUpDownFrom
             // 
