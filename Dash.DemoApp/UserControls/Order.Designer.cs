@@ -64,7 +64,7 @@
             // 
             // groupBoxOrder
             // 
-            this.groupBoxOrder.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.groupBoxOrder.BackColor = System.Drawing.SystemColors.Window;
             this.groupBoxOrder.Controls.Add(this.labelCwNow);
             this.groupBoxOrder.Controls.Add(this.labelCwPlan);
             this.groupBoxOrder.Controls.Add(this.labelMinutes);

@@ -18,9 +18,8 @@ namespace Dash.DemoApp.Forms
     {
         public DashDbContext DbContext { get; set; }
         public IConfigurationRoot Configuration { get; set; }
-        private readonly List<FlowLayoutPanel> flowLayoutPanels = new();
+        private readonly List<WeekControl> weekcontrols = new();
         private Order draggedOrder;
-        private int i = 1;
 
         public DragDrop(DashDbContext dbContext, IConfigurationRoot configuration)
         {
@@ -51,7 +50,9 @@ namespace Dash.DemoApp.Forms
             foreach (var order in orders)
             {
                 order.MouseDown += new MouseEventHandler(Order_MouseDown);
-                flowLayoutPanels[2].Controls.Add(order);
+                //weekcontrols.Where(w => (w.Tag as DbWorkWeek).CalendarWeek == order.ListElement.CWPlanned).First().Controls.Add(order);
+
+                weekcontrols.Where(w => w.Week.CalendarWeek == order.ListElement.CWPlanned).First().Controls.Add(order);
             }
 
         }
@@ -89,23 +90,25 @@ namespace Dash.DemoApp.Forms
             panel.Controls.Add(draggedOrder);
         }
 
-        private FlowLayoutPanel GetFlowPanel(DbWorkWeek week)
+        private WeekControl GetFlowPanel(DbWorkWeek week)
         {
-            FlowLayoutPanel flowPanel = new();
-            flowPanel.AllowDrop = true;
-            flowPanel.AutoSize = true;
-            flowPanel.BorderStyle = BorderStyle.FixedSingle;
-            flowPanel.ControlAdded += new ControlEventHandler(FlowPanel_ControlAdded);
-            flowPanel.Dock = DockStyle.Top;
-            flowPanel.DragDrop += new DragEventHandler(FlowPanel_DragDrop);
-            flowPanel.DragEnter += new DragEventHandler(FlowPanel_DragEnter);
-            flowPanel.FlowDirection = FlowDirection.TopDown;
-            flowPanel.TabIndex = 0;
-            flowPanel.Tag = week;
-            flowPanel.Controls.Add(new Label() { Text = "Week" + week.CalendarWeek.ToString(), BackColor = Color.Aquamarine });
+            WeekControl weekControl = new(week);
 
-            flowLayoutPanels.Add(flowPanel);
-            return flowPanel;
+            //FlowLayoutPanel flowPanel = new();
+            //flowPanel.AllowDrop = true;
+            //flowPanel.AutoSize = true;
+            //flowPanel.BorderStyle = BorderStyle.FixedSingle;
+            //flowPanel.ControlAdded += new ControlEventHandler(FlowPanel_ControlAdded);
+            //flowPanel.Dock = DockStyle.Top;
+            //flowPanel.DragDrop += new DragEventHandler(FlowPanel_DragDrop);
+            //flowPanel.DragEnter += new DragEventHandler(FlowPanel_DragEnter);
+            //flowPanel.FlowDirection = FlowDirection.TopDown;
+            //flowPanel.TabIndex = 0;
+            //flowPanel.Tag = week;
+            //flowPanel.Controls.Add(new Label() { Text = "Week" + week.CalendarWeek.ToString(), BackColor = Color.Aquamarine });
+
+            weekcontrols.Add(weekControl);
+            return weekControl;
         }
 
     }
