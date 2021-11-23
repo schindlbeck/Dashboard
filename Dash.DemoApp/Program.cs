@@ -41,7 +41,7 @@ namespace Dash.DemoApp
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                Application.Run(new PrototypeForm());
+                Application.Run(new PrototypeForm(configuration));
                 Log.Information("End of: {0}", Application.ProductName);
                 Log.Information("***************************************************  -- END --  ****************************************************************");
             }

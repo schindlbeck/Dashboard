@@ -50,7 +50,7 @@
             this.Controls.Add(this.flowLayoutPanelMain);
             this.Name = "DragDrop";
             this.Text = "DragDrop";
-            this.Load += new System.EventHandler(this.DragDrop_Load);
+            this.Load += new System.EventHandler(this.DragDrop_LoadAsync);
             this.ResumeLayout(false);
             this.PerformLayout();
 

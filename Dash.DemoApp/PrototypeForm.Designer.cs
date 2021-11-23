@@ -65,8 +65,8 @@ namespace Erp.Prototype
             this.panelLeft.Name = "panelLeft";
             this.panelLeft.Size = new System.Drawing.Size(443, 1050);
             this.panelLeft.TabIndex = 1;
-            this.panelLeft.DragDrop += new System.Windows.Forms.DragEventHandler(this.PanelLeft_DragDrop);
-            this.panelLeft.DragEnter += new System.Windows.Forms.DragEventHandler(this.PanelLeft_DragEnter);
+            //this.panelLeft.DragDrop += new System.Windows.Forms.DragEventHandler(this.PanelLeft_DragDrop);
+            //this.panelLeft.DragEnter += new System.Windows.Forms.DragEventHandler(this.PanelLeft_DragEnter);
             // 
             // buttonPopup
             // 

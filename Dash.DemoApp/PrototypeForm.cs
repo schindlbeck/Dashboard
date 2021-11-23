@@ -1,6 +1,7 @@
 ﻿
 using Dash.Data;
 using Dash.DemoApp.Forms;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using System;
 using System.IO;
@@ -11,10 +12,12 @@ namespace Erp.Prototype
     public partial class PrototypeForm : Form
     {
         Form activeForm;
+        public IConfigurationRoot Configuration { get; }
         public DashDbContext DbContext { get; set; }
         
-        public PrototypeForm()
+        public PrototypeForm(IConfigurationRoot configuration)
         {
+            Configuration = configuration;
             InitializeComponent();
             SetDbContext();
         }
@@ -44,7 +47,7 @@ namespace Erp.Prototype
 
         private void BtnDataOverview_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new DragDrop(DbContext), sender);
+            OpenChildForm(new DragDrop(DbContext, Configuration), sender);
         }
 
         private void OpenChildForm(Form childForm, object sender)
@@ -66,22 +69,22 @@ namespace Erp.Prototype
             }
         }
 
-        private void PanelLeft_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                e.Effect = DragDropEffects.All;
-            else
-                e.Effect = DragDropEffects.None;
-        }
+        //private void PanelLeft_DragEnter(object sender, DragEventArgs e)
+        //{
+        //    if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        //        e.Effect = DragDropEffects.All;
+        //    else
+        //        e.Effect = DragDropEffects.None;
+        //}
 
-        private void PanelLeft_DragDrop(object sender, DragEventArgs e)
-        {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            if (files.Length > 0 && File.Exists(files[0]))
-            {
+        //private void PanelLeft_DragDrop(object sender, DragEventArgs e)
+        //{
+        //    string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+        //    if (files.Length > 0 && File.Exists(files[0]))
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
     }
 }
