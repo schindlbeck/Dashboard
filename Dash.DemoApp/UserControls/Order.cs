@@ -33,5 +33,6 @@ namespace Dash.DemoApp.UserControls
             labelCwPlan.Text = ListElement.CWPlanned.ToString();
             labelMinutes.Text = ListElement.TimeTotal.ToString();
         }
+
     }
 }

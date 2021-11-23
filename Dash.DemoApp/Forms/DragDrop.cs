@@ -19,7 +19,7 @@ namespace Dash.DemoApp.Forms
         public DashDbContext DbContext { get; set; }
         public IConfigurationRoot Configuration { get; set; }
         private readonly List<FlowLayoutPanel> flowLayoutPanels = new();
-        private Label draggedLabel;
+        private Order draggedOrder;
         private int i = 1;
 
         public DragDrop(DashDbContext dbContext, IConfigurationRoot configuration)
@@ -34,7 +34,7 @@ namespace Dash.DemoApp.Forms
             await AddWeeks();
             AddOrders();
         }
-        
+
         private async Task AddWeeks()
         {
             var weeks = await DbContext.WorkWeeks.ToListAsync();
@@ -50,16 +50,10 @@ namespace Dash.DemoApp.Forms
 
             foreach (var order in orders)
             {
+                order.MouseDown += new MouseEventHandler(Order_MouseDown);
                 flowLayoutPanels[2].Controls.Add(order);
             }
 
-            //flowLayoutPanels[2].Controls.Add(GetLabel());
-            //flowLayoutPanels[2].Controls.Add(GetLabel());
-            //flowLayoutPanels[2].Controls.Add(GetLabel());
-            //flowLayoutPanels[2].Controls.Add(GetLabel());
-            //flowLayoutPanels[2].Controls.Add(GetLabel());
-            //flowLayoutPanels[2].Controls.Add(GetLabel());
-            //flowLayoutPanels[2].Controls.Add(GetLabel());
         }
 
         private void FlowPanel_ControlAdded(object sender, ControlEventArgs e)
@@ -69,17 +63,17 @@ namespace Dash.DemoApp.Forms
 
         }
 
-        private void Label_MouseDown(object sender, MouseEventArgs e)
+        private void Order_MouseDown(object sender, MouseEventArgs e)
         {
-            var label = sender as Label;
+            var order = sender as Order;
 
-            draggedLabel = label;
-            DoDragDrop(label.Text, DragDropEffects.Move);
+            draggedOrder = order;
+            DoDragDrop(order.Text, DragDropEffects.Move);
         }
 
         private void FlowPanel_DragEnter(object sender, DragEventArgs e)
         {
-            if(e.Data.GetDataPresent(DataFormats.Text))
+            if (e.Data.GetDataPresent(DataFormats.Text))
             {
                 e.Effect = DragDropEffects.Move;
             }
@@ -92,27 +86,7 @@ namespace Dash.DemoApp.Forms
         private void FlowPanel_DragDrop(object sender, DragEventArgs e)
         {
             FlowLayoutPanel panel = sender as FlowLayoutPanel;
-            panel.Controls.Add(draggedLabel);
-        }
-
-        private Label GetLabel()
-        {
-            //TODO: PrioListElement?
-            Label label = new();
-
-            label.Text = "Test" + i.ToString();
-            label.MouseDown += new MouseEventHandler(Label_MouseDown);
-            //TODO: Tag should be order
-            label.Tag = RandomNumber();
-
-            i++;
-            return label;
-        }
-
-        private static int RandomNumber()
-        {
-            Random r = new();
-            return r.Next(50, 150);
+            panel.Controls.Add(draggedOrder);
         }
 
         private FlowLayoutPanel GetFlowPanel(DbWorkWeek week)

@@ -56,7 +56,7 @@
             // labelCwNow
             // 
             this.labelCwNow.AutoSize = true;
-            this.labelCwNow.Location = new System.Drawing.Point(63, 19);
+            this.labelCwNow.Location = new System.Drawing.Point(61, 19);
             this.labelCwNow.Name = "labelCwNow";
             this.labelCwNow.Size = new System.Drawing.Size(38, 15);
             this.labelCwNow.TabIndex = 4;
@@ -68,9 +68,10 @@
             this.groupBoxOrder.Controls.Add(this.labelCwNow);
             this.groupBoxOrder.Controls.Add(this.labelCwPlan);
             this.groupBoxOrder.Controls.Add(this.labelMinutes);
-            this.groupBoxOrder.Location = new System.Drawing.Point(3, 3);
+            this.groupBoxOrder.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBoxOrder.Location = new System.Drawing.Point(0, 0);
             this.groupBoxOrder.Name = "groupBoxOrder";
-            this.groupBoxOrder.Size = new System.Drawing.Size(121, 61);
+            this.groupBoxOrder.Size = new System.Drawing.Size(106, 67);
             this.groupBoxOrder.TabIndex = 5;
             this.groupBoxOrder.TabStop = false;
             this.groupBoxOrder.Text = "groupBox1";
@@ -79,10 +80,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.BackColor = System.Drawing.SystemColors.ControlText;
             this.Controls.Add(this.groupBoxOrder);
             this.Name = "Order";
-            this.Size = new System.Drawing.Size(134, 74);
+            this.Size = new System.Drawing.Size(135, 67);
             this.Load += new System.EventHandler(this.Order_Load);
             this.groupBoxOrder.ResumeLayout(false);
             this.groupBoxOrder.PerformLayout();
