@@ -14,6 +14,7 @@ namespace Dash.DemoApp.UserControls
     public partial class WeekControl : UserControl
     {
         public DbWorkWeek Week { get; set; }
+        public List<Order> orders = new();
 
         public WeekControl(DbWorkWeek workWeek)
         {
@@ -34,6 +35,8 @@ namespace Dash.DemoApp.UserControls
         public void AddOrder(Order order)
         {
             flowPanel.Controls.Add(order);
+            orders.Add(order);
+            CalculateMinutes();
         }
 
         private void FlowPanel_DragEnter(object sender, DragEventArgs e)
@@ -51,13 +54,31 @@ namespace Dash.DemoApp.UserControls
         private void FlowPanel_DragDrop(object sender, DragEventArgs e)
         {
             Order o = Forms.DragDrop.DraggedOrder;
+            o.SetCWCurrent(Week.CalendarWeek);
+            orders.Add(o);
             flowPanel.Controls.Add(o);
+        }
+
+        private void CalculateMinutes()
+        {
+            var minutesBooked = orders.Sum(s => s.ListElement.TimeTotal);
+            var productionMinutes = Week.ProductionMinutes;
+            textBoxInfo.Text = $"Production Minutes: {minutesBooked}/{productionMinutes}";
+
+            if(minutesBooked > productionMinutes * 0.9)
+            {
+                if(minutesBooked > productionMinutes) textBoxInfo.BackColor = Color.Red;
+                else textBoxInfo.BackColor = Color.PaleVioletRed;
+            }
+            else
+            {
+                textBoxInfo.BackColor = Color.LightGreen;
+            }
         }
 
         private void FlowPanel_ControlAdded(object sender, ControlEventArgs e)
         {
-            
+            CalculateMinutes();
         }
-
     }
 }

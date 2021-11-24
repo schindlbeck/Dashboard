@@ -13,26 +13,45 @@ namespace Dash.DemoApp.UserControls
 {
     public partial class Order : UserControl
     {
-        public PrioListElement ListElement { get; set; }  
+        public PrioListElement ListElement { get; set; }
+        private int orderCWCurrent;
 
         public Order(PrioListElement element)
         {
             ListElement = element;
+            orderCWCurrent = ListElement.CWPlanned;
             InitializeComponent();
         }
 
         private void Order_Load(object sender, EventArgs e)
         {
-            InitializeLabels();
+            groupBoxOrder.Text = ListElement.Project + "/" + ListElement.OrderNr;
+
+            InitializeText();
         }
 
-        private void InitializeLabels()
+        private void InitializeText()
         {
-            groupBoxOrder.Text = ListElement.Project + "/" +ListElement.OrderNr;
-            labelCwNow.Text = ListElement.CWPlanned.ToString();
-            labelCwPlan.Text = ListElement.CWPlanned.ToString();
-            labelMinutes.Text = ListElement.TimeTotal.ToString();
+            richTextBoxInfo.Text = $"CW planned: {ListElement.CWPlanned}" + Environment.NewLine +
+                $"CW current: {orderCWCurrent}" + Environment.NewLine + $"Total time: {ListElement.TimeTotal}";
+
+            if (orderCWCurrent >= ListElement.CWPlanned)
+            {
+                if (orderCWCurrent == ListElement.CWPlanned)
+                    richTextBoxInfo.BackColor = Color.LightYellow;
+                else
+                    richTextBoxInfo.BackColor = Color.IndianRed;
+            }
+            else
+            {
+                richTextBoxInfo.BackColor = Color.DarkSeaGreen;
+            }
         }
 
+        public void SetCWCurrent(int cw)
+        {
+            orderCWCurrent = cw;
+            InitializeText();
+        }
     }
 }

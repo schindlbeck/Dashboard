@@ -52,11 +52,9 @@ namespace Dash.DemoApp
             return list;
         }
 
-        public static List<Order> GetOrders(IConfigurationRoot configuration)
+        public static List<Order> GetOrders(IConfigurationRoot configuration, List<PrioListElement> prioList)
         {
             List<Order> orders = new();
-
-            var prioList = GetPrioList(configuration);
 
             foreach (var prioElement in prioList)
             {

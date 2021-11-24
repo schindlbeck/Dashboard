@@ -28,73 +28,50 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelMinutes = new System.Windows.Forms.Label();
-            this.labelCwPlan = new System.Windows.Forms.Label();
-            this.labelCwNow = new System.Windows.Forms.Label();
             this.groupBoxOrder = new System.Windows.Forms.GroupBox();
+            this.richTextBoxInfo = new System.Windows.Forms.RichTextBox();
             this.groupBoxOrder.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // labelMinutes
-            // 
-            this.labelMinutes.AutoSize = true;
-            this.labelMinutes.Location = new System.Drawing.Point(35, 44);
-            this.labelMinutes.Name = "labelMinutes";
-            this.labelMinutes.Size = new System.Drawing.Size(38, 15);
-            this.labelMinutes.TabIndex = 2;
-            this.labelMinutes.Text = "label3";
-            // 
-            // labelCwPlan
-            // 
-            this.labelCwPlan.AutoSize = true;
-            this.labelCwPlan.Location = new System.Drawing.Point(6, 19);
-            this.labelCwPlan.Name = "labelCwPlan";
-            this.labelCwPlan.Size = new System.Drawing.Size(38, 15);
-            this.labelCwPlan.TabIndex = 3;
-            this.labelCwPlan.Text = "label3";
-            // 
-            // labelCwNow
-            // 
-            this.labelCwNow.AutoSize = true;
-            this.labelCwNow.Location = new System.Drawing.Point(61, 19);
-            this.labelCwNow.Name = "labelCwNow";
-            this.labelCwNow.Size = new System.Drawing.Size(38, 15);
-            this.labelCwNow.TabIndex = 4;
-            this.labelCwNow.Text = "label3";
             // 
             // groupBoxOrder
             // 
             this.groupBoxOrder.BackColor = System.Drawing.SystemColors.Window;
-            this.groupBoxOrder.Controls.Add(this.labelCwNow);
-            this.groupBoxOrder.Controls.Add(this.labelCwPlan);
-            this.groupBoxOrder.Controls.Add(this.labelMinutes);
+            this.groupBoxOrder.Controls.Add(this.richTextBoxInfo);
             this.groupBoxOrder.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBoxOrder.Location = new System.Drawing.Point(0, 0);
+            this.groupBoxOrder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBoxOrder.Name = "groupBoxOrder";
-            this.groupBoxOrder.Size = new System.Drawing.Size(106, 67);
+            this.groupBoxOrder.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBoxOrder.Size = new System.Drawing.Size(180, 141);
             this.groupBoxOrder.TabIndex = 5;
             this.groupBoxOrder.TabStop = false;
             this.groupBoxOrder.Text = "groupBox1";
             // 
+            // richTextBoxInfo
+            // 
+            this.richTextBoxInfo.Location = new System.Drawing.Point(7, 32);
+            this.richTextBoxInfo.Name = "richTextBoxInfo";
+            this.richTextBoxInfo.Size = new System.Drawing.Size(165, 98);
+            this.richTextBoxInfo.TabIndex = 0;
+            this.richTextBoxInfo.Text = "";
+            // 
             // Order
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlText;
             this.Controls.Add(this.groupBoxOrder);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Order";
-            this.Size = new System.Drawing.Size(135, 67);
+            this.Size = new System.Drawing.Size(217, 141);
             this.Load += new System.EventHandler(this.Order_Load);
             this.groupBoxOrder.ResumeLayout(false);
-            this.groupBoxOrder.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.Label labelMinutes;
-        private System.Windows.Forms.Label labelCwPlan;
-        private System.Windows.Forms.Label labelCwNow;
         private System.Windows.Forms.GroupBox groupBoxOrder;
+        private System.Windows.Forms.RichTextBox richTextBoxInfo;
     }
 }

@@ -20,6 +20,7 @@ namespace Dash.DemoApp.Forms
         public IConfigurationRoot Configuration { get; set; }
         private readonly List<WeekControl> weekcontrols = new();
         public static Order DraggedOrder;
+        private List<PrioListElement> prioList;
 
         public DragDrop(DashDbContext dbContext, IConfigurationRoot configuration)
         {
@@ -36,6 +37,9 @@ namespace Dash.DemoApp.Forms
 
         private async Task AddWeeks()
         {
+            prioList = ManageOrders.GetPrioList(Configuration);
+
+            var weeksOrders = prioList.Select(w => w.CWPlanned).Distinct();
             var weeks = await DbContext.WorkWeeks.ToListAsync();
             foreach (var week in weeks)
             {
@@ -45,12 +49,10 @@ namespace Dash.DemoApp.Forms
 
         private void AddOrders()
         {
-            List<Order> orders = ManageOrders.GetOrders(Configuration);
-
+            var orders = ManageOrders.GetOrders(Configuration, prioList);
             foreach (var order in orders)
             {
                 order.MouseDown += new MouseEventHandler(Order_MouseDown);
-                //weekcontrols.Where(w => (w.Tag as DbWorkWeek).CalendarWeek == order.ListElement.CWPlanned).First().Controls.Add(order);
 
                 weekcontrols.Where(w => w.Week.CalendarWeek == order.ListElement.CWPlanned).First().AddOrder(order);
             }
@@ -62,24 +64,6 @@ namespace Dash.DemoApp.Forms
 
             DraggedOrder = order;
             DoDragDrop(order.Text, DragDropEffects.Move);
-        }
-
-        private void FlowPanel_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.Text))
-            {
-                e.Effect = DragDropEffects.Move;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
-        }
-
-        private void FlowPanel_DragDrop(object sender, DragEventArgs e)
-        {
-            FlowLayoutPanel panel = sender as FlowLayoutPanel;
-            panel.Controls.Add(DraggedOrder);
         }
 
         private WeekControl GetFlowPanel(DbWorkWeek week)

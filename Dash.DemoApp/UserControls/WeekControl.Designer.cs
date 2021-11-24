@@ -30,6 +30,7 @@
         {
             this.flowPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
+            this.textBoxInfo = new System.Windows.Forms.RichTextBox();
             this.flowPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,12 +41,13 @@
             this.flowPanel.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.flowPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flowPanel.Controls.Add(this.label1);
+            this.flowPanel.Controls.Add(this.textBoxInfo);
             this.flowPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowPanel.Location = new System.Drawing.Point(0, 0);
             this.flowPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.flowPanel.Name = "flowPanel";
-            this.flowPanel.Size = new System.Drawing.Size(214, 347);
+            this.flowPanel.Size = new System.Drawing.Size(216, 347);
             this.flowPanel.TabIndex = 0;
             // 
             // label1
@@ -58,6 +60,14 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
             // 
+            // textBoxInfo
+            // 
+            this.textBoxInfo.Location = new System.Drawing.Point(3, 28);
+            this.textBoxInfo.Name = "textBoxInfo";
+            this.textBoxInfo.Size = new System.Drawing.Size(208, 56);
+            this.textBoxInfo.TabIndex = 1;
+            this.textBoxInfo.Text = "";
+            // 
             // WeekControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -66,7 +76,7 @@
             this.Controls.Add(this.flowPanel);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "WeekControl";
-            this.Size = new System.Drawing.Size(214, 347);
+            this.Size = new System.Drawing.Size(216, 347);
             this.Load += new System.EventHandler(this.WeekControl_Load);
             this.flowPanel.ResumeLayout(false);
             this.flowPanel.PerformLayout();
@@ -79,5 +89,6 @@
 
         private System.Windows.Forms.FlowLayoutPanel flowPanel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RichTextBox textBoxInfo;
     }
 }
