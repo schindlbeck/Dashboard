@@ -50,7 +50,8 @@ namespace Dash.DemoApp.UserControls
 
         private void FlowPanel_DragDrop(object sender, DragEventArgs e)
         {
-            
+            Order o = Forms.DragDrop.DraggedOrder;
+            flowPanel.Controls.Add(o);
         }
 
         private void FlowPanel_ControlAdded(object sender, ControlEventArgs e)

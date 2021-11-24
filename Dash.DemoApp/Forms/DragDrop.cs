@@ -19,7 +19,7 @@ namespace Dash.DemoApp.Forms
         public DashDbContext DbContext { get; set; }
         public IConfigurationRoot Configuration { get; set; }
         private readonly List<WeekControl> weekcontrols = new();
-        private Order draggedOrder;
+        public static Order DraggedOrder;
 
         public DragDrop(DashDbContext dbContext, IConfigurationRoot configuration)
         {
@@ -54,21 +54,13 @@ namespace Dash.DemoApp.Forms
 
                 weekcontrols.Where(w => w.Week.CalendarWeek == order.ListElement.CWPlanned).First().AddOrder(order);
             }
-
-        }
-
-        private void FlowPanel_ControlAdded(object sender, ControlEventArgs e)
-        {
-            var panel = sender as FlowLayoutPanel;
-
-
         }
 
         private void Order_MouseDown(object sender, MouseEventArgs e)
         {
             var order = sender as Order;
 
-            draggedOrder = order;
+            DraggedOrder = order;
             DoDragDrop(order.Text, DragDropEffects.Move);
         }
 
@@ -87,25 +79,12 @@ namespace Dash.DemoApp.Forms
         private void FlowPanel_DragDrop(object sender, DragEventArgs e)
         {
             FlowLayoutPanel panel = sender as FlowLayoutPanel;
-            panel.Controls.Add(draggedOrder);
+            panel.Controls.Add(DraggedOrder);
         }
 
         private WeekControl GetFlowPanel(DbWorkWeek week)
         {
             WeekControl weekControl = new(week);
-
-            //FlowLayoutPanel flowPanel = new();
-            //flowPanel.AllowDrop = true;
-            //flowPanel.AutoSize = true;
-            //flowPanel.BorderStyle = BorderStyle.FixedSingle;
-            //flowPanel.ControlAdded += new ControlEventHandler(FlowPanel_ControlAdded);
-            //flowPanel.Dock = DockStyle.Top;
-            //flowPanel.DragDrop += new DragEventHandler(FlowPanel_DragDrop);
-            //flowPanel.DragEnter += new DragEventHandler(FlowPanel_DragEnter);
-            //flowPanel.FlowDirection = FlowDirection.TopDown;
-            //flowPanel.TabIndex = 0;
-            //flowPanel.Tag = week;
-            //flowPanel.Controls.Add(new Label() { Text = "Week" + week.CalendarWeek.ToString(), BackColor = Color.Aquamarine });
 
             weekcontrols.Add(weekControl);
             return weekControl;
