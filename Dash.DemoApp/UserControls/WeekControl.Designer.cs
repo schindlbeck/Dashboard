@@ -43,27 +43,30 @@
             this.flowPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowPanel.Location = new System.Drawing.Point(0, 0);
+            this.flowPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.flowPanel.Name = "flowPanel";
-            this.flowPanel.Size = new System.Drawing.Size(150, 208);
+            this.flowPanel.Size = new System.Drawing.Size(214, 347);
             this.flowPanel.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Location = new System.Drawing.Point(4, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 15);
+            this.label1.Size = new System.Drawing.Size(59, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
             // 
             // WeekControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.Controls.Add(this.flowPanel);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "WeekControl";
-            this.Size = new System.Drawing.Size(150, 208);
+            this.Size = new System.Drawing.Size(214, 347);
             this.Load += new System.EventHandler(this.WeekControl_Load);
             this.flowPanel.ResumeLayout(false);
             this.flowPanel.PerformLayout();

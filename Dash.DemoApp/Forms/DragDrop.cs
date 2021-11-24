@@ -52,7 +52,7 @@ namespace Dash.DemoApp.Forms
                 order.MouseDown += new MouseEventHandler(Order_MouseDown);
                 //weekcontrols.Where(w => (w.Tag as DbWorkWeek).CalendarWeek == order.ListElement.CWPlanned).First().Controls.Add(order);
 
-                weekcontrols.Where(w => w.Week.CalendarWeek == order.ListElement.CWPlanned).First().Controls.Add(order);
+                weekcontrols.Where(w => w.Week.CalendarWeek == order.ListElement.CWPlanned).First().AddOrder(order);
             }
 
         }
