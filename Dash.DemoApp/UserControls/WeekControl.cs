@@ -30,6 +30,13 @@ namespace Dash.DemoApp.UserControls
             flowPanel.ControlAdded += FlowPanel_ControlAdded;
             flowPanel.DragDrop += FlowPanel_DragDrop;
             flowPanel.DragEnter += FlowPanel_DragEnter;
+            flowPanel.ControlRemoved += FlowPanel_ControlRemoved;
+        }
+
+        private void FlowPanel_ControlRemoved(object sender, ControlEventArgs e)
+        {
+            orders.Remove(Forms.DragDrop.DraggedOrder);
+            CalculateMinutes();
         }
 
         public void AddOrder(Order order)
