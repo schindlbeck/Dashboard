@@ -195,7 +195,7 @@ namespace DashSharedTest
         {
             //Arrange
             var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
-            optionsBuilder.UseInMemoryDatabase("DashTest8");
+            optionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString());
             var dbContext = new DashDbContext(optionsBuilder.Options);
 
             //Act

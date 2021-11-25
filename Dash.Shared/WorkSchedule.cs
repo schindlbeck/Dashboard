@@ -13,8 +13,8 @@ namespace Dash.Shared
 {
     public class WorkSchedule
     {
-        public List<WorkWeek> WorkWeeks { get; set; }
-        public List<Holiday> Holidays { get; set; }
+        public List<WorkWeek> WorkWeeks { get; set; } = new();
+        public List<Holiday> Holidays { get; set; } = new();
 
         public DashDbContext DbContext { get; set; }
 
