@@ -74,5 +74,15 @@ namespace Dash.DemoApp.Forms
             return weekControl;
         }
 
+        private void BtnAddWeek_Click(object sender, EventArgs e)
+        {
+            var lastWeek = weekcontrols.Last().Week;
+            var 
+        }
+
+        private void BtnUndo_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

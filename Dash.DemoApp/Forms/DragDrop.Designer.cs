@@ -45,8 +45,9 @@
             this.flowLayoutPanelMain.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanelMain.Margin = new System.Windows.Forms.Padding(2);
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
-            this.flowLayoutPanelMain.Size = new System.Drawing.Size(1934, 1134);
+            this.flowLayoutPanelMain.Size = new System.Drawing.Size(1354, 679);
             this.flowLayoutPanelMain.TabIndex = 0;
             // 
             // splitContainer1
@@ -55,6 +56,7 @@
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -67,36 +69,42 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.flowLayoutPanelMain);
-            this.splitContainer1.Size = new System.Drawing.Size(1934, 1177);
-            this.splitContainer1.SplitterDistance = 39;
+            this.splitContainer1.Size = new System.Drawing.Size(1354, 706);
+            this.splitContainer1.SplitterDistance = 25;
+            this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 1;
             // 
             // button2
             // 
             this.button2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.button2.Location = new System.Drawing.Point(112, 0);
+            this.button2.Location = new System.Drawing.Point(78, 0);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(98, 39);
+            this.button2.Size = new System.Drawing.Size(69, 25);
             this.button2.TabIndex = 1;
             this.button2.Text = "Undo";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.BtnUndo_Click);
             // 
             // button1
             // 
             this.button1.Dock = System.Windows.Forms.DockStyle.Left;
             this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 39);
+            this.button1.Size = new System.Drawing.Size(78, 25);
             this.button1.TabIndex = 0;
             this.button1.Text = "Add Week";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.BtnAddWeek_Click);
             // 
             // DragDrop
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1934, 1177);
+            this.ClientSize = new System.Drawing.Size(1354, 706);
             this.Controls.Add(this.splitContainer1);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "DragDrop";
             this.Text = "DragDrop";
             this.Load += new System.EventHandler(this.DragDrop_LoadAsync);
