@@ -19,9 +19,12 @@ namespace Dash.DemoApp.Forms
     {
         public DashDbContext DbContext { get; set; }
         public IConfigurationRoot Configuration { get; set; }
+
+
         private readonly List<WeekControl> weekcontrols = new();
         public static OrderControl DraggedOrder;
         private List<PrioListElement> prioList;
+        private OrderScheduler scheduler;
 
         public DragDrop(DashDbContext dbContext, IConfigurationRoot configuration)
         {
@@ -39,8 +42,9 @@ namespace Dash.DemoApp.Forms
         private async Task AddWeeks()
         {
             prioList = ManageOrders.GetPrioList(Configuration);
+            //var weeksOrders = prioList.Select(w => w.CWPlanned).Distinct();
+            scheduler = new OrderScheduler(prioList);
 
-            var weeksOrders = prioList.Select(w => w.CWPlanned).Distinct();
             var weeks = await DbContext.WorkWeeks.ToListAsync();
             foreach (var week in weeks)
             {
@@ -51,6 +55,7 @@ namespace Dash.DemoApp.Forms
         private void AddOrders()
         {
             var orders = ManageOrders.GetOrders(Configuration, prioList);
+
             foreach (var order in orders)
             {
                 order.MouseDown += new MouseEventHandler(Order_MouseDown);
@@ -93,9 +98,7 @@ namespace Dash.DemoApp.Forms
                 newWeek = await w.SetUpDefaultWeekScheduleAsync(lastWeek.CalendarWeek + 1, lastWeek.Year);
             }
 
-
             flowLayoutPanelMain.Controls.Add(GetFlowPanel(newWeek));
-
         }
 
         private void BtnUndo_Click(object sender, EventArgs e)
