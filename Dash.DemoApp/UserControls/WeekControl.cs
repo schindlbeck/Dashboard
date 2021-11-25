@@ -1,4 +1,5 @@
 ﻿using Dash.Data.Models;
+using Dash.Shared;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,18 +14,17 @@ namespace Dash.DemoApp.UserControls
 {
     public partial class WeekControl : UserControl
     {
-        public DbWorkWeek Week { get; set; }
-        public List<Order> orders = new();
-
+        public WeekContainer WeekContainer { get; init; }
+ 
         public WeekControl(DbWorkWeek workWeek)
         {
-            Week = workWeek;
+            WeekContainer = new(workWeek);
             InitializeComponent();
         }
 
         private void WeekControl_Load(object sender, EventArgs e)
         {
-            label1.Text = Week.CalendarWeek.ToString();
+            label1.Text = WeekContainer.Week.CalendarWeek.ToString();
             label1.BackColor = Color.Aquamarine;
 
             flowPanel.ControlAdded += FlowPanel_ControlAdded;
@@ -35,14 +35,14 @@ namespace Dash.DemoApp.UserControls
 
         private void FlowPanel_ControlRemoved(object sender, ControlEventArgs e)
         {
-            orders.Remove(Forms.DragDrop.DraggedOrder);
+            WeekContainer.Orders.Remove(Forms.DragDrop.DraggedOrder.OrderContainer.ListElement);
             CalculateMinutes();
         }
 
-        public void AddOrder(Order order)
+        public void AddOrder(OrderControl order)
         {
             flowPanel.Controls.Add(order);
-            orders.Add(order);
+            WeekContainer.Orders.Add(order.OrderContainer.ListElement);
             CalculateMinutes();
         }
 
@@ -60,16 +60,16 @@ namespace Dash.DemoApp.UserControls
 
         private void FlowPanel_DragDrop(object sender, DragEventArgs e)
         {
-            Order o = Forms.DragDrop.DraggedOrder;
-            o.SetCWCurrent(Week.CalendarWeek);
-            orders.Add(o);
+            OrderControl o = Forms.DragDrop.DraggedOrder;
+            o.SetCWCurrent(WeekContainer.Week.CalendarWeek);
+            WeekContainer.Orders.Add(o.OrderContainer.ListElement);
             flowPanel.Controls.Add(o);
         }
 
         private void CalculateMinutes()
         {
-            var minutesBooked = orders.Sum(s => s.ListElement.TimeTotal);
-            var productionMinutes = Week.ProductionMinutes;
+            var minutesBooked = WeekContainer.Orders.Sum(s => s.TimeTotal);
+            var productionMinutes = WeekContainer.Week.ProductionMinutes;
             textBoxInfo.Text = $"Production Minutes: {minutesBooked}/{productionMinutes}";
 
             if(minutesBooked > productionMinutes * 0.9)

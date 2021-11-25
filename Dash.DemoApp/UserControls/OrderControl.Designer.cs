@@ -1,6 +1,6 @@
 ﻿namespace Dash.DemoApp.UserControls
 {
-    partial class Order
+    partial class OrderControl
     {
         /// <summary> 
         /// Erforderliche Designervariable.

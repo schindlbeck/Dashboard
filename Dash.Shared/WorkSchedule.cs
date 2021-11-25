@@ -13,7 +13,7 @@ namespace Dash.Shared
 {
     public class WorkSchedule
     {
-        public List<WorkWeek> WorkWeeks { get; set; } = new();
+        public List<DbWorkWeek> WorkWeeks { get; set; } = new();
         public List<Holiday> Holidays { get; set; } = new();
 
         public DashDbContext DbContext { get; set; }
@@ -56,7 +56,7 @@ namespace Dash.Shared
             return ISOWeek.GetWeeksInYear(year);
         }
 
-        internal async Task<List<WorkWeek>> AddWorkDaysAsync(int cwStart, int cwEnd, int year)
+        internal async Task<List<DbWorkWeek>> AddWorkDaysAsync(int cwStart, int cwEnd, int year)
         {
             for (int i = cwStart; i <= cwEnd; i++)
             {
@@ -66,13 +66,14 @@ namespace Dash.Shared
             return WorkWeeks;
         }
 
-        public async Task<WorkWeek> SetUpDefaultWeekScheduleAsync(int calendarWeek, int year)
+        public async Task<DbWorkWeek> SetUpDefaultWeekScheduleAsync(int calendarWeek, int year)
         {
-            WorkWeek workWeek = new();
+            DbWorkWeek workWeek = new();
             workWeek.WorkDays = new();
             workWeek.CalendarWeek = calendarWeek;
+            workWeek.Year = year;
 
-            int productMinutes = 0; 
+            workWeek.ProductionMinutes = 0; 
 
             for (int i = 0; i < 5; i++)
             {
@@ -86,13 +87,13 @@ namespace Dash.Shared
                 if (!Holidays.Exists(h => h.Date == workDay.Date))
                 {
                     workWeek.WorkDays.Add(workDay);
-                    productMinutes += workDay.Shifts.Sum(s => s.ActiveMinutes * s.NumberEquipments);
+                    workWeek.ProductionMinutes += workDay.Shifts.Sum(s => s.ActiveMinutes * s.NumberEquipments);
                     DbContext.WorkDays.Add(new DbWorkDay() { Date = workDay.Date, ProductionMinutes = workDay.Shifts.Sum(s => s.ActiveMinutes * s.NumberEquipments), WorkDay = workDay, CalendarWeek = ISOWeek.GetWeekOfYear(workDay.Date) });
                     await DbContext.SaveChangesAsync();
                 }
             }
 
-            DbContext.WorkWeeks.Add(new DbWorkWeek() { CalendarWeek = calendarWeek, Year = year, ProductionMinutes = productMinutes, WorkDays = workWeek.WorkDays});
+            DbContext.WorkWeeks.Add(workWeek);
             await DbContext.SaveChangesAsync();
 
             return workWeek;
@@ -114,17 +115,17 @@ namespace Dash.Shared
             }
         }
 
-        public void DeleteWorkday(WorkDay day, WorkWeek week)
+        public void DeleteWorkday(WorkDay day, DbWorkWeek week)
         {
             WorkWeeks.First(w => w.CalendarWeek == week.CalendarWeek).WorkDays.Remove(day);
         }
 
-        public void AddShift(Shifts shift, WorkDay day, WorkWeek week)
+        public void AddShift(Shifts shift, WorkDay day, DbWorkWeek week)
         {
             WorkWeeks.First(w => w.CalendarWeek == week.CalendarWeek).WorkDays.First(w => w.Date == day.Date).Shifts.Add(GetShift(shift));
         }
 
-        public void DeleteShift(Shifts shift, WorkDay day, WorkWeek week)
+        public void DeleteShift(Shifts shift, WorkDay day, DbWorkWeek week)
         {
             var deletedShift = WorkWeeks.First(w => w.CalendarWeek == week.CalendarWeek).WorkDays.First(w => w.Date == day.Date).Shifts.First(s => s.Type == shift);
             WorkWeeks.First(w => w.CalendarWeek == week.CalendarWeek).WorkDays.First(w => w.Date == day.Date).Shifts.Remove(deletedShift);
@@ -182,7 +183,7 @@ namespace Dash.Shared
             }
         }
 
-        public void ChangeNumberEquipments(int value, Shifts shift, WorkWeek week, WorkDay day)
+        public void ChangeNumberEquipments(int value, Shifts shift, DbWorkWeek week, WorkDay day)
         {
             WorkWeeks.First(w => w.CalendarWeek == week.CalendarWeek).WorkDays.First(d => d.Date == day.Date).Shifts.First(s => s.Type == shift).NumberEquipments = value;
         }

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,7 +20,7 @@ namespace Dash.DemoApp.Forms
         public DashDbContext DbContext { get; set; }
         public IConfigurationRoot Configuration { get; set; }
         private readonly List<WeekControl> weekcontrols = new();
-        public static Order DraggedOrder;
+        public static OrderControl DraggedOrder;
         private List<PrioListElement> prioList;
 
         public DragDrop(DashDbContext dbContext, IConfigurationRoot configuration)
@@ -54,13 +55,13 @@ namespace Dash.DemoApp.Forms
             {
                 order.MouseDown += new MouseEventHandler(Order_MouseDown);
 
-                weekcontrols.Where(w => w.Week.CalendarWeek == order.ListElement.CWPlanned).First().AddOrder(order);
+                weekcontrols.Where(w => w.WeekContainer.Week.CalendarWeek == order.OrderContainer.ListElement.CWPlanned).First().AddOrder(order);
             }
         }
 
         private void Order_MouseDown(object sender, MouseEventArgs e)
         {
-            var order = sender as Order;
+            var order = sender as OrderControl;
 
             DraggedOrder = order;
             DoDragDrop(order.Text, DragDropEffects.Move);
@@ -74,10 +75,27 @@ namespace Dash.DemoApp.Forms
             return weekControl;
         }
 
-        private void BtnAddWeek_Click(object sender, EventArgs e)
+        private async void BtnAddWeek_Click(object sender, EventArgs e)
         {
-            var lastWeek = weekcontrols.Last().Week;
-            var 
+            var lastWeek = weekcontrols.Last().WeekContainer.Week;
+            var cw = lastWeek.CalendarWeek;
+
+            WorkSchedule w = new(DbContext);
+            DbWorkWeek newWeek = new();
+
+            if ((cw == 52 && ISOWeek.GetWeeksInYear(lastWeek.Year) == 52)
+                ||cw == 53)
+            {
+                newWeek = await w.SetUpDefaultWeekScheduleAsync(1, lastWeek.Year + 1);
+            }
+            else
+            {
+                newWeek = await w.SetUpDefaultWeekScheduleAsync(lastWeek.CalendarWeek + 1, lastWeek.Year);
+            }
+
+
+            flowLayoutPanelMain.Controls.Add(GetFlowPanel(newWeek));
+
         }
 
         private void BtnUndo_Click(object sender, EventArgs e)

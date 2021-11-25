@@ -11,7 +11,7 @@ namespace Dash.DemoApp.Forms
     public partial class WorkDaysOverview : Form
     {
         private WorkSchedule workSchedule;
-        private WorkWeek selectedWorkWeek;
+        private DbWorkWeek selectedWorkWeek;
         private WorkDay selectedWorkDay;
 
         public DashDbContext DbContext { get; set; }
@@ -53,7 +53,7 @@ namespace Dash.DemoApp.Forms
         private void FillListBoxSchedule()
         {
             listBoxWorkSchedule.Items.Clear();
-            foreach (WorkWeek workWeek in workSchedule.WorkWeeks)
+            foreach (DbWorkWeek workWeek in workSchedule.WorkWeeks)
             {
                 listBoxWorkSchedule.Items.Add(workWeek.ToString());
             }

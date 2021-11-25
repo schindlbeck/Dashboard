@@ -8,36 +8,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Dash.Shared;
 
 namespace Dash.DemoApp.UserControls
 {
-    public partial class Order : UserControl
+    public partial class OrderControl : UserControl
     {
-        public PrioListElement ListElement { get; set; }
-        private int orderCWCurrent;
+        public OrderContainer OrderContainer { get; init; }
 
-        public Order(PrioListElement element)
+        public OrderControl(PrioListElement element)
         {
-            ListElement = element;
-            orderCWCurrent = ListElement.CWPlanned;
+            OrderContainer = new(element);
+
             InitializeComponent();
         }
 
         private void Order_Load(object sender, EventArgs e)
         {
-            groupBoxOrder.Text = ListElement.Project + "/" + ListElement.OrderNr;
+            groupBoxOrder.Text = OrderContainer.ListElement.Project + "/" + OrderContainer.ListElement.OrderNr;
 
             InitializeText();
         }
 
         private void InitializeText()
         {
-            richTextBoxInfo.Text = $"CW planned: {ListElement.CWPlanned}" + Environment.NewLine +
-                $"CW current: {orderCWCurrent}" + Environment.NewLine + $"Total time: {ListElement.TimeTotal}";
+            richTextBoxInfo.Text = $"CW planned: {OrderContainer.ListElement.CWPlanned}" + Environment.NewLine +
+                $"CW current: {OrderContainer.CurrentCW}" + Environment.NewLine + $"Total time: {OrderContainer.ListElement.TimeTotal}";
 
-            if (orderCWCurrent >= ListElement.CWPlanned)
+            if (OrderContainer.CurrentCW >= OrderContainer.ListElement.CWPlanned)
             {
-                if (orderCWCurrent == ListElement.CWPlanned)
+                if (OrderContainer.CurrentCW == OrderContainer.ListElement.CWPlanned)
                     richTextBoxInfo.BackColor = Color.LightYellow;
                 else
                     richTextBoxInfo.BackColor = Color.IndianRed;
@@ -50,7 +50,7 @@ namespace Dash.DemoApp.UserControls
 
         public void SetCWCurrent(int cw)
         {
-            orderCWCurrent = cw;
+            OrderContainer.CurrentCW = cw;
             InitializeText();
         }
     }
