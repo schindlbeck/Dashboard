@@ -15,7 +15,7 @@ namespace Dash.DemoApp.UserControls
     public partial class WeekControl : UserControl
     {
         public WeekContainer WeekContainer { get; init; }
- 
+
         public WeekControl(DbWorkWeek workWeek, OrderScheduler scheduler)
         {
             WeekContainer = new(workWeek, scheduler);
@@ -33,11 +33,11 @@ namespace Dash.DemoApp.UserControls
             flowPanel.ControlRemoved += FlowPanel_ControlRemoved;
         }
 
-       
+
         public void AddOrder(OrderControl order)
         {
             flowPanel.Controls.Add(order);
-            WeekContainer.Orders.Add(order.OrderContainer.ListElement);
+            WeekContainer.Orders.Add(order);
             CalculateMinutes();
         }
 
@@ -57,11 +57,11 @@ namespace Dash.DemoApp.UserControls
         {
             var order = WeekContainer.AddOrder();
 
-            if(order is not null)
+            if (order is not null)
             {
-                var newOrder = new OrderControl(order);
-                newOrder.SetCWCurrent(WeekContainer.Week.CalendarWeek);
-                flowPanel.Controls.Add(newOrder);
+                var a = WeekContainer.Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(order.OrderContainer.ListElement.KeyToString()));
+
+                flowPanel.Controls.Add(a);
             }
         }
 
@@ -72,20 +72,15 @@ namespace Dash.DemoApp.UserControls
 
         private void FlowPanel_ControlRemoved(object sender, ControlEventArgs e)
         {
-            //TODO: not reached
-
             var order = WeekContainer.RemoveOrder();
+            //flowPanel.Controls.Remove(order);
+            CalculateMinutes();
 
-            if (order is not null)
-            {
-                WeekContainer.Orders.Remove(Forms.DragDrop.DraggedOrder.OrderContainer.ListElement);
-                CalculateMinutes();
-            }
         }
 
         private void CalculateMinutes()
         {
-            var minutesBooked = WeekContainer.Orders.Sum(s => s.TimeTotal);
+            var minutesBooked = WeekContainer.Orders.Sum(s => s.OrderContainer.ListElement.TimeTotal);
             var productionMinutes = WeekContainer.Week.ProductionMinutes;
             textBoxInfo.Text = $"Production Minutes: {minutesBooked}/{productionMinutes}";
 

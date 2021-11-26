@@ -1,30 +1,28 @@
 ﻿using Dash.Data;
+using Dash.DemoApp.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dash.Shared
+namespace Dash.DemoApp
 {
     public class OrderScheduler
     {
-        public List<OrderContainer> Orders;
+        public List<OrderControl> Orders;
         public string KeyDraggedOrder;
 
         private readonly Stack<LastChangedItem> lastChanged = new();
 
-        public OrderScheduler(List<PrioListElement> prioList)
+        public OrderScheduler()
         {
             Orders = new();
-            foreach (PrioListElement prio in prioList)
-            {
-                Orders.Add(new OrderContainer(prio));
-            }
+           
         }
 
         private void AddLastChangedItem(string key, int cwLast, int cwNow)
-        {
+        {   
             lastChanged.Push(new LastChangedItem() { Key = key, CwLast = cwLast, CwNow = cwNow });
         }
 
@@ -38,16 +36,16 @@ namespace Dash.Shared
             lastChanged.Pop();
         }
 
-        public OrderContainer GetOrder(string key)
+        public OrderControl GetOrder(string key)
         {
-            return Orders.First(o => o.ListElement.KeyToString().Equals(key));
+            return Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key));
         }
 
         public void ChangeCW(string key, int newWeek)
         {
-            var oldWeek = Orders.First(o => o.ListElement.KeyToString().Equals(key)).CurrentCW;
+            var oldWeek = Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentCW;
 
-            Orders.First(o => o.ListElement.KeyToString().Equals(key)).CurrentCW = newWeek;
+            Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentCW = newWeek;
             AddLastChangedItem(key, oldWeek, newWeek);
         }
     }

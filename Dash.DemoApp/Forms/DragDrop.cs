@@ -30,6 +30,8 @@ namespace Dash.DemoApp.Forms
         {
             Configuration = configuration;
             DbContext = dbContext;
+            scheduler = new OrderScheduler();
+
             InitializeComponent();
         }
 
@@ -43,7 +45,6 @@ namespace Dash.DemoApp.Forms
         {
             prioList = ManageOrders.GetPrioList(Configuration);
             //var weeksOrders = prioList.Select(w => w.CWPlanned).Distinct();
-            scheduler = new OrderScheduler(prioList);
 
             var weeks = await DbContext.WorkWeeks.ToListAsync();
             foreach (var week in weeks)
@@ -59,7 +60,7 @@ namespace Dash.DemoApp.Forms
             foreach (var order in orders)
             {
                 order.MouseDown += new MouseEventHandler(Order_MouseDown);
-
+                scheduler.Orders.Add(order);
                 weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == order.OrderContainer.ListElement.CWPlanned).AddOrder(order);
             }
         }

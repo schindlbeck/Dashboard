@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dash.DemoApp.UserControls;
 
-namespace Dash.Shared
+namespace Dash.DemoApp
 {
     public class WeekContainer
     {
         public DbWorkWeek Week { get; set; }
-        public List<PrioListElement> Orders { get; set; }
+        public List<OrderControl> Orders { get; set; }
         public OrderScheduler Scheduler { get; set; }
 
         public WeekContainer(DbWorkWeek week, OrderScheduler scheduler)
@@ -21,23 +22,26 @@ namespace Dash.Shared
             Scheduler = scheduler;
         }
 
-        public PrioListElement AddOrder()
+        public OrderControl AddOrder()
         {
-            if(!Orders.Exists(o => o.KeyToString().Equals(Scheduler.KeyDraggedOrder)))
+            if (!Orders.Exists(o => o.OrderContainer.ListElement.KeyToString().Equals(Scheduler.KeyDraggedOrder)))
             {
                 var order = Scheduler.GetOrder(Scheduler.KeyDraggedOrder);
-                Orders.Add(order.ListElement);
+                Orders.Add(order);
                 Scheduler.ChangeCW(Scheduler.KeyDraggedOrder, Week.CalendarWeek);
 
-                return order.ListElement;
+                return order;
             }
 
             return null;
         }
 
-        public PrioListElement RemoveOrder()
+        public OrderControl RemoveOrder()
         {
-            return null;
+            var order = Scheduler.GetOrder(Scheduler.KeyDraggedOrder);
+            Orders.Remove(order);
+
+            return order;
         }
 
     }
