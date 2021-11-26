@@ -23,8 +23,8 @@ namespace Dash.DemoApp
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             byte[] bin;
 
-            bin = File.ReadAllBytes(Configuration["ConnectionStrings:DefaultExcelFileConnection"] + Configuration["Files:DefaultExcelFile"]);
-            //bin = File.ReadAllBytes(Configuration["ConnectionStrings:DefaultExcelFileConnectionHome"] + Configuration["Files:DefaultExcelFile"]);
+            //bin = File.ReadAllBytes(Configuration["ConnectionStrings:DefaultExcelFileConnection"] + Configuration["Files:DefaultExcelFile"]);
+            bin = File.ReadAllBytes(Configuration["ConnectionStrings:DefaultExcelFileConnectionHome"] + Configuration["Files:DefaultExcelFile"]);
 
             MemoryStream stream = new(bin);
             ExcelPackage excelPackage = new(stream);
@@ -52,7 +52,7 @@ namespace Dash.DemoApp
             return list;
         }
 
-        public static List<OrderControl> GetOrders(IConfigurationRoot configuration, List<PrioListElement> prioList)
+        public static List<OrderControl> GetOrders(List<PrioListElement> prioList)
         {
             List<OrderControl> orders = new();
 
@@ -65,5 +65,7 @@ namespace Dash.DemoApp
 
             return orders;
         }
+
+        
     }
 }

@@ -16,9 +16,9 @@ namespace Dash.DemoApp.UserControls
     {
         public WeekContainer WeekContainer { get; init; }
  
-        public WeekControl(DbWorkWeek workWeek)
+        public WeekControl(DbWorkWeek workWeek, OrderScheduler scheduler)
         {
-            WeekContainer = new(workWeek);
+            WeekContainer = new(workWeek, scheduler);
             InitializeComponent();
         }
 
@@ -33,12 +33,7 @@ namespace Dash.DemoApp.UserControls
             flowPanel.ControlRemoved += FlowPanel_ControlRemoved;
         }
 
-        private void FlowPanel_ControlRemoved(object sender, ControlEventArgs e)
-        {
-            WeekContainer.Orders.Remove(Forms.DragDrop.DraggedOrder.OrderContainer.ListElement);
-            CalculateMinutes();
-        }
-
+       
         public void AddOrder(OrderControl order)
         {
             flowPanel.Controls.Add(order);
@@ -60,10 +55,29 @@ namespace Dash.DemoApp.UserControls
 
         private void FlowPanel_DragDrop(object sender, DragEventArgs e)
         {
-            OrderControl o = Forms.DragDrop.DraggedOrder;
-            o.SetCWCurrent(WeekContainer.Week.CalendarWeek);
-            WeekContainer.Orders.Add(o.OrderContainer.ListElement);
-            flowPanel.Controls.Add(o);
+            //OrderControl o = Forms.DragDrop.DraggedOrder;
+            //o.SetCWCurrent(WeekContainer.Week.CalendarWeek);
+            //WeekContainer.Orders.Add(o.OrderContainer.ListElement);
+            
+            var order = WeekContainer.AddOrder();
+
+            if(order is not null)
+            {
+                var newOrder = new OrderControl(order);
+                newOrder.SetCWCurrent(WeekContainer.Week.CalendarWeek);
+                flowPanel.Controls.Add(newOrder);
+            }
+        }
+
+        private void FlowPanel_ControlAdded(object sender, ControlEventArgs e)
+        {
+            CalculateMinutes();
+        }
+
+        private void FlowPanel_ControlRemoved(object sender, ControlEventArgs e)
+        {
+            WeekContainer.Orders.Remove(Forms.DragDrop.DraggedOrder.OrderContainer.ListElement);
+            CalculateMinutes();
         }
 
         private void CalculateMinutes()
@@ -72,20 +86,15 @@ namespace Dash.DemoApp.UserControls
             var productionMinutes = WeekContainer.Week.ProductionMinutes;
             textBoxInfo.Text = $"Production Minutes: {minutesBooked}/{productionMinutes}";
 
-            if(minutesBooked > productionMinutes * 0.9)
+            if (minutesBooked > productionMinutes * 0.9)
             {
-                if(minutesBooked > productionMinutes) textBoxInfo.BackColor = Color.Red;
+                if (minutesBooked > productionMinutes) textBoxInfo.BackColor = Color.Red;
                 else textBoxInfo.BackColor = Color.PaleVioletRed;
             }
             else
             {
                 textBoxInfo.BackColor = Color.LightGreen;
             }
-        }
-
-        private void FlowPanel_ControlAdded(object sender, ControlEventArgs e)
-        {
-            CalculateMinutes();
         }
     }
 }

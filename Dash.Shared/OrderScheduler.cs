@@ -10,25 +10,27 @@ namespace Dash.Shared
     public class OrderScheduler
     {
         public List<OrderContainer> Orders;
+        public string KeyDraggedOrder;
 
-        private Stack<OrderContainer> lastChanged = new();
+        private readonly Stack<LastChangedItem> lastChanged = new();
 
         public OrderScheduler(List<PrioListElement> prioList)
         {
-            foreach(PrioListElement prio in prioList)
+            Orders = new();
+            foreach (PrioListElement prio in prioList)
             {
                 Orders.Add(new OrderContainer(prio));
             }
         }
 
-        public void AddLastChangedItem(string Key)
+        private void AddLastChangedItem(string key, int cwLast, int cwNow)
         {
-            lastChanged.Push(Orders.First(o => o.ListElement.KeyToString() == Key));
+            lastChanged.Push(new LastChangedItem() { Key = key, CwLast = cwLast, CwNow = cwNow });
         }
 
         public string GetLastChangedItem()
         {
-            return lastChanged.Peek().ListElement.KeyToString();
+            return lastChanged.Peek().Key;
         }
 
         public void LastChangedUndid()
@@ -36,7 +38,26 @@ namespace Dash.Shared
             lastChanged.Pop();
         }
 
-        
+        public OrderContainer GetOrder(string key)
+        {
+            return Orders.First(o => o.ListElement.KeyToString().Equals(key));
+        }
 
+        public void ChangeCW(string key, int newWeek)
+        {
+            var oldWeek = Orders.First(o => o.ListElement.KeyToString().Equals(key)).CurrentCW;
+
+            Orders.First(o => o.ListElement.KeyToString().Equals(key)).CurrentCW = newWeek;
+            AddLastChangedItem(key, oldWeek, newWeek);
+        }
+    }
+
+    public class LastChangedItem
+    {
+        public string Key { get; set; }
+
+        public int CwLast { get; set; }
+
+        public int CwNow { get; set; }
     }
 }

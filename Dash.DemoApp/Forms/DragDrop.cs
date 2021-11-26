@@ -54,13 +54,13 @@ namespace Dash.DemoApp.Forms
 
         private void AddOrders()
         {
-            var orders = ManageOrders.GetOrders(Configuration, prioList);
+            var orders = ManageOrders.GetOrders(prioList);
 
             foreach (var order in orders)
             {
                 order.MouseDown += new MouseEventHandler(Order_MouseDown);
 
-                weekcontrols.Where(w => w.WeekContainer.Week.CalendarWeek == order.OrderContainer.ListElement.CWPlanned).First().AddOrder(order);
+                weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == order.OrderContainer.ListElement.CWPlanned).AddOrder(order);
             }
         }
 
@@ -68,13 +68,16 @@ namespace Dash.DemoApp.Forms
         {
             var order = sender as OrderControl;
 
-            DraggedOrder = order;
+            scheduler.KeyDraggedOrder = order.OrderContainer.ListElement.KeyToString();
+            
+            //DraggedOrder = order;
+            order.Text = scheduler.KeyDraggedOrder;
             DoDragDrop(order.Text, DragDropEffects.Move);
         }
 
         private WeekControl GetFlowPanel(DbWorkWeek week)
         {
-            WeekControl weekControl = new(week);
+            WeekControl weekControl = new(week, scheduler);
 
             weekcontrols.Add(weekControl);
             return weekControl;
