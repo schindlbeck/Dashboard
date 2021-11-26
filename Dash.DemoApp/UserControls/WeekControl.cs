@@ -55,10 +55,6 @@ namespace Dash.DemoApp.UserControls
 
         private void FlowPanel_DragDrop(object sender, DragEventArgs e)
         {
-            //OrderControl o = Forms.DragDrop.DraggedOrder;
-            //o.SetCWCurrent(WeekContainer.Week.CalendarWeek);
-            //WeekContainer.Orders.Add(o.OrderContainer.ListElement);
-            
             var order = WeekContainer.AddOrder();
 
             if(order is not null)
@@ -76,8 +72,15 @@ namespace Dash.DemoApp.UserControls
 
         private void FlowPanel_ControlRemoved(object sender, ControlEventArgs e)
         {
-            WeekContainer.Orders.Remove(Forms.DragDrop.DraggedOrder.OrderContainer.ListElement);
-            CalculateMinutes();
+            //TODO: not reached
+
+            var order = WeekContainer.RemoveOrder();
+
+            if (order is not null)
+            {
+                WeekContainer.Orders.Remove(Forms.DragDrop.DraggedOrder.OrderContainer.ListElement);
+                CalculateMinutes();
+            }
         }
 
         private void CalculateMinutes()

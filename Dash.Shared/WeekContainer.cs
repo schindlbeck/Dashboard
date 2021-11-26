@@ -27,6 +27,7 @@ namespace Dash.Shared
             {
                 var order = Scheduler.GetOrder(Scheduler.KeyDraggedOrder);
                 Orders.Add(order.ListElement);
+                Scheduler.ChangeCW(Scheduler.KeyDraggedOrder, Week.CalendarWeek);
 
                 return order.ListElement;
             }
@@ -34,9 +35,10 @@ namespace Dash.Shared
             return null;
         }
 
-        public void RemoveOrder()
+        public PrioListElement RemoveOrder()
         {
-
+            return null;
         }
+
     }
 }
