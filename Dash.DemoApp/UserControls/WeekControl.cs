@@ -31,6 +31,8 @@ namespace Dash.DemoApp.UserControls
             flowPanel.DragDrop += FlowPanel_DragDrop;
             flowPanel.DragEnter += FlowPanel_DragEnter;
             flowPanel.ControlRemoved += FlowPanel_ControlRemoved;
+
+            CalculateMinutes();
         }
 
 

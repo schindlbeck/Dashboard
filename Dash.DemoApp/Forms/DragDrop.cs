@@ -23,7 +23,7 @@ namespace Dash.DemoApp.Forms
 
         private readonly List<WeekControl> weekcontrols = new();
         private List<PrioListElement> prioList;
-        private OrderScheduler scheduler;
+        private readonly OrderScheduler scheduler;
 
         public DragDrop(DashDbContext dbContext, IConfigurationRoot configuration)
         {
@@ -85,7 +85,7 @@ namespace Dash.DemoApp.Forms
             var cw = lastWeek.CalendarWeek;
 
             WorkSchedule w = new(DbContext);
-            DbWorkWeek newWeek = new();
+            DbWorkWeek newWeek;
 
             if ((cw == 52 && ISOWeek.GetWeeksInYear(lastWeek.Year) == 52)
                 ||cw == 53)

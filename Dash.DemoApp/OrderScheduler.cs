@@ -39,8 +39,7 @@ namespace Dash.DemoApp
 
         public void LastChangedUndid()
         {
-                lastChanged.Pop();
-            
+            lastChanged.Pop();
         }
 
         public OrderControl GetOrder(string key)
