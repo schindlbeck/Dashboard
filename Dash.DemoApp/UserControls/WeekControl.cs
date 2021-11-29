@@ -55,7 +55,10 @@ namespace Dash.DemoApp.UserControls
 
         private void FlowPanel_DragDrop(object sender, DragEventArgs e)
         {
-            var order = WeekContainer.AddOrder();
+            var orderKey = e.Data.GetData(DataFormats.Text) as string;
+
+            var order = WeekContainer.AddOrder(orderKey);
+
 
             if (order is not null)
             {
@@ -73,9 +76,7 @@ namespace Dash.DemoApp.UserControls
         private void FlowPanel_ControlRemoved(object sender, ControlEventArgs e)
         {
             var order = WeekContainer.RemoveOrder();
-            //flowPanel.Controls.Remove(order);
             CalculateMinutes();
-
         }
 
         private void CalculateMinutes()

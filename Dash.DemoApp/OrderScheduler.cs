@@ -44,8 +44,8 @@ namespace Dash.DemoApp
         public void ChangeCW(string key, int newWeek)
         {
             var oldWeek = Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentCW;
-
             Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentCW = newWeek;
+
             AddLastChangedItem(key, oldWeek, newWeek);
         }
     }

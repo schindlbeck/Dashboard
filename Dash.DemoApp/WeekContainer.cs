@@ -22,17 +22,17 @@ namespace Dash.DemoApp
             Scheduler = scheduler;
         }
 
-        public OrderControl AddOrder()
+        public OrderControl AddOrder(string key)
         {
-            if (!Orders.Exists(o => o.OrderContainer.ListElement.KeyToString().Equals(Scheduler.KeyDraggedOrder)))
+            if (!Orders.Exists(o => o.OrderContainer.ListElement.KeyToString().Equals(key)))
             {
-                var order = Scheduler.GetOrder(Scheduler.KeyDraggedOrder);
+                Scheduler.ChangeCW(key, Week.CalendarWeek);
+                var order = Scheduler.GetOrder(key);
+                order.SetCWCurrent(order.OrderContainer.CurrentCW);
                 Orders.Add(order);
-                Scheduler.ChangeCW(Scheduler.KeyDraggedOrder, Week.CalendarWeek);
 
                 return order;
             }
-
             return null;
         }
 
