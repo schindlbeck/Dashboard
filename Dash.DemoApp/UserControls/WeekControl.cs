@@ -57,7 +57,12 @@ namespace Dash.DemoApp.UserControls
         {
             var orderKey = e.Data.GetData(DataFormats.Text) as string;
 
-            var order = WeekContainer.AddOrder(orderKey);
+            AddOrder(orderKey, false);
+        }
+
+        public void AddOrder(string orderKey, bool isUndo)
+        {
+            var order = WeekContainer.AddOrder(orderKey, isUndo);
 
 
             if (order is not null)
@@ -74,6 +79,11 @@ namespace Dash.DemoApp.UserControls
         }
 
         private void FlowPanel_ControlRemoved(object sender, ControlEventArgs e)
+        {
+            RemoveOrder();
+        }
+
+        public void RemoveOrder()
         {
             WeekContainer.RemoveOrder();
             CalculateMinutes();

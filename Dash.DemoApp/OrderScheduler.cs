@@ -17,22 +17,30 @@ namespace Dash.DemoApp
         public OrderScheduler()
         {
             Orders = new();
-           
+
         }
 
         private void AddLastChangedItem(string key, int cwLast, int cwNow)
-        {   
+        {
             lastChanged.Push(new LastChangedItem() { Key = key, CwLast = cwLast, CwNow = cwNow });
         }
 
         public LastChangedItem GetLastChangedItem()
         {
-            return lastChanged.Peek();
+            try
+            {
+                return lastChanged.Peek();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public void LastChangedUndid()
         {
-            lastChanged.Pop();
+                lastChanged.Pop();
+            
         }
 
         public OrderControl GetOrder(string key)
@@ -40,12 +48,13 @@ namespace Dash.DemoApp
             return Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key));
         }
 
-        public void ChangeCW(string key, int newWeek)
+        public void ChangeCW(string key, int newWeek, bool isUndo)
         {
             var oldWeek = Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentCW;
             Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentCW = newWeek;
 
-            AddLastChangedItem(key, oldWeek, newWeek);
+            if (!isUndo)
+                AddLastChangedItem(key, oldWeek, newWeek);
         }
     }
 

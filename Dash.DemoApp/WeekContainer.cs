@@ -22,11 +22,11 @@ namespace Dash.DemoApp
             Scheduler = scheduler;
         }
 
-        public OrderControl AddOrder(string key)
+        public OrderControl AddOrder(string key, bool isUndo)
         {
             if (!Orders.Exists(o => o.OrderContainer.ListElement.KeyToString().Equals(key)))
             {
-                Scheduler.ChangeCW(key, Week.CalendarWeek);
+                Scheduler.ChangeCW(key, Week.CalendarWeek, isUndo);
                 var order = Scheduler.GetOrder(key);
                 order.SetCWCurrent(order.OrderContainer.CurrentCW);
                 Orders.Add(order);

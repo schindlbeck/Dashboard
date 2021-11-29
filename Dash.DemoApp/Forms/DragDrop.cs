@@ -102,10 +102,15 @@ namespace Dash.DemoApp.Forms
 
         private void BtnUndo_Click(object sender, EventArgs e)
         {
-            //var lastChanged = scheduler.GetLastChangedItem();
+            var lastChanged = scheduler.GetLastChangedItem();
 
-            //weekcontrols.First(w => w.WeekContainer.Week == lastChanged.CwNow).
-           
+            if(lastChanged is not null)
+            {
+                weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == lastChanged.CwLast).AddOrder(lastChanged.Key, true);
+                weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == lastChanged.CwNow).RemoveOrder();
+
+                scheduler.LastChangedUndid();
+            }
         }
     }
 }
