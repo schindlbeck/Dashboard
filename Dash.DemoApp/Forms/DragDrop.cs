@@ -22,7 +22,6 @@ namespace Dash.DemoApp.Forms
 
 
         private readonly List<WeekControl> weekcontrols = new();
-        public static OrderControl DraggedOrder;
         private List<PrioListElement> prioList;
         private OrderScheduler scheduler;
 
@@ -44,7 +43,6 @@ namespace Dash.DemoApp.Forms
         private async Task AddWeeks()
         {
             prioList = ManageOrders.GetPrioList(Configuration);
-            //var weeksOrders = prioList.Select(w => w.CWPlanned).Distinct();
 
             var weeks = await DbContext.WorkWeeks.ToListAsync();
             foreach (var week in weeks)
@@ -69,10 +67,7 @@ namespace Dash.DemoApp.Forms
         {
             var order = sender as OrderControl;
 
-            scheduler.KeyDraggedOrder = order.OrderContainer.ListElement.KeyToString();
-            
-            //DraggedOrder = order;
-            order.Text = scheduler.KeyDraggedOrder;
+            order.Text = order.OrderContainer.ListElement.KeyToString();
             DoDragDrop(order.Text, DragDropEffects.Move);
         }
 
@@ -107,7 +102,10 @@ namespace Dash.DemoApp.Forms
 
         private void BtnUndo_Click(object sender, EventArgs e)
         {
+            //var lastChanged = scheduler.GetLastChangedItem();
 
+            //weekcontrols.First(w => w.WeekContainer.Week == lastChanged.CwNow).
+           
         }
     }
 }

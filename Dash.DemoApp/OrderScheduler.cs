@@ -11,7 +11,6 @@ namespace Dash.DemoApp
     public class OrderScheduler
     {
         public List<OrderControl> Orders;
-        public string KeyDraggedOrder;
 
         private readonly Stack<LastChangedItem> lastChanged = new();
 
@@ -26,9 +25,9 @@ namespace Dash.DemoApp
             lastChanged.Push(new LastChangedItem() { Key = key, CwLast = cwLast, CwNow = cwNow });
         }
 
-        public string GetLastChangedItem()
+        public LastChangedItem GetLastChangedItem()
         {
-            return lastChanged.Peek().Key;
+            return lastChanged.Peek();
         }
 
         public void LastChangedUndid()

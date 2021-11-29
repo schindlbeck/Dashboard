@@ -75,7 +75,7 @@ namespace Dash.DemoApp.UserControls
 
         private void FlowPanel_ControlRemoved(object sender, ControlEventArgs e)
         {
-            var order = WeekContainer.RemoveOrder();
+            WeekContainer.RemoveOrder();
             CalculateMinutes();
         }
 

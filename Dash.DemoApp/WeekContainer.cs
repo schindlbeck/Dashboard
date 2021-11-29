@@ -36,13 +36,14 @@ namespace Dash.DemoApp
             return null;
         }
 
-        public OrderControl RemoveOrder()
+        public void RemoveOrder()
         {
-            var order = Scheduler.GetOrder(Scheduler.KeyDraggedOrder);
-            Orders.Remove(order);
+            var schedulerOrders = Scheduler.Orders.Where(o => o.OrderContainer.CurrentCW == Week.CalendarWeek).ToList();
 
-            return order;
+            var order = Orders.Except(schedulerOrders).FirstOrDefault();
+
+            if (order is not null)
+                Orders.Remove(order);
         }
-
     }
 }
