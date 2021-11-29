@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,9 +29,17 @@ namespace Dash.DemoApp.UserControls
             label1.BackColor = Color.Aquamarine;
 
             flowPanel.ControlAdded += FlowPanel_ControlAdded;
-            flowPanel.DragDrop += FlowPanel_DragDrop;
-            flowPanel.DragEnter += FlowPanel_DragEnter;
             flowPanel.ControlRemoved += FlowPanel_ControlRemoved;
+
+            //TODO : datetime.now later
+            var cw = 41;
+            var year = 2021;
+
+            if (WeekContainer.Week.CalendarWeek >= cw || WeekContainer.Week.Year > year)
+            {
+                flowPanel.DragDrop += FlowPanel_DragDrop;
+                flowPanel.DragEnter += FlowPanel_DragEnter;
+            }
 
             CalculateMinutes();
         }

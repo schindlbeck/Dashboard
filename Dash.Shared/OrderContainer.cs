@@ -11,11 +11,13 @@ namespace Dash.Shared
     {
         public PrioListElement ListElement { get; init; }
         public int CurrentCW { get; set; }
+        public int CurrentYear { get; set; }
 
         public OrderContainer(PrioListElement element) 
         { 
             ListElement = element;
             CurrentCW = element.CWPlanned;
+            CurrentYear = element.DeliveryDate.Year;
         }
 
     }

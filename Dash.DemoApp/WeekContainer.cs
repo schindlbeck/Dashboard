@@ -26,9 +26,9 @@ namespace Dash.DemoApp
         {
             if (!Orders.Exists(o => o.OrderContainer.ListElement.KeyToString().Equals(key)))
             {
-                Scheduler.ChangeCW(key, Week.CalendarWeek, isUndo);
+                Scheduler.ChangeCW(key, Week.CalendarWeek, Week.Year, isUndo);
                 var order = Scheduler.GetOrder(key);
-                order.SetCWCurrent(order.OrderContainer.CurrentCW);
+                order.SetCWCurrent();
                 Orders.Add(order);
 
                 return order;

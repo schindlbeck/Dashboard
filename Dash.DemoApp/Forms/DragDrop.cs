@@ -30,6 +30,7 @@ namespace Dash.DemoApp.Forms
             Configuration = configuration;
             DbContext = dbContext;
             scheduler = new OrderScheduler();
+            prioList = ManageOrders.GetPrioList(Configuration);
 
             InitializeComponent();
         }
@@ -42,10 +43,15 @@ namespace Dash.DemoApp.Forms
 
         private async Task AddWeeks()
         {
-            prioList = ManageOrders.GetPrioList(Configuration);
-
             var weeks = await DbContext.WorkWeeks.ToListAsync();
-            foreach (var week in weeks)
+
+            //TODO : cw later dateNow
+            var cw = 41;
+            var d = prioList.Select(w => w.CWPlanned).ToList();
+
+            var weeksDisplayed1 = weeks.Where(w => w.CalendarWeek >= cw || d.Contains(w.CalendarWeek)).ToList();
+           
+            foreach (var week in weeksDisplayed1)
             {
                 flowLayoutPanelMain.Controls.Add(GetFlowPanel(week));
             }
@@ -88,7 +94,7 @@ namespace Dash.DemoApp.Forms
             DbWorkWeek newWeek;
 
             if ((cw == 52 && ISOWeek.GetWeeksInYear(lastWeek.Year) == 52)
-                ||cw == 53)
+                || cw == 53)
             {
                 newWeek = await w.SetUpDefaultWeekScheduleAsync(1, lastWeek.Year + 1);
             }
@@ -104,7 +110,7 @@ namespace Dash.DemoApp.Forms
         {
             var lastChanged = scheduler.GetLastChangedItem();
 
-            if(lastChanged is not null)
+            if (lastChanged is not null)
             {
                 weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == lastChanged.CwLast).AddOrder(lastChanged.Key, true);
                 weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == lastChanged.CwNow).RemoveOrder();

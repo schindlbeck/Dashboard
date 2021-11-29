@@ -47,10 +47,12 @@ namespace Dash.DemoApp
             return Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key));
         }
 
-        public void ChangeCW(string key, int newWeek, bool isUndo)
+        public void ChangeCW(string key, int newWeek, int year, bool isUndo)
         {
             var oldWeek = Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentCW;
             Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentCW = newWeek;
+            Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentYear = year;
+
 
             if (!isUndo)
                 AddLastChangedItem(key, oldWeek, newWeek);
