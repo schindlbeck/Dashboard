@@ -17,7 +17,6 @@ namespace Dash.DemoApp
         public OrderScheduler()
         {
             Orders = new();
-
         }
 
         private void AddLastChangedItem(string key, int cwLast, int cwNow)

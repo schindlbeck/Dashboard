@@ -17,7 +17,8 @@ namespace Dash.DemoApp.Forms
 {
     public partial class DragDrop : Form
     {
-        public DashDbContext DbContext { get; set; }
+        public DashDbContext DashContext { get; set; }
+        public PriorityDbContext PriorityContext { get; set; }
         public IConfigurationRoot Configuration { get; set; }
 
 
@@ -25,10 +26,11 @@ namespace Dash.DemoApp.Forms
         private List<PrioListElement> prioList;
         private readonly OrderScheduler scheduler;
 
-        public DragDrop(DashDbContext dbContext, IConfigurationRoot configuration)
+        public DragDrop(DashDbContext dbDashContext, IConfigurationRoot configuration)
         {
             Configuration = configuration;
-            DbContext = dbContext;
+            DashContext = dbDashContext;
+            PriorityContext = new PriorityDbContext();
             scheduler = new OrderScheduler();
             prioList = ManageOrders.GetPrioList(Configuration);
 
@@ -43,7 +45,7 @@ namespace Dash.DemoApp.Forms
 
         private async Task AddWeeks()
         {
-            var weeks = await DbContext.WorkWeeks.ToListAsync();
+            var weeks = await DashContext.WorkWeeks.ToListAsync();
 
             //TODO : cw later dateNow
             var cw = 41;
@@ -79,7 +81,7 @@ namespace Dash.DemoApp.Forms
 
         private WeekControl GetFlowPanel(DbWorkWeek week)
         {
-            WeekControl weekControl = new(week, scheduler);
+            WeekControl weekControl = new(week, scheduler, PriorityContext);
 
             weekcontrols.Add(weekControl);
             return weekControl;
@@ -90,7 +92,7 @@ namespace Dash.DemoApp.Forms
             var lastWeek = weekcontrols.Last().WeekContainer.Week;
             var cw = lastWeek.CalendarWeek;
 
-            WorkSchedule w = new(DbContext);
+            WorkSchedule w = new(DashContext);
             DbWorkWeek newWeek;
 
             if ((cw == 52 && ISOWeek.GetWeeksInYear(lastWeek.Year) == 52)

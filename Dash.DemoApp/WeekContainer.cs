@@ -15,14 +15,25 @@ namespace Dash.DemoApp
         public List<OrderControl> Orders { get; set; }
         public OrderScheduler Scheduler { get; set; }
 
-        public WeekContainer(DbWorkWeek week, OrderScheduler scheduler)
+        private PriorityDbContext dbContext;
+
+        public WeekContainer(DbWorkWeek week, OrderScheduler scheduler, PriorityDbContext dbContext)
         {
             Week = week;
             Orders = new();
             Scheduler = scheduler;
+            this.dbContext = dbContext;
+
+            AddToDb();
         }
 
-        public OrderControl AddOrder(string key, bool isUndo)
+        private void AddToDb()
+        {
+            dbContext.Weeks.Add(new Week() { CalendarWeek = Week.CalendarWeek, ProductionMinutes = Week.ProductionMinutes, Year = Week.Year, Orders = new() });
+            dbContext.SaveChangesAsync();
+        }
+
+        public async Task<OrderControl> AddOrder(string key, bool isUndo)
         {
             if (!Orders.Exists(o => o.OrderContainer.ListElement.KeyToString().Equals(key)))
             {
@@ -31,9 +42,20 @@ namespace Dash.DemoApp
                 order.SetCWCurrent();
                 Orders.Add(order);
 
+                var dbOrder = new Order() { DeliveryDate = order.OrderContainer.ListElement.DeliveryDate, Key = key, TimeTotal = order.OrderContainer.ListElement.TimeTotal };
+                await AddOrderToDbAsync(dbOrder);
+
                 return order;
             }
             return null;
+        }
+
+        private async Task AddOrderToDbAsync(Order dbOrder)
+        {
+            dbContext.Orders.Add(dbOrder);
+            dbContext.Weeks.First(w => w.CalendarWeek == Week.CalendarWeek && w.Year == Week.Year).Orders.Add(dbOrder);
+
+            await dbContext.SaveChangesAsync();
         }
 
         public void RemoveOrder()

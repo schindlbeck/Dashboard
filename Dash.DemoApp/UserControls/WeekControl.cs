@@ -1,4 +1,5 @@
-﻿using Dash.Data.Models;
+﻿using Dash.Data;
+using Dash.Data.Models;
 using Dash.Shared;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,9 @@ namespace Dash.DemoApp.UserControls
     {
         public WeekContainer WeekContainer { get; init; }
 
-        public WeekControl(DbWorkWeek workWeek, OrderScheduler scheduler)
+        public WeekControl(DbWorkWeek workWeek, OrderScheduler scheduler, PriorityDbContext dbContext)
         {
-            WeekContainer = new(workWeek, scheduler);
+            WeekContainer = new(workWeek, scheduler, dbContext);
             InitializeComponent();
         }
 
@@ -71,9 +72,9 @@ namespace Dash.DemoApp.UserControls
             AddOrder(orderKey, false);
         }
 
-        public void AddOrder(string orderKey, bool isUndo)
+        public async void AddOrder(string orderKey, bool isUndo)
         {
-            var order = WeekContainer.AddOrder(orderKey, isUndo);
+            var order = await WeekContainer.AddOrder(orderKey, isUndo);
 
 
             if (order is not null)

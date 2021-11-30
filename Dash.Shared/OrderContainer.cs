@@ -19,6 +19,5 @@ namespace Dash.Shared
             CurrentCW = element.CWPlanned;
             CurrentYear = element.DeliveryDate.Year;
         }
-
     }
 }
