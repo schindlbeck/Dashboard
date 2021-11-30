@@ -23,6 +23,7 @@ namespace Dash.DemoApp
             Orders = new();
             Scheduler = scheduler;
             this.dbContext = dbContext;
+            dbContext.Database.EnsureCreated();
 
             AddToDb();
         }
@@ -58,14 +59,20 @@ namespace Dash.DemoApp
             await dbContext.SaveChangesAsync();
         }
 
-        public void RemoveOrder()
+        public async Task RemoveOrder()
         {
             var schedulerOrders = Scheduler.Orders.Where(o => o.OrderContainer.CurrentCW == Week.CalendarWeek).ToList();
 
             var order = Orders.Except(schedulerOrders).FirstOrDefault();
 
             if (order is not null)
+            {
                 Orders.Remove(order);
+                var removedOrder = dbContext.Weeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.FirstOrDefault(o => order.OrderContainer.ListElement.KeyToString().Equals(o.Key));
+                dbContext.Weeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.Remove(removedOrder);
+
+                await dbContext.SaveChangesAsync();
+            }
         }
     }
 }

@@ -90,14 +90,14 @@ namespace Dash.DemoApp.UserControls
             CalculateMinutes();
         }
 
-        private void FlowPanel_ControlRemoved(object sender, ControlEventArgs e)
+        private async void FlowPanel_ControlRemoved(object sender, ControlEventArgs e)
         {
-            RemoveOrder();
+            await RemoveOrder();
         }
 
-        public void RemoveOrder()
+        public async Task RemoveOrder()
         {
-            WeekContainer.RemoveOrder();
+            await WeekContainer.RemoveOrder();
             CalculateMinutes();
         }
 
