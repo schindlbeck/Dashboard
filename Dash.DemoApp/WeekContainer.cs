@@ -23,6 +23,7 @@ namespace Dash.DemoApp
             Orders = new();
             Scheduler = scheduler;
             this.dbContext = dbContext;
+            dbContext.Database.EnsureCreated();
 
             AddToDb();
         }
