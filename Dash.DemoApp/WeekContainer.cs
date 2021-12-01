@@ -12,6 +12,8 @@ namespace Dash.DemoApp
     public class WeekContainer
     {
         public DbWorkWeek Week { get; set; }
+
+        //TODO : OrderConatainer
         public List<OrderControl> Orders { get; private set; }
         public OrderScheduler Scheduler { get; set; }
 
@@ -44,6 +46,7 @@ namespace Dash.DemoApp
 
         }
 
+        //TODO : OrderContainer instead of OrderControl
         public async Task<OrderControl> AddOrderAfterDragDrop(string key, bool isUndo)
         {
             if (!Orders.Exists(o => o.OrderContainer.ListElement.KeyToString().Equals(key)))
@@ -52,9 +55,6 @@ namespace Dash.DemoApp
                 var order = Scheduler.GetOrder(key);
                 order.SetCWCurrent();
                 Orders.Add(order);
-
-                //var dbOrder = new Order() { DeliveryDate = order.OrderContainer.ListElement.DeliveryDate, Key = key, TimeTotal = order.OrderContainer.ListElement.TimeTotal, CurrentCW = Week.CalendarWeek };
-                //await AddOrderToDbAsync(dbOrder);
 
                 dbContext.Orders.First(o => o.Key.Equals(key)).CurrentCW = Week.CalendarWeek;
                 await dbContext.SaveChangesAsync();
