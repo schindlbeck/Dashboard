@@ -12,10 +12,10 @@ namespace Dash.DemoApp
     public class WeekContainer
     {
         public DbWorkWeek Week { get; set; }
-        public List<OrderControl> Orders { get; set; }
+        public List<OrderControl> Orders { get; private set; }
         public OrderScheduler Scheduler { get; set; }
 
-        private PriorityDbContext dbContext;
+        private readonly PriorityDbContext dbContext;
 
         public WeekContainer(DbWorkWeek week, OrderScheduler scheduler, PriorityDbContext dbContext)
         {
@@ -25,26 +25,39 @@ namespace Dash.DemoApp
             this.dbContext = dbContext;
             dbContext.Database.EnsureCreated();
 
-            AddToDb();
+            AddWeekToDb();
         }
 
-        private void AddToDb()
+        private async void AddWeekToDb()
         {
             dbContext.Weeks.Add(new Week() { CalendarWeek = Week.CalendarWeek, ProductionMinutes = Week.ProductionMinutes, Year = Week.Year, Orders = new() });
-            dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
         }
 
-        public async Task<OrderControl> AddOrder(string key, bool isUndo)
+        public async Task AddOrderInitialized(OrderControl order)
+        {
+            Scheduler.AddOrder(order);
+            Orders.Add(order);
+            var dbOrder = new Order() { DeliveryDate = order.OrderContainer.ListElement.DeliveryDate, Key = order.OrderContainer.ListElement.KeyToString(), TimeTotal = order.OrderContainer.ListElement.TimeTotal, CurrentCW = Week.CalendarWeek };
+
+            await AddOrderToDbAsync(dbOrder);
+
+        }
+
+        public async Task<OrderControl> AddOrderAfterDragDrop(string key, bool isUndo)
         {
             if (!Orders.Exists(o => o.OrderContainer.ListElement.KeyToString().Equals(key)))
             {
-                Scheduler.ChangeCW(key, Week.CalendarWeek, Week.Year, isUndo);
+                await Scheduler.ChangeCW(key, Week.CalendarWeek, Week.Year, isUndo);
                 var order = Scheduler.GetOrder(key);
                 order.SetCWCurrent();
                 Orders.Add(order);
 
-                var dbOrder = new Order() { DeliveryDate = order.OrderContainer.ListElement.DeliveryDate, Key = key, TimeTotal = order.OrderContainer.ListElement.TimeTotal };
-                await AddOrderToDbAsync(dbOrder);
+                //var dbOrder = new Order() { DeliveryDate = order.OrderContainer.ListElement.DeliveryDate, Key = key, TimeTotal = order.OrderContainer.ListElement.TimeTotal, CurrentCW = Week.CalendarWeek };
+                //await AddOrderToDbAsync(dbOrder);
+
+                dbContext.Orders.First(o => o.Key.Equals(key)).CurrentCW = Week.CalendarWeek;
+                await dbContext.SaveChangesAsync();
 
                 return order;
             }

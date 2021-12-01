@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -66,6 +67,20 @@ namespace Dash.DemoApp
             return orders;
         }
 
-        
+        public static List<OrderControl> CheckOrdersAgainstPrioritization(List<OrderControl> orders, List<Order> prioritizedOrders)
+        {
+            foreach (var order in orders)
+            {
+                if (prioritizedOrders.Exists(o => o.Key.Equals(order.OrderContainer.ListElement.KeyToString())))
+                {
+                    var currentCw = prioritizedOrders.First(o => o.Key.Equals(order.OrderContainer.ListElement.KeyToString())).CurrentCW;
+
+                    order.OrderContainer.CurrentCW = currentCw;
+                }
+            }
+
+            return orders;
+        }
+
     }
 }

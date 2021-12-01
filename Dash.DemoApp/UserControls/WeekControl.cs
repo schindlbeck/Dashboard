@@ -46,10 +46,10 @@ namespace Dash.DemoApp.UserControls
         }
 
 
-        public void AddOrder(OrderControl order)
+        public async Task AddOrderInitialized(OrderControl order)
         {
             flowPanel.Controls.Add(order);
-            WeekContainer.Orders.Add(order);
+            await WeekContainer.AddOrderInitialized(order);
             CalculateMinutes();
         }
 
@@ -74,7 +74,7 @@ namespace Dash.DemoApp.UserControls
 
         public async void AddOrder(string orderKey, bool isUndo)
         {
-            var order = await WeekContainer.AddOrder(orderKey, isUndo);
+            var order = await WeekContainer.AddOrderAfterDragDrop(orderKey, isUndo);
 
 
             if (order is not null)

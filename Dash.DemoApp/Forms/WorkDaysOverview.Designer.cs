@@ -143,7 +143,6 @@
             0,
             0});
             this.numericUpDownCwEnd.Name = "numericUpDownCwEnd";
-            this.numericUpDownCwEnd.ReadOnly = true;
             this.numericUpDownCwEnd.Size = new System.Drawing.Size(49, 23);
             this.numericUpDownCwEnd.TabIndex = 9;
             this.numericUpDownCwEnd.Value = new decimal(new int[] {

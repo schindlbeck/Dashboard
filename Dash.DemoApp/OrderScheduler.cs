@@ -10,13 +10,20 @@ namespace Dash.DemoApp
 {
     public class OrderScheduler
     {
-        public List<OrderControl> Orders;
+        public List<OrderControl> Orders { get; private set; }
+        private readonly PriorityDbContext priorityDbContext;
 
         private readonly Stack<LastChangedItem> lastChanged = new();
 
-        public OrderScheduler()
+        public OrderScheduler(PriorityDbContext priorityDbContext)
         {
             Orders = new();
+            this.priorityDbContext = priorityDbContext;
+        }
+
+        public void AddOrder(OrderControl order)
+        {
+            Orders.Add(order); 
         }
 
         private void AddLastChangedItem(string key, int cwLast, int cwNow)
@@ -46,12 +53,14 @@ namespace Dash.DemoApp
             return Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key));
         }
 
-        public void ChangeCW(string key, int newWeek, int year, bool isUndo)
+        public async Task ChangeCW(string key, int newWeek, int year, bool isUndo)
         {
             var oldWeek = Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentCW;
             Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentCW = newWeek;
             Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentYear = year;
 
+            priorityDbContext.Orders.First(o => o.Key.Equals(key)).CurrentCW = newWeek;
+            await priorityDbContext.SaveChangesAsync();
 
             if (!isUndo)
                 AddLastChangedItem(key, oldWeek, newWeek);
