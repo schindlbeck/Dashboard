@@ -1,13 +1,10 @@
 ﻿using Dash.Data;
-using Dash.DemoApp.UserControls;
-using Dash.Shared;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Dash.DemoApp
+namespace Dash.Shared
+
 {
     public class OrderScheduler
     {

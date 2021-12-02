@@ -5,16 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dash.DemoApp.UserControls;
 using Dash.Shared;
 
-namespace Dash.DemoApp
+namespace Dash.Shared
 {
     public class WeekContainer
     {
         public DbWorkWeek Week { get; set; }
 
-        //TODO : OrderContainer
         public List<OrderContainer> Orders { get; private set; }
         public OrderScheduler Scheduler { get; set; }
 
@@ -51,7 +49,6 @@ namespace Dash.DemoApp
 
         }
 
-        //TODO : OrderContainer instead of OrderControl
         public async Task<OrderContainer> AddOrderAfterDragDrop(string key, bool isUndo)
         {
             if (!Orders.Exists(o => o.ListElement.KeyToString().Equals(key)))
@@ -59,7 +56,6 @@ namespace Dash.DemoApp
                 await Scheduler.ChangeCW(key, Week.CalendarWeek, Week.Year, isUndo);
                 var order = Scheduler.GetOrder(key);
                 
-                //TODO : order text update
                 order.SetCWCurrent();
                 Orders.Add(order);
 
