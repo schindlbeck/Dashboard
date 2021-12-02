@@ -7,7 +7,7 @@ using Xunit;
 
 namespace DashSharedTest
 {
-    public class ManageOrdersTest
+    public class WeekContainerTest
     {
 
     }

@@ -9,9 +9,9 @@ namespace Dash.Shared
     public class OrderScheduler
     {
         public List<OrderContainer> Orders { get; private set; }
-        private readonly PriorityDbContext priorityDbContext;
-
         private readonly Stack<LastChangedItem> lastChanged = new();
+        
+        private readonly PriorityDbContext priorityDbContext;
 
         public OrderScheduler(PriorityDbContext priorityDbContext)
         {

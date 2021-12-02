@@ -23,7 +23,7 @@ namespace Dash.Shared
             CurrentYear = element.DeliveryDate.Year;
         }
 
-        public void SetCWCurrent()
+        public void CurrentCwChanged()
         {
             OrderCwChanged?.Invoke(this, EventArgs.Empty);
         }

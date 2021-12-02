@@ -33,12 +33,6 @@ namespace Dash.Shared
             AddWeekToDb();
         }
 
-        private async void AddWeekToDb()
-        {
-            dbContext.Weeks.Add(new Week() { CalendarWeek = Week.CalendarWeek, ProductionMinutes = Week.ProductionMinutes, Year = Week.Year, Orders = new() });
-            await dbContext.SaveChangesAsync();
-        }
-
         public async Task AddOrderInitialized(OrderContainer order)
         {
             Scheduler.AddOrder(order);
@@ -46,25 +40,57 @@ namespace Dash.Shared
             var dbOrder = new Order() { DeliveryDate = order.ListElement.DeliveryDate, Key = order.ListElement.KeyToString(), TimeTotal = order.ListElement.TimeTotal, CurrentCW = Week.CalendarWeek };
 
             await AddOrderToDbAsync(dbOrder);
-
         }
 
         public async Task<OrderContainer> AddOrderAfterDragDrop(string key, bool isUndo)
         {
             if (!Orders.Exists(o => o.ListElement.KeyToString().Equals(key)))
             {
-                await Scheduler.ChangeCW(key, Week.CalendarWeek, Week.Year, isUndo);
-                var order = Scheduler.GetOrder(key);
-                
-                order.SetCWCurrent();
-                Orders.Add(order);
+                var order = await ChangeCurrentCw(key, isUndo);
 
-                dbContext.Orders.First(o => o.Key.Equals(key)).CurrentCW = Week.CalendarWeek;
-                await dbContext.SaveChangesAsync();
+                Orders.Add(order);
 
                 return order;
             }
             return null;
+        }
+
+        private async Task<OrderContainer> ChangeCurrentCw(string key, bool isUndo)
+        {
+            await Scheduler.ChangeCW(key, Week.CalendarWeek, Week.Year, isUndo);
+            var order = Scheduler.GetOrder(key);
+
+            order.CurrentCwChanged();
+
+            await ChangeCurrentCwInDb(key);
+
+            return order;
+        }
+
+        public async Task RemoveOrder()
+        {
+            var schedulerOrders = Scheduler.Orders.Where(o => o.CurrentCW == Week.CalendarWeek).ToList();
+
+            var removedOrder = Orders.Except(schedulerOrders).FirstOrDefault();
+
+            if (removedOrder is not null)
+            {
+                Orders.Remove(removedOrder);
+
+                await RemoveOrderInDb(removedOrder);
+            }
+        }
+
+        private async void AddWeekToDb()
+        {
+            dbContext.Weeks.Add(new Week() { CalendarWeek = Week.CalendarWeek, ProductionMinutes = Week.ProductionMinutes, Year = Week.Year, Orders = new() });
+            await dbContext.SaveChangesAsync();
+        }
+
+        private async Task ChangeCurrentCwInDb(string key)
+        {
+            dbContext.Orders.First(o => o.Key.Equals(key)).CurrentCW = Week.CalendarWeek;
+            await dbContext.SaveChangesAsync();
         }
 
         private async Task AddOrderToDbAsync(Order dbOrder)
@@ -75,21 +101,12 @@ namespace Dash.Shared
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task RemoveOrder()
+        private async Task RemoveOrderInDb(OrderContainer order)
         {
-            var schedulerOrders = Scheduler.Orders.Where(o => o.CurrentCW == Week.CalendarWeek).ToList();
+            var removedOrder = dbContext.Weeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.FirstOrDefault(o => order.ListElement.KeyToString().Equals(o.Key));
+            dbContext.Weeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.Remove(removedOrder);
 
-            var order = Orders.Except(schedulerOrders).FirstOrDefault();
-
-            if (order is not null)
-            {
-                Orders.Remove(order);
-                var removedOrder = dbContext.Weeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.FirstOrDefault(o => order.ListElement.KeyToString().Equals(o.Key));
-                dbContext.Weeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.Remove(removedOrder);
-
-                await dbContext.SaveChangesAsync();
-            }
+            await dbContext.SaveChangesAsync();
         }
-
     }
 }
