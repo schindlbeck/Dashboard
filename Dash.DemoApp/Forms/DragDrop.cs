@@ -103,7 +103,10 @@ namespace Dash.DemoApp.Forms
 
         private void BtnUndo_Click(object sender, EventArgs e)
         {
+            var lastItem = scheduler.GetLastChangedItem();
 
+            //Undo - Action
+            //if(done) scheduler.LastChangedItemUndid()
         }
     }
 }
