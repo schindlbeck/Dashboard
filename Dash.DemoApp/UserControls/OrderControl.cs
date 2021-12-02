@@ -32,7 +32,6 @@ namespace Dash.DemoApp.UserControls
 
         private void InitializeText()
         {
-            //TODO: colors right if cwplan>cwcurrent, but in next year
             richTextBoxInfo.Text = $"CW planned: {OrderContainer.ListElement.CWPlanned}" + Environment.NewLine +
                 $"CW current: {OrderContainer.CurrentCW}" + Environment.NewLine + $"Total time: {OrderContainer.ListElement.TimeTotal}";
 

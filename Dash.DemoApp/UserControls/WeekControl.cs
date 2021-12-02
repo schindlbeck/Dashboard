@@ -1,14 +1,8 @@
 ﻿using Dash.Data;
 using Dash.Data.Models;
-using Dash.Shared;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -42,15 +36,14 @@ namespace Dash.DemoApp.UserControls
                 flowPanel.DragEnter += FlowPanel_DragEnter;
             }
 
-            CalculateMinutes();
+            DisplayMinutes();
         }
-
 
         public async Task AddOrderInitialized(OrderControl order)
         {
             flowPanel.Controls.Add(order);
             await WeekContainer.AddOrderInitialized(order);
-            CalculateMinutes();
+            DisplayMinutes();
         }
 
         private void FlowPanel_DragEnter(object sender, DragEventArgs e)
@@ -87,7 +80,7 @@ namespace Dash.DemoApp.UserControls
 
         private void FlowPanel_ControlAdded(object sender, ControlEventArgs e)
         {
-            CalculateMinutes();
+            DisplayMinutes();
         }
 
         private async void FlowPanel_ControlRemoved(object sender, ControlEventArgs e)
@@ -98,18 +91,18 @@ namespace Dash.DemoApp.UserControls
         public async Task RemoveOrder()
         {
             await WeekContainer.RemoveOrder();
-            CalculateMinutes();
+            DisplayMinutes();
         }
 
-        private void CalculateMinutes()
+        private void DisplayMinutes()
         {
-            var minutesBooked = WeekContainer.Orders.Sum(s => s.OrderContainer.ListElement.TimeTotal);
-            var productionMinutes = WeekContainer.Week.ProductionMinutes;
-            textBoxInfo.Text = $"Production Minutes: {minutesBooked}/{productionMinutes}";
+            var minutes = WeekContainer.CalculateMinutes();
 
-            if (minutesBooked > productionMinutes * 0.9)
+            textBoxInfo.Text = $"Production Minutes: {minutes[0]}/{minutes[1]}";
+
+            if (minutes[0] > minutes[1] * 0.9)
             {
-                if (minutesBooked > productionMinutes) textBoxInfo.BackColor = Color.Red;
+                if (minutes[0] > minutes[1]) textBoxInfo.BackColor = Color.Red;
                 else textBoxInfo.BackColor = Color.PaleVioletRed;
             }
             else

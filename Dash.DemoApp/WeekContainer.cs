@@ -87,5 +87,13 @@ namespace Dash.DemoApp
                 await dbContext.SaveChangesAsync();
             }
         }
+
+        public int[] CalculateMinutes()
+        {
+            var minutesBooked = Orders.Sum(s => s.OrderContainer.ListElement.TimeTotal);
+            var productionMinutes = Week.ProductionMinutes;
+
+            return new int[] {minutesBooked, productionMinutes};
+        }
     }
 }
