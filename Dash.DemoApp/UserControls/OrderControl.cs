@@ -45,14 +45,22 @@ namespace Dash.DemoApp.UserControls
             }
             else
             {
-                richTextBoxInfo.BackColor = Color.DarkSeaGreen;
+                if (OrderContainer.CurrentYear > OrderContainer.ListElement.DeliveryDate.Year)
+                    richTextBoxInfo.BackColor = Color.IndianRed;
+                else
+                    richTextBoxInfo.BackColor = Color.DarkSeaGreen;
             }
         }
 
-        public void SetCWCurrent(int cw)
+        public void SetCWCurrent()
         {
-            OrderContainer.CurrentCW = cw;
             InitializeText();
         }
+
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [Bindable(true)]
+        public override string Text { get; set; }
     }
 }

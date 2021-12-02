@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace Dash.Data
 {
@@ -35,13 +36,14 @@ namespace Dash.Data
         {
             var configuration = new ConfigurationBuilder()
            .AddJsonFile("appsettings.json")
+           .AddJsonFile($"appsettings.{Environment.MachineName}.json", true, true)
            .Build();
 
-            var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
-            
-            optionsBuilder.UseSqlServer(configuration["ConnectionStrings:DefaultSqlWorkConnection"]);
-            //optionsBuilder.UseSqlServer(configuration["ConnectionStrings:DefaultSqlConnection"]);
+            var cs = configuration.GetConnectionString("DefaultSqlConnection");
+            Console.WriteLine(cs);
 
+            var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
+            optionsBuilder.UseSqlServer(configuration["ConnectionStrings:DefaultSqlConnection"]);
 
             return new DashDbContext(optionsBuilder.Options);
         }

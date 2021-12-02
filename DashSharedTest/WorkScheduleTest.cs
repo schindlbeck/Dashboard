@@ -118,7 +118,7 @@ namespace DashSharedTest
             var day = workSchedule.WorkWeeks.First(w => w.CalendarWeek == 46).WorkDays.First(d => d.Date == new DateTime(2021, 11, 18));
 
             //Act
-            workSchedule.DeleteWorkday(day, new WorkWeek() { CalendarWeek = 46});
+            workSchedule.DeleteWorkday(day, new DbWorkWeek() { CalendarWeek = 46});
 
             //Assert
             Assert.Equal(4 , workSchedule.WorkWeeks.First(w => w.CalendarWeek == 46).WorkDays.Count);
@@ -162,7 +162,7 @@ namespace DashSharedTest
             var day = workSchedule.WorkWeeks.Where(w => w.CalendarWeek == 46).First().WorkDays.Where(d => d.Date == new DateTime(2021, 11, 18)).First();
 
             //Act
-            workSchedule.DeleteShift(Shifts.morning, day, new WorkWeek() { CalendarWeek = 46 });
+            workSchedule.DeleteShift(Shifts.morning, day, new DbWorkWeek() { CalendarWeek = 46 });
 
             //Assert
             Assert.Single(workSchedule.WorkWeeks.Where(w => w.CalendarWeek == 46).First().WorkDays.Where(d => d.Date == new DateTime(2021, 11, 18)).First().Shifts);
@@ -182,7 +182,7 @@ namespace DashSharedTest
             var day = workSchedule.WorkWeeks.Where(w => w.CalendarWeek == 46).First().WorkDays.Where(d => d.Date == new DateTime(2021, 11, 18)).First();
 
             //Act
-            workSchedule.ChangeNumberEquipments(4, Shifts.morning, new WorkWeek() { CalendarWeek = 46 }, day);
+            workSchedule.ChangeNumberEquipments(4, Shifts.morning, new DbWorkWeek() { CalendarWeek = 46 }, day);
 
             //Assert
             Assert.Equal(4, workSchedule.WorkWeeks.First(w => w.CalendarWeek == 46).WorkDays.First(d => d.Date == day.Date).Shifts.First(s => s.Type == Shifts.morning).NumberEquipments);

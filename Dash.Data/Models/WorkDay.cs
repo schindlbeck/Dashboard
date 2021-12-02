@@ -5,6 +5,7 @@ namespace Dash.Data.Models
 {
     public class WorkDay
     {
+        public int Id { get; set; }
         public List<Shift> Shifts { get; set; }
 
         public DateTime Date { get; set; }
