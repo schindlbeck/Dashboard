@@ -26,7 +26,7 @@ namespace Dash.DemoApp.UserControls
 
         private void WeekControl_Load(object sender, EventArgs e)
         {
-            label1.Text = WeekContainer.Week.CalendarWeek.ToString();
+            label1.Text = WeekContainer.Week.Year.ToString() + "/" + WeekContainer.Week.CalendarWeek.ToString();
             label1.BackColor = Color.Aquamarine;
 
             flowPanel.ControlAdded += FlowPanel_ControlAdded;

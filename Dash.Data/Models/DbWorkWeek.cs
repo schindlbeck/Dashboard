@@ -10,6 +10,7 @@ namespace Dash.Data.Models
     public class DbWorkWeek
     {
         public int Id { get; set; }
+
         public int Year { get; set; }
 
         public int CalendarWeek { get; set; }
@@ -31,6 +32,8 @@ namespace Dash.Data.Models
         public void Configure(EntityTypeBuilder<DbWorkWeek> builder)
         {
             builder.HasKey(e => e.Id);
+
+            builder.HasIndex(e => new { e.CalendarWeek, e.Year }).IsUnique();
 
             ValueConverter<List<WorkDay>, string> valueConverter = new(wd => JsonSerializer.Serialize(wd, options),
                                                                         wd => JsonSerializer.Deserialize<List<WorkDay>>(wd, options));

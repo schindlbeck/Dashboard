@@ -55,11 +55,15 @@ namespace Dash.DemoApp.Forms
 
             //TODO : cw later dateNow
             var currentCw = 41;
+            var currentYear = 2021;
 
             //later other source
-            var prioListWeeks = prioList.Select(w => w.CWPlanned).ToList();
+            var prioListWeeks = prioList.Select(w => Convert.ToInt32(w.DeliveryDate.Year.ToString() + w.CWPlanned.ToString())).ToList();
 
-            var weeksDisplayed1 = workScheduleWeeks.Where(w => w.CalendarWeek >= currentCw || prioListWeeks.Contains(w.CalendarWeek)).ToList();
+            var weeksDisplayed1 = workScheduleWeeks.Where(w => (w.CalendarWeek >= currentCw && w.Year == currentYear)
+                                                                || w.Year > currentYear
+                                                                || prioListWeeks.Contains(Convert.ToInt32(w.Year.ToString() + w.CalendarWeek.ToString())))
+                                                                .ToList();
 
             foreach (var week in weeksDisplayed1)
             {
