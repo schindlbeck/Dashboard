@@ -1,5 +1,6 @@
 ﻿using Dash.Data;
 using Dash.Data.Models;
+using Dash.DemoApp.Forms;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -10,12 +11,16 @@ namespace Dash.DemoApp.UserControls
 {
     public partial class WeekControl : UserControl
     {
+        private readonly DragDrop dragDrop;
+
         public WeekContainer WeekContainer { get; init; }
 
-        public WeekControl(DbWorkWeek workWeek, OrderScheduler scheduler, PriorityDbContext dbContext)
+        public WeekControl(DbWorkWeek workWeek, OrderScheduler scheduler, PriorityDbContext dbContext, DragDrop dragDrop)
         {
+
             WeekContainer = new(workWeek, scheduler, dbContext);
             InitializeComponent();
+            this.dragDrop = dragDrop;
         }
 
         private void WeekControl_Load(object sender, EventArgs e)
@@ -42,7 +47,7 @@ namespace Dash.DemoApp.UserControls
         public async Task AddOrderInitialized(OrderControl order)
         {
             flowPanel.Controls.Add(order);
-            await WeekContainer.AddOrderInitialized(order);
+            await WeekContainer.AddOrderInitialized(order.OrderContainer);
             DisplayMinutes();
         }
 
@@ -72,9 +77,9 @@ namespace Dash.DemoApp.UserControls
 
             if (order is not null)
             {
-                var a = WeekContainer.Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(order.OrderContainer.ListElement.KeyToString()));
+                var a = WeekContainer.Orders.First(o => o.ListElement.KeyToString().Equals(order.ListElement.KeyToString()));
 
-                flowPanel.Controls.Add(a);
+                flowPanel.Controls.Add(dragDrop.OrderControls[a.ListElement.KeyToString()]);
             }
         }
 
@@ -96,13 +101,12 @@ namespace Dash.DemoApp.UserControls
 
         private void DisplayMinutes()
         {
-            var minutes = WeekContainer.CalculateMinutes();
 
-            textBoxInfo.Text = $"Production Minutes: {minutes[0]}/{minutes[1]}";
+            textBoxInfo.Text = $"Production Minutes: {WeekContainer.MinutesBooked}/{WeekContainer.ProductionMinutes}";
 
-            if (minutes[0] > minutes[1] * 0.9)
+            if (WeekContainer.MinutesBooked > WeekContainer.ProductionMinutes * 0.9)
             {
-                if (minutes[0] > minutes[1]) textBoxInfo.BackColor = Color.Red;
+                if (WeekContainer.MinutesBooked > WeekContainer.ProductionMinutes) textBoxInfo.BackColor = Color.Red;
                 else textBoxInfo.BackColor = Color.PaleVioletRed;
             }
             else

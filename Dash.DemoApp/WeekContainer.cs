@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dash.DemoApp.UserControls;
+using Dash.Shared;
 
 namespace Dash.DemoApp
 {
@@ -13,9 +14,13 @@ namespace Dash.DemoApp
     {
         public DbWorkWeek Week { get; set; }
 
-        //TODO : OrderConatainer
-        public List<OrderControl> Orders { get; private set; }
+        //TODO : OrderContainer
+        public List<OrderContainer> Orders { get; private set; }
         public OrderScheduler Scheduler { get; set; }
+
+        public int ProductionMinutes { get { return Week.ProductionMinutes; } }
+        
+        public int MinutesBooked { get { return Orders.Sum(s => s.ListElement.TimeTotal); } }
 
         private readonly PriorityDbContext dbContext;
 
@@ -36,23 +41,25 @@ namespace Dash.DemoApp
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task AddOrderInitialized(OrderControl order)
+        public async Task AddOrderInitialized(OrderContainer order)
         {
             Scheduler.AddOrder(order);
             Orders.Add(order);
-            var dbOrder = new Order() { DeliveryDate = order.OrderContainer.ListElement.DeliveryDate, Key = order.OrderContainer.ListElement.KeyToString(), TimeTotal = order.OrderContainer.ListElement.TimeTotal, CurrentCW = Week.CalendarWeek };
+            var dbOrder = new Order() { DeliveryDate = order.ListElement.DeliveryDate, Key = order.ListElement.KeyToString(), TimeTotal = order.ListElement.TimeTotal, CurrentCW = Week.CalendarWeek };
 
             await AddOrderToDbAsync(dbOrder);
 
         }
 
         //TODO : OrderContainer instead of OrderControl
-        public async Task<OrderControl> AddOrderAfterDragDrop(string key, bool isUndo)
+        public async Task<OrderContainer> AddOrderAfterDragDrop(string key, bool isUndo)
         {
-            if (!Orders.Exists(o => o.OrderContainer.ListElement.KeyToString().Equals(key)))
+            if (!Orders.Exists(o => o.ListElement.KeyToString().Equals(key)))
             {
                 await Scheduler.ChangeCW(key, Week.CalendarWeek, Week.Year, isUndo);
                 var order = Scheduler.GetOrder(key);
+                
+                //TODO : order text update
                 order.SetCWCurrent();
                 Orders.Add(order);
 
@@ -74,26 +81,19 @@ namespace Dash.DemoApp
 
         public async Task RemoveOrder()
         {
-            var schedulerOrders = Scheduler.Orders.Where(o => o.OrderContainer.CurrentCW == Week.CalendarWeek).ToList();
+            var schedulerOrders = Scheduler.Orders.Where(o => o.CurrentCW == Week.CalendarWeek).ToList();
 
             var order = Orders.Except(schedulerOrders).FirstOrDefault();
 
             if (order is not null)
             {
                 Orders.Remove(order);
-                var removedOrder = dbContext.Weeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.FirstOrDefault(o => order.OrderContainer.ListElement.KeyToString().Equals(o.Key));
+                var removedOrder = dbContext.Weeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.FirstOrDefault(o => order.ListElement.KeyToString().Equals(o.Key));
                 dbContext.Weeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.Remove(removedOrder);
 
                 await dbContext.SaveChangesAsync();
             }
         }
 
-        public int[] CalculateMinutes()
-        {
-            var minutesBooked = Orders.Sum(s => s.OrderContainer.ListElement.TimeTotal);
-            var productionMinutes = Week.ProductionMinutes;
-
-            return new int[] {minutesBooked, productionMinutes};
-        }
     }
 }

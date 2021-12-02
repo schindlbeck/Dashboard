@@ -21,6 +21,13 @@ namespace Dash.DemoApp.UserControls
             OrderContainer = new(element);
 
             InitializeComponent();
+
+            this.OrderContainer.OrderCwChanged += OrderContainer_OrderCwChanged;
+        }
+
+        private void OrderContainer_OrderCwChanged(object sender, EventArgs e)
+        {
+            InitializeText();
         }
 
         private void Order_Load(object sender, EventArgs e)
@@ -49,11 +56,6 @@ namespace Dash.DemoApp.UserControls
                 else
                     richTextBoxInfo.BackColor = Color.DarkSeaGreen;
             }
-        }
-
-        public void SetCWCurrent()
-        {
-            InitializeText();
         }
 
         [EditorBrowsable(EditorBrowsableState.Always)]

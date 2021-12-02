@@ -21,6 +21,7 @@ namespace Dash.DemoApp.Forms
         public PriorityDbContext PriorityContext { get; set; }
         public IConfigurationRoot Configuration { get; set; }
 
+        public Dictionary<string, OrderControl> OrderControls { get; } = new();
 
         private readonly List<WeekControl> weekcontrols = new();
         private readonly List<PrioListElement> prioList;
@@ -79,6 +80,7 @@ namespace Dash.DemoApp.Forms
             foreach (var order in orders)
             {
                 order.MouseDown += new MouseEventHandler(Order_MouseDown);
+                OrderControls.Add(order.OrderContainer.ListElement.KeyToString(), order);
                 await weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == order.OrderContainer.CurrentCW).AddOrderInitialized(order);
             }
         }
@@ -93,7 +95,7 @@ namespace Dash.DemoApp.Forms
 
         private WeekControl GetFlowPanel(DbWorkWeek week)
         {
-            WeekControl weekControl = new(week, scheduler, PriorityContext);
+            WeekControl weekControl = new(week, scheduler, PriorityContext, this);
 
             weekcontrols.Add(weekControl);
             return weekControl;

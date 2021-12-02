@@ -1,5 +1,6 @@
 ﻿using Dash.Data;
 using Dash.DemoApp.UserControls;
+using Dash.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,7 @@ namespace Dash.DemoApp
 {
     public class OrderScheduler
     {
-        //TODO : OrderContainer
-        public List<OrderControl> Orders { get; private set; }
+        public List<OrderContainer> Orders { get; private set; }
         private readonly PriorityDbContext priorityDbContext;
 
         private readonly Stack<LastChangedItem> lastChanged = new();
@@ -22,7 +22,7 @@ namespace Dash.DemoApp
             this.priorityDbContext = priorityDbContext;
         }
 
-        public void AddOrder(OrderControl order)
+        public void AddOrder(OrderContainer order)
         {
             Orders.Add(order); 
         }
@@ -49,16 +49,16 @@ namespace Dash.DemoApp
             lastChanged.Pop();
         }
 
-        public OrderControl GetOrder(string key)
+        public OrderContainer GetOrder(string key)
         {
-            return Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key));
+            return Orders.First(o => o.ListElement.KeyToString().Equals(key));
         }
 
         public async Task ChangeCW(string key, int newWeek, int year, bool isUndo)
         {
-            var oldWeek = Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentCW;
-            Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentCW = newWeek;
-            Orders.First(o => o.OrderContainer.ListElement.KeyToString().Equals(key)).OrderContainer.CurrentYear = year;
+            var oldWeek = Orders.First(o => o.ListElement.KeyToString().Equals(key)).CurrentCW;
+            Orders.First(o => o.ListElement.KeyToString().Equals(key)).CurrentCW = newWeek;
+            Orders.First(o => o.ListElement.KeyToString().Equals(key)).CurrentYear = year;
 
             priorityDbContext.Orders.First(o => o.Key.Equals(key)).CurrentCW = newWeek;
             await priorityDbContext.SaveChangesAsync();
