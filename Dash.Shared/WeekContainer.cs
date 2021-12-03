@@ -54,7 +54,7 @@ namespace Dash.Shared
 
         private async Task<OrderContainer> ChangeCurrentCw(string key, bool isUndo)
         {
-            await Scheduler.ChangeCW(key, Week.CalendarWeek, Week.Year, isUndo);
+            Scheduler.ChangeCW(key, Week.CalendarWeek, Week.Year, isUndo);
             var order = Scheduler.GetOrder(key);
 
             order.CurrentCwChanged();

@@ -20,8 +20,7 @@ namespace Dash.Shared
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             byte[] bin;
 
-            //bin = File.ReadAllBytes(Configuration["ConnectionStrings:DefaultExcelFileConnection"] + Configuration["Files:DefaultExcelFile"]);
-            bin = File.ReadAllBytes(Configuration["ConnectionStrings:DefaultExcelFileConnectionHome"] + Configuration["Files:DefaultExcelFile"]);
+            bin = File.ReadAllBytes(Configuration["ConnectionStrings:DefaultExcelFileConnection"] + Configuration["Files:DefaultExcelFile"]);
 
             MemoryStream stream = new(bin);
             ExcelPackage excelPackage = new(stream);

@@ -7,19 +7,19 @@ using Xunit;
 
 namespace DashSharedTest
 {
-    public class OrderSchedulerTest
+    public class OrderSchedulerTest : IClassFixture<ManageOrdersFixture>
     {
+        public OrderSchedulerTest(ManageOrdersFixture prioListFixture)
+        {
+
+        }
+
         [Fact]
         public void AddOrder_Test()
         {
             //Arrange
-            var optionsBuilder = new DbContextOptionsBuilder<PriorityDbContext>();
-            optionsBuilder.UseInMemoryDatabase("Test1");
-            var dbContext = new PriorityDbContext(optionsBuilder.Options);
-
-            OrderScheduler scheduler = new(dbContext);
-            PrioListElement element = new() { CWPlanned = 48, DeliveryDate = new DateTime(2021, 12, 2), OrderNr = "A001", Project = "P1" };
-            OrderContainer container = new(element);
+            OrderScheduler scheduler = new();
+            OrderContainer container = new(ManageOrdersFixture.GetPrioListElement());
 
             //Act
             scheduler.AddOrder(container);
@@ -32,13 +32,8 @@ namespace DashSharedTest
         public void GetOrder_Test()
         {
             //Arrange
-            var optionsBuilder = new DbContextOptionsBuilder<PriorityDbContext>();
-            optionsBuilder.UseInMemoryDatabase("Test6");
-            var dbContext = new PriorityDbContext(optionsBuilder.Options);
-
-            OrderScheduler scheduler = new(dbContext);
-            PrioListElement element = new() { CWPlanned = 48, DeliveryDate = new DateTime(2021, 12, 2), OrderNr = "A001", Project = "P1" };
-            OrderContainer container = new(element);
+            OrderScheduler scheduler = new();
+            OrderContainer container = new(ManageOrdersFixture.GetPrioListElement());
             scheduler.AddOrder(container);
 
             //Act
@@ -50,20 +45,15 @@ namespace DashSharedTest
         }
 
         [Fact]
-        public async void ChangeCW_Test()
+        public void ChangeCW_Test()
         {
             //Arrange
-            var optionsBuilder = new DbContextOptionsBuilder<PriorityDbContext>();
-            optionsBuilder.UseInMemoryDatabase("Test7");
-            var dbContext = new PriorityDbContext(optionsBuilder.Options);
-
-            OrderScheduler scheduler = new(dbContext);
-            PrioListElement element = new() { CWPlanned = 48, DeliveryDate = new DateTime(2021, 12, 2), OrderNr = "A001", Project = "P1" };
-            OrderContainer container = new(element);
+            OrderScheduler scheduler = new();
+            OrderContainer container = new(ManageOrdersFixture.GetPrioListElement());
             scheduler.AddOrder(container);
 
             //Act
-            await scheduler.ChangeCW(container.ListElement.KeyToString(), 47, 2021, true);
+            scheduler.ChangeCW(container.ListElement.KeyToString(), 47, 2021, true);
 
             //Assert
             Assert.Equal(47, scheduler.Orders.First().CurrentCW);
@@ -73,13 +63,8 @@ namespace DashSharedTest
         public void AddLastChangedItem_Test()
         {
             //Arrange
-            var optionsBuilder = new DbContextOptionsBuilder<PriorityDbContext>();
-            optionsBuilder.UseInMemoryDatabase("Test2");
-            var dbContext = new PriorityDbContext(optionsBuilder.Options);
-
-            OrderScheduler scheduler = new(dbContext);
-            PrioListElement element = new() { CWPlanned = 48, DeliveryDate = new DateTime(2021, 12, 2), OrderNr = "A001", Project = "P1" };
-            OrderContainer container = new(element);
+            OrderScheduler scheduler = new();
+            OrderContainer container = new(ManageOrdersFixture.GetPrioListElement());
             scheduler.AddOrder(container);
 
 
@@ -97,13 +82,8 @@ namespace DashSharedTest
         public void GetLastChangedItem_Test()
         {
             //Arrange
-            var optionsBuilder = new DbContextOptionsBuilder<PriorityDbContext>();
-            optionsBuilder.UseInMemoryDatabase("Test3");
-            var dbContext = new PriorityDbContext(optionsBuilder.Options);
-
-            OrderScheduler scheduler = new(dbContext);
-            PrioListElement element = new() { CWPlanned = 48, DeliveryDate = new DateTime(2021, 12, 2), OrderNr = "A001", Project = "P1" };
-            OrderContainer container = new(element);
+            OrderScheduler scheduler = new();
+            OrderContainer container = new(ManageOrdersFixture.GetPrioListElement());
             scheduler.AddOrder(container);
             scheduler.AddLastChangedItem(container.ListElement.KeyToString(), 48, 47);
 
@@ -120,13 +100,8 @@ namespace DashSharedTest
         public void GetLastChangedItem_null_Test()
         {
             //Arrange
-            var optionsBuilder = new DbContextOptionsBuilder<PriorityDbContext>();
-            optionsBuilder.UseInMemoryDatabase("Test4");
-            var dbContext = new PriorityDbContext(optionsBuilder.Options);
-
-            OrderScheduler scheduler = new(dbContext);
-            PrioListElement element = new() { CWPlanned = 48, DeliveryDate = new DateTime(2021, 12, 2), OrderNr = "A001", Project = "P1" };
-            OrderContainer container = new(element);
+            OrderScheduler scheduler = new();
+            OrderContainer container = new(ManageOrdersFixture.GetPrioListElement());
             scheduler.AddOrder(container);
 
             //Act
@@ -140,13 +115,8 @@ namespace DashSharedTest
         public void LastChangedUndid_Test()
         {
             //Arrange
-            var optionsBuilder = new DbContextOptionsBuilder<PriorityDbContext>();
-            optionsBuilder.UseInMemoryDatabase("Test5");
-            var dbContext = new PriorityDbContext(optionsBuilder.Options);
-
-            OrderScheduler scheduler = new(dbContext);
-            PrioListElement element = new() { CWPlanned = 48, DeliveryDate = new DateTime(2021, 12, 2), OrderNr = "A001", Project = "P1" };
-            OrderContainer container = new(element);
+            OrderScheduler scheduler = new();
+            OrderContainer container = new(ManageOrdersFixture.GetPrioListElement());
             scheduler.AddOrder(container);
             scheduler.AddLastChangedItem(container.ListElement.KeyToString(), 48, 47);
 

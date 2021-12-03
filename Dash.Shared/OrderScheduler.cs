@@ -11,12 +11,10 @@ namespace Dash.Shared
         public List<OrderContainer> Orders { get; private set; }
         internal readonly Stack<LastChangedItem> lastChanged = new();
         
-        private readonly PriorityDbContext priorityDbContext;
 
-        public OrderScheduler(PriorityDbContext priorityDbContext)
+        public OrderScheduler()
         {
             Orders = new();
-            this.priorityDbContext = priorityDbContext;
         }
 
         public void AddOrder(OrderContainer order)
@@ -29,14 +27,12 @@ namespace Dash.Shared
             return Orders.First(o => o.ListElement.KeyToString().Equals(key));
         }
 
-        public async Task ChangeCW(string key, int newWeek, int year, bool isUndo)
+        public void ChangeCW(string key, int newWeek, int year, bool isUndo)
         {
             var oldWeek = Orders.First(o => o.ListElement.KeyToString().Equals(key)).CurrentCW;
             Orders.First(o => o.ListElement.KeyToString().Equals(key)).CurrentCW = newWeek;
             Orders.First(o => o.ListElement.KeyToString().Equals(key)).CurrentYear = year;
 
-            priorityDbContext.Orders.First(o => o.Key.Equals(key)).CurrentCW = newWeek;
-            await priorityDbContext.SaveChangesAsync();
 
             if (!isUndo)
                 AddLastChangedItem(key, oldWeek, newWeek);

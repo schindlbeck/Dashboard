@@ -54,7 +54,6 @@ namespace Erp.Prototype
             panelDesk.Controls.Clear();
             Log.Information("Child Form load: {0}", childForm);
             activeForm?.Close();
-            //ActivateButton(sender, panelLeft);
             if (childForm != null)
             {
                 activeForm = childForm;
@@ -67,23 +66,5 @@ namespace Erp.Prototype
                 childForm.Show();
             }
         }
-
-        //private void PanelLeft_DragEnter(object sender, DragEventArgs e)
-        //{
-        //    if (e.Data.GetDataPresent(DataFormats.FileDrop))
-        //        e.Effect = DragDropEffects.All;
-        //    else
-        //        e.Effect = DragDropEffects.None;
-        //}
-
-        //private void PanelLeft_DragDrop(object sender, DragEventArgs e)
-        //{
-        //    string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-        //    if (files.Length > 0 && File.Exists(files[0]))
-        //    {
-
-        //    }
-        //}
-
     }
 }

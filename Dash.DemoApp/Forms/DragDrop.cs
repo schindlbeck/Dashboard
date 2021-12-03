@@ -36,7 +36,7 @@ namespace Dash.DemoApp.Forms
             PriorityContext = factory.CreateDbContext(null);
             PriorityContext.Database.EnsureCreated();
 
-            scheduler = new OrderScheduler(PriorityContext);
+            scheduler = new OrderScheduler();
             prioList = ManageOrders.GetPrioList(Configuration);
 
             InitializeComponent();
