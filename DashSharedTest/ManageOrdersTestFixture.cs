@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace DashSharedTest
 {
-    public class ManageOrdersFixture : IDisposable
+    public class ManageOrdersTestFixture : IDisposable
     {
-        public ManageOrdersFixture()
+        public ManageOrdersTestFixture()
         {
 
         }
@@ -33,7 +33,7 @@ namespace DashSharedTest
 
         public static PrioListElement GetPrioListElement()
         {
-            return new PrioListElement() { CWPlanned = 48, DeliveryDate = new DateTime(2021, 12, 2), OrderNr = "A001", Project = "P1" };
+            return new PrioListElement() { CWPlanned = 48, DeliveryDate = new DateTime(2021, 12, 2), OrderNr = "A001", Project = "P1", TimeTotal = 3500 };
         }
 
         public static List<Order> GetOrders()

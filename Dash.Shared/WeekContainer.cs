@@ -8,7 +8,7 @@ namespace Dash.Shared
 {
     public class WeekContainer
     {
-        public DbWorkWeek Week { get; set; }
+        public DbWorkWeek Week { get; private set; }
 
         public List<OrderContainer> Orders { get; private set; }
         public OrderScheduler Scheduler { get; set; }
@@ -90,7 +90,7 @@ namespace Dash.Shared
             await dbContext.SaveChangesAsync();
         }
 
-        private async Task AddOrderToDbAsync(Order dbOrder)
+        internal async Task AddOrderToDbAsync(Order dbOrder)
         {
             dbContext.Orders.Add(dbOrder);
             dbContext.Weeks.First(w => w.CalendarWeek == Week.CalendarWeek && w.Year == Week.Year).Orders.Add(dbOrder);

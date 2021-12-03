@@ -8,9 +8,9 @@ using Xunit;
 
 namespace DashSharedTest
 {
-    public class ManageOrdersTest : IClassFixture<ManageOrdersFixture>
+    public class ManageOrdersTest : IClassFixture<ManageOrdersTestFixture>
     {
-        public ManageOrdersTest(ManageOrdersFixture prioListFixture)
+        public ManageOrdersTest(ManageOrdersTestFixture prioListFixture)
         {
 
         }
@@ -31,7 +31,7 @@ namespace DashSharedTest
         public void GetOrders_Test()
         {
             //Act
-            var orders = ManageOrders.GetOrders(ManageOrdersFixture.GetPrioList());
+            var orders = ManageOrders.GetOrders(ManageOrdersTestFixture.GetPrioList());
 
             //Assert
             Assert.Equal(5, orders.Count);
@@ -41,7 +41,7 @@ namespace DashSharedTest
 
             Assert.Equal(2021, orders[1].CurrentYear);
 
-            Assert.Equal(ManageOrdersFixture.GetPrioList()[2].Project, orders[2].ListElement.Project);
+            Assert.Equal(ManageOrdersTestFixture.GetPrioList()[2].Project, orders[2].ListElement.Project);
 
         }
 
@@ -49,10 +49,10 @@ namespace DashSharedTest
         public void CheckOrdersAgainstPrioritization()
         {
             //Arrange
-            var orders = ManageOrders.GetOrders(ManageOrdersFixture.GetPrioList());
+            var orders = ManageOrders.GetOrders(ManageOrdersTestFixture.GetPrioList());
 
             //Act
-            var result = ManageOrders.CheckOrdersAgainstPrioritization(orders, ManageOrdersFixture.GetOrders());
+            var result = ManageOrders.CheckOrdersAgainstPrioritization(orders, ManageOrdersTestFixture.GetOrders());
 
             //Assert
             Assert.Equal(5, result.Count);

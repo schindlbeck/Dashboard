@@ -7,9 +7,9 @@ using Xunit;
 
 namespace DashSharedTest
 {
-    public class OrderSchedulerTest : IClassFixture<ManageOrdersFixture>
+    public class OrderSchedulerTest : IClassFixture<ManageOrdersTestFixture>
     {
-        public OrderSchedulerTest(ManageOrdersFixture prioListFixture)
+        public OrderSchedulerTest(ManageOrdersTestFixture prioListFixture)
         {
 
         }
@@ -19,7 +19,7 @@ namespace DashSharedTest
         {
             //Arrange
             OrderScheduler scheduler = new();
-            OrderContainer container = new(ManageOrdersFixture.GetPrioListElement());
+            OrderContainer container = new(ManageOrdersTestFixture.GetPrioListElement());
 
             //Act
             scheduler.AddOrder(container);
@@ -33,7 +33,7 @@ namespace DashSharedTest
         {
             //Arrange
             OrderScheduler scheduler = new();
-            OrderContainer container = new(ManageOrdersFixture.GetPrioListElement());
+            OrderContainer container = new(ManageOrdersTestFixture.GetPrioListElement());
             scheduler.AddOrder(container);
 
             //Act
@@ -49,7 +49,7 @@ namespace DashSharedTest
         {
             //Arrange
             OrderScheduler scheduler = new();
-            OrderContainer container = new(ManageOrdersFixture.GetPrioListElement());
+            OrderContainer container = new(ManageOrdersTestFixture.GetPrioListElement());
             scheduler.AddOrder(container);
 
             //Act
@@ -64,7 +64,7 @@ namespace DashSharedTest
         {
             //Arrange
             OrderScheduler scheduler = new();
-            OrderContainer container = new(ManageOrdersFixture.GetPrioListElement());
+            OrderContainer container = new(ManageOrdersTestFixture.GetPrioListElement());
             scheduler.AddOrder(container);
 
 
@@ -83,7 +83,7 @@ namespace DashSharedTest
         {
             //Arrange
             OrderScheduler scheduler = new();
-            OrderContainer container = new(ManageOrdersFixture.GetPrioListElement());
+            OrderContainer container = new(ManageOrdersTestFixture.GetPrioListElement());
             scheduler.AddOrder(container);
             scheduler.AddLastChangedItem(container.ListElement.KeyToString(), 48, 47);
 
@@ -101,7 +101,7 @@ namespace DashSharedTest
         {
             //Arrange
             OrderScheduler scheduler = new();
-            OrderContainer container = new(ManageOrdersFixture.GetPrioListElement());
+            OrderContainer container = new(ManageOrdersTestFixture.GetPrioListElement());
             scheduler.AddOrder(container);
 
             //Act
@@ -116,7 +116,7 @@ namespace DashSharedTest
         {
             //Arrange
             OrderScheduler scheduler = new();
-            OrderContainer container = new(ManageOrdersFixture.GetPrioListElement());
+            OrderContainer container = new(ManageOrdersTestFixture.GetPrioListElement());
             scheduler.AddOrder(container);
             scheduler.AddLastChangedItem(container.ListElement.KeyToString(), 48, 47);
 
