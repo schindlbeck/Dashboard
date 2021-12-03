@@ -16,9 +16,9 @@ namespace Dash.DemoApp.UserControls
     {
         public OrderContainer OrderContainer { get; init; }
 
-        public OrderControl(PrioListElement element)
+        public OrderControl(OrderContainer container)
         {
-            OrderContainer = new(element);
+            OrderContainer = container;
 
             InitializeComponent();
 

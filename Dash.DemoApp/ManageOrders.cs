@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dash.Data;
-using Dash.DemoApp.UserControls;
+﻿using Dash.Data;
+using Dash.Shared;
 using Microsoft.Extensions.Configuration;
 using OfficeOpenXml;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Dash.DemoApp
 {
@@ -53,13 +50,13 @@ namespace Dash.DemoApp
             return list;
         }
 
-        public static List<OrderControl> GetOrders(List<PrioListElement> prioList)
+        public static List<OrderContainer> GetOrders(List<PrioListElement> prioList)
         {
-            List<OrderControl> orders = new();
+            List<OrderContainer> orders = new();
 
             foreach (var prioElement in prioList)
             {
-                OrderControl order = new(prioElement);
+                OrderContainer order = new(prioElement);
 
                 orders.Add(order);
             }
@@ -67,15 +64,15 @@ namespace Dash.DemoApp
             return orders;
         }
 
-        public static List<OrderControl> CheckOrdersAgainstPrioritization(List<OrderControl> orders, List<Order> prioritizedOrders)
+        public static List<OrderContainer> CheckOrdersAgainstPrioritization(List<OrderContainer> orders, List<Order> prioritizedOrders)
         {
             foreach (var order in orders)
             {
-                if (prioritizedOrders.Exists(o => o.Key.Equals(order.OrderContainer.ListElement.KeyToString())))
+                if (prioritizedOrders.Exists(o => o.Key.Equals(order.ListElement.KeyToString())))
                 {
-                    var currentCw = prioritizedOrders.First(o => o.Key.Equals(order.OrderContainer.ListElement.KeyToString())).CurrentCW;
+                    var currentCw = prioritizedOrders.First(o => o.Key.Equals(order.ListElement.KeyToString())).CurrentCW;
 
-                    order.OrderContainer.CurrentCW = currentCw;
+                    order.CurrentCW = currentCw;
                 }
             }
 

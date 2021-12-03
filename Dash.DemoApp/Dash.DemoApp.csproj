@@ -53,6 +53,9 @@
 
 
 	<ItemGroup>
+	  <None Update="appsettings.GSNIT1NTB202105.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="appsettings.GSRGB1NTB201901.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

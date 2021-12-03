@@ -77,15 +77,17 @@ namespace Dash.DemoApp.Forms
             var prioritizedOrders = await PriorityContext.Orders.ToListAsync();
 
             //later other source
-            var orders = ManageOrders.GetOrders(prioList);
+            var orderContainer = ManageOrders.GetOrders(prioList);
 
-            orders = ManageOrders.CheckOrdersAgainstPrioritization(orders, prioritizedOrders);
+            orderContainer = ManageOrders.CheckOrdersAgainstPrioritization(orderContainer, prioritizedOrders);
 
-            foreach (var order in orders)
+            foreach (var container in orderContainer)
             {
-                order.MouseDown += new MouseEventHandler(Order_MouseDown);
-                OrderControls.Add(order.OrderContainer.ListElement.KeyToString(), order);
-                await weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == order.OrderContainer.CurrentCW).AddOrderInitialized(order);
+                OrderControl control = new(container);
+                
+                control.MouseDown += new MouseEventHandler(Order_MouseDown);
+                OrderControls.Add(control.OrderContainer.ListElement.KeyToString(), control);
+                await weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == control.OrderContainer.CurrentCW).AddOrderInitialized(control);
             }
         }
 
