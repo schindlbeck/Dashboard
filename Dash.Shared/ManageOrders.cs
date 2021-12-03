@@ -1,5 +1,4 @@
 ﻿using Dash.Data;
-using Dash.Shared;
 using Microsoft.Extensions.Configuration;
 using OfficeOpenXml;
 using System;
@@ -7,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Dash.DemoApp
+namespace Dash.Shared
 {
     public static class ManageOrders
     {

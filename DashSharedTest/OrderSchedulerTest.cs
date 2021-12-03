@@ -2,10 +2,7 @@
 using Dash.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace DashSharedTest
@@ -16,7 +13,6 @@ namespace DashSharedTest
         public void AddOrder_Test()
         {
             //Arrange
-
             var optionsBuilder = new DbContextOptionsBuilder<PriorityDbContext>();
             optionsBuilder.UseInMemoryDatabase("Test1");
             var dbContext = new PriorityDbContext(optionsBuilder.Options);

@@ -4,7 +4,6 @@ using Dash.DemoApp.Forms;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace Erp.Prototype
