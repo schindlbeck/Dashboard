@@ -16,7 +16,7 @@ namespace Dash.DemoApp.UserControls
 
             InitializeComponent();
 
-            this.OrderContainer.OrderCwChanged += OrderContainer_OrderCwChanged;
+            this.OrderContainer.OrderProductionCWChanged += OrderContainer_OrderCwChanged;
         }
 
         private void OrderContainer_OrderCwChanged(object sender, EventArgs e)
@@ -33,12 +33,12 @@ namespace Dash.DemoApp.UserControls
 
         private void InitializeText()
         {
-            richTextBoxInfo.Text = $"CW planned: {OrderContainer.ListElement.CWPlanned}" + Environment.NewLine +
-                $"CW current: {OrderContainer.CurrentCW}" + Environment.NewLine + $"Total time: {OrderContainer.ListElement.TimeTotal}";
+            richTextBoxInfo.Text = $"CW planned: {OrderContainer.ListElement.DeliveryCW}" + Environment.NewLine +
+                $"CW current: {OrderContainer.ProductionCW}" + Environment.NewLine + $"Total time: {OrderContainer.ListElement.TimeTotal}";
 
-            if (OrderContainer.CurrentCW >= OrderContainer.ListElement.CWPlanned)
+            if (OrderContainer.ProductionCW >= OrderContainer.ListElement.DeliveryCW)
             {
-                if (OrderContainer.CurrentCW == OrderContainer.ListElement.CWPlanned)
+                if (OrderContainer.ProductionCW == OrderContainer.ListElement.DeliveryCW)
                     richTextBoxInfo.BackColor = Color.LightYellow;
                 else
                     richTextBoxInfo.BackColor = Color.IndianRed;

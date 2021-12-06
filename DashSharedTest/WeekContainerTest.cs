@@ -47,8 +47,8 @@ namespace DashSharedTest
             var dbContext = new PriorityDbContext(optionsBuilder.Options);
 
             var scheduler = new OrderScheduler();
-            scheduler.AddOrder(new OrderContainer(new PrioListElement() { CWPlanned = 49, DeliveryDate = new DateTime(2021, 12, 9), OrderNr = "A001", Project = "P1", TimeTotal = 3500 }));
-            dbContext.Orders.Add(new Order() { CurrentCW = 49, DeliveryDate = new DateTime(2021, 12, 9), TimeTotal = 3500, Key = "P1: A001" });
+            scheduler.AddOrder(new OrderContainer(new PrioListElement() { DeliveryCW = 49, DeliveryDate = new DateTime(2021, 12, 9), OrderNr = "A001", Project = "P1", TimeTotal = 3500 }));
+            dbContext.Orders.Add(new Order() { ProductionCW = 49, DeliveryDate = new DateTime(2021, 12, 9), TimeTotal = 3500, Key = "P1: A001" });
 
             WeekContainer container = new(WeekContainerTestFixture.GetDbWorkWeek(), scheduler, dbContext);
             
@@ -57,7 +57,7 @@ namespace DashSharedTest
 
             //Assert
             Assert.Single(container.Orders);
-            Assert.Equal(48, scheduler.Orders.First().CurrentCW);
+            Assert.Equal(48, scheduler.Orders.First().ProductionCW);
         }
 
         [Fact]
@@ -93,7 +93,7 @@ namespace DashSharedTest
             WeekContainer container = new(WeekContainerTestFixture.GetDbWorkWeek(), scheduler, dbContext);
             await container.AddOrderInitialized(new OrderContainer(ManageOrdersTestFixture.GetPrioListElement()));
 
-            scheduler.Orders.First().CurrentCW = 47;
+            scheduler.Orders.First().ProductionCW = 47;
 
             //Act
             await container.RemoveOrder();

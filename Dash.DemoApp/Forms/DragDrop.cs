@@ -57,7 +57,7 @@ namespace Dash.DemoApp.Forms
             var currentYear = 2021;
 
             //later other source
-            var prioListWeeks = prioList.Select(w => Convert.ToInt32(w.DeliveryDate.Year.ToString() + w.CWPlanned.ToString())).ToList();
+            var prioListWeeks = prioList.Select(w => Convert.ToInt32(w.DeliveryDate.Year.ToString() + w.DeliveryCW.ToString())).ToList();
 
             var weeksDisplayed1 = workScheduleWeeks.Where(w => (w.CalendarWeek >= currentCw && w.Year == currentYear)
                                                                 || w.Year > currentYear
@@ -86,7 +86,7 @@ namespace Dash.DemoApp.Forms
                 
                 control.MouseDown += new MouseEventHandler(Order_MouseDown);
                 OrderControls.Add(control.OrderContainer.ListElement.KeyToString(), control);
-                await weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == control.OrderContainer.CurrentCW).AddOrderInitialized(control);
+                await weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == control.OrderContainer.ProductionCW).AddOrderInitialized(control);
             }
         }
 
@@ -133,8 +133,8 @@ namespace Dash.DemoApp.Forms
 
             if (lastChanged is not null)
             {
-                weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == lastChanged.CwLast).AddOrder(lastChanged.Key, true);
-                await weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == lastChanged.CwNow).RemoveOrder();
+                weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == lastChanged.OldProdutionCW).AddOrder(lastChanged.Key, true);
+                await weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == lastChanged.NewProductionCW).RemoveOrder();
 
                 scheduler.LastChangedUndid();
             }

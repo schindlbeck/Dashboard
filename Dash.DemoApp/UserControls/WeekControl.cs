@@ -75,12 +75,9 @@ namespace Dash.DemoApp.UserControls
         {
             var order = await WeekContainer.AddOrderAfterDragDrop(orderKey, isUndo);
 
-
             if (order is not null)
             {
-                var a = WeekContainer.Orders.First(o => o.ListElement.KeyToString().Equals(order.ListElement.KeyToString()));
-
-                flowPanel.Controls.Add(dragDrop.OrderControls[a.ListElement.KeyToString()]);
+                flowPanel.Controls.Add(dragDrop.OrderControls[order.ListElement.KeyToString()]);
             }
         }
 

@@ -36,8 +36,8 @@ namespace DashSharedTest
             //Assert
             Assert.Equal(5, orders.Count);
 
-            Assert.Equal(48, orders[0].CurrentCW);
-            Assert.Equal(50, orders[3].CurrentCW);
+            Assert.Equal(48, orders[0].ProductionCW);
+            Assert.Equal(50, orders[3].ProductionCW);
 
             Assert.Equal(2021, orders[1].CurrentYear);
 
@@ -56,11 +56,11 @@ namespace DashSharedTest
 
             //Assert
             Assert.Equal(5, result.Count);
-            Assert.Equal(48, result[0].CurrentCW);
-            Assert.Equal(47, result[1].CurrentCW);
-            Assert.Equal(49, result[2].CurrentCW);
-            Assert.Equal(49, result[3].CurrentCW);
-            Assert.Equal(50, result[4].CurrentCW);
+            Assert.Equal(48, result[0].ProductionCW);
+            Assert.Equal(47, result[1].ProductionCW);
+            Assert.Equal(49, result[2].ProductionCW);
+            Assert.Equal(49, result[3].ProductionCW);
+            Assert.Equal(50, result[4].ProductionCW);
 
         }
     }

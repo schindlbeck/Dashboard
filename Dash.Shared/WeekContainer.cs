@@ -34,7 +34,7 @@ namespace Dash.Shared
         {
             Scheduler.AddOrder(order);
             Orders.Add(order);
-            var dbOrder = new Order() { DeliveryDate = order.ListElement.DeliveryDate, Key = order.ListElement.KeyToString(), TimeTotal = order.ListElement.TimeTotal, CurrentCW = Week.CalendarWeek };
+            var dbOrder = new Order() { DeliveryDate = order.ListElement.DeliveryDate, Key = order.ListElement.KeyToString(), TimeTotal = order.ListElement.TimeTotal, ProductionCW = Week.CalendarWeek };
 
             await AddOrderToDbAsync(dbOrder);
         }
@@ -43,7 +43,7 @@ namespace Dash.Shared
         {
             if (!Orders.Exists(o => o.ListElement.KeyToString().Equals(key)))
             {
-                var order = await ChangeCurrentCw(key, isUndo);
+                var order = await ChangeProductionCW(key, isUndo);
 
                 Orders.Add(order);
 
@@ -52,21 +52,21 @@ namespace Dash.Shared
             return null;
         }
 
-        private async Task<OrderContainer> ChangeCurrentCw(string key, bool isUndo)
+        private async Task<OrderContainer> ChangeProductionCW(string key, bool isUndo)
         {
-            Scheduler.ChangeCW(key, Week.CalendarWeek, Week.Year, isUndo);
+            Scheduler.ChangeProductionCW(key, Week.CalendarWeek, Week.Year, isUndo);
             var order = Scheduler.GetOrder(key);
 
-            order.CurrentCwChanged();
+            order.ProductionCWChanged();
 
-            await ChangeCurrentCwInDb(key);
+            await ChangeProductionCWInDb(key);
 
             return order;
         }
 
         public async Task RemoveOrder()
         {
-            var schedulerOrders = Scheduler.Orders.Where(o => o.CurrentCW == Week.CalendarWeek).ToList();
+            var schedulerOrders = Scheduler.Orders.Where(o => o.ProductionCW == Week.CalendarWeek).ToList();
 
             var removedOrder = Orders.Except(schedulerOrders).FirstOrDefault();
 
@@ -84,9 +84,9 @@ namespace Dash.Shared
             await dbContext.SaveChangesAsync();
         }
 
-        private async Task ChangeCurrentCwInDb(string key)
+        private async Task ChangeProductionCWInDb(string key)
         {
-            dbContext.Orders.First(o => o.Key.Equals(key)).CurrentCW = Week.CalendarWeek;
+            dbContext.Orders.First(o => o.Key.Equals(key)).ProductionCW = Week.CalendarWeek;
             await dbContext.SaveChangesAsync();
         }
 

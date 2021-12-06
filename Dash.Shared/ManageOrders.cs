@@ -34,7 +34,7 @@ namespace Dash.Shared
                 p.Project = worksheet.Cells[i, 1].Value.ToString();
                 p.OrderNr = worksheet.Cells[i, 2].Value.ToString();
                 p.DeliveryDate = Convert.ToDateTime(worksheet.Cells[i, 3].Value);
-                p.CWPlanned = Convert.ToInt16(worksheet.Cells[i, 5].Value);
+                p.DeliveryCW = Convert.ToInt16(worksheet.Cells[i, 5].Value);
                 p.Progress = Convert.ToDecimal(worksheet.Cells[i, 6].Value);
                 p.Position = Convert.ToInt16(worksheet.Cells[i, 7].Value);
                 p.Quantity = Convert.ToInt16(worksheet.Cells[i, 8].Value);
@@ -68,9 +68,9 @@ namespace Dash.Shared
             {
                 if (prioritizedOrders.Exists(o => o.Key.Equals(order.ListElement.KeyToString())))
                 {
-                    var currentCw = prioritizedOrders.First(o => o.Key.Equals(order.ListElement.KeyToString())).CurrentCW;
+                    var productionCW = prioritizedOrders.First(o => o.Key.Equals(order.ListElement.KeyToString())).ProductionCW;
 
-                    order.CurrentCW = currentCw;
+                    order.ProductionCW = productionCW;
                 }
             }
 

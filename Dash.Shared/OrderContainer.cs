@@ -7,21 +7,21 @@ namespace Dash.Shared
     {
         public delegate void OrderContainerEventHandler(object sender, EventArgs e);
 
-        public event OrderContainerEventHandler OrderCwChanged;
+        public event OrderContainerEventHandler OrderProductionCWChanged;
         public PrioListElement ListElement { get; init; }
-        public int CurrentCW { get; set; }
+        public int ProductionCW { get; set; }
         public int CurrentYear { get; set; }
 
         public OrderContainer(PrioListElement element)
         {
             ListElement = element;
-            CurrentCW = element.CWPlanned;
+            ProductionCW = element.DeliveryCW;
             CurrentYear = element.DeliveryDate.Year;
         }
 
-        public void CurrentCwChanged()
+        public void ProductionCWChanged()
         {
-            OrderCwChanged?.Invoke(this, EventArgs.Empty);
+            OrderProductionCWChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

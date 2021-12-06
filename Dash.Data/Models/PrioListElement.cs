@@ -18,7 +18,7 @@ namespace Dash.Data
 
         public DateTime DeliveryDate { get; set; }
 
-        public int CWPlanned { get; set; }
+        public int DeliveryCW { get; set; }
 
         public decimal Progress { get; set; }
 

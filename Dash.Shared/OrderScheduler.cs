@@ -27,10 +27,10 @@ namespace Dash.Shared
             return Orders.First(o => o.ListElement.KeyToString().Equals(key));
         }
 
-        public void ChangeCW(string key, int newWeek, int year, bool isUndo)
+        public void ChangeProductionCW(string key, int newWeek, int year, bool isUndo)
         {
-            var oldWeek = Orders.First(o => o.ListElement.KeyToString().Equals(key)).CurrentCW;
-            Orders.First(o => o.ListElement.KeyToString().Equals(key)).CurrentCW = newWeek;
+            var oldWeek = Orders.First(o => o.ListElement.KeyToString().Equals(key)).ProductionCW;
+            Orders.First(o => o.ListElement.KeyToString().Equals(key)).ProductionCW = newWeek;
             Orders.First(o => o.ListElement.KeyToString().Equals(key)).CurrentYear = year;
 
 
@@ -38,9 +38,9 @@ namespace Dash.Shared
                 AddLastChangedItem(key, oldWeek, newWeek);
         }
 
-        internal void AddLastChangedItem(string key, int cwLast, int cwNow)
+        private void AddLastChangedItem(string key, int cwLast, int cwNow)
         {
-            lastChanged.Push(new LastChangedItem() { Key = key, CwLast = cwLast, CwNow = cwNow });
+            lastChanged.Push(new LastChangedItem() { Key = key, OldProdutionCW = cwLast, NewProductionCW = cwNow });
         }
 
         public LastChangedItem GetLastChangedItem()
@@ -65,8 +65,8 @@ namespace Dash.Shared
     {
         public string Key { get; set; }
 
-        public int CwLast { get; set; }
+        public int OldProdutionCW { get; set; }
 
-        public int CwNow { get; set; }
+        public int NewProductionCW { get; set; }
     }
 }

@@ -44,60 +44,76 @@ namespace DashSharedTest
 
         }
 
-        [Fact]
-        public void ChangeCW_Test()
+        [Theory]
+        [InlineData(47, 2021, true, 0)]
+        [InlineData(48, 2021, true, 1)]
+        [InlineData(48, 2021, true, 2)]
+        [InlineData(1, 2022, true, 3)]
+        [InlineData(5, 2022, true, 4)]
+        public void ChangeProductionCW_IsUndo_Theory(int newcw, int year, bool isUndo, int priolistElementindex)
         {
             //Arrange
             OrderScheduler scheduler = new();
-            OrderContainer container = new(ManageOrdersTestFixture.GetPrioListElement());
+            var prioListElement = ManageOrdersTestFixture.GetPrioListElementTheory()[priolistElementindex];
+            OrderContainer container = new(prioListElement);
             scheduler.AddOrder(container);
 
             //Act
-            scheduler.ChangeCW(container.ListElement.KeyToString(), 47, 2021, true);
+            scheduler.ChangeProductionCW(container.ListElement.KeyToString(), newcw, year, isUndo);
 
             //Assert
-            Assert.Equal(47, scheduler.Orders.First().CurrentCW);
+            Assert.Equal(newcw, scheduler.Orders.First().ProductionCW);
         }
 
-        [Fact]
-        public void AddLastChangedItem_Test()
+        [Theory]
+        [InlineData(47, 2021, false, 0)]
+        [InlineData(48, 2021, false, 1)]
+        [InlineData(48, 2021, false, 2)]
+        [InlineData(1, 2022, false, 3)]
+        [InlineData(5, 2022, false, 4)]
+        public void ChangeProductionCW_IsNotUndo_Theory(int newcw, int year, bool isUndo, int priolistElementindex)
         {
             //Arrange
             OrderScheduler scheduler = new();
-            OrderContainer container = new(ManageOrdersTestFixture.GetPrioListElement());
+            var prioListElement = ManageOrdersTestFixture.GetPrioListElementTheory()[priolistElementindex];
+            OrderContainer container = new(prioListElement);
             scheduler.AddOrder(container);
-
 
             //Act
-            scheduler.AddLastChangedItem(container.ListElement.KeyToString(), 48, 47);
+            scheduler.ChangeProductionCW(container.ListElement.KeyToString(), newcw, year, isUndo);
+            var resultLastChanged = scheduler.lastChanged.Peek();
 
             //Assert
-            Assert.Equal(47, scheduler.lastChanged.Peek().CwNow);
-            Assert.Equal(48, scheduler.lastChanged.Peek().CwLast);
-            Assert.Equal(container.ListElement.KeyToString(), scheduler.lastChanged.Peek().Key);
+            Assert.Equal(newcw, scheduler.Orders.First().ProductionCW);
 
+            if (!isUndo)
+            {
+                Assert.Equal(prioListElement.KeyToString(), resultLastChanged.Key);
+                Assert.Equal(prioListElement.DeliveryCW, resultLastChanged.OldProdutionCW);
+                Assert.Equal(newcw, resultLastChanged.NewProductionCW);
+            }
         }
 
         [Fact]
-        public void GetLastChangedItem_Test()
+        public void GetLastChangedItem_LastChangedItemExists_GetItem_Test()
         {
             //Arrange
             OrderScheduler scheduler = new();
             OrderContainer container = new(ManageOrdersTestFixture.GetPrioListElement());
             scheduler.AddOrder(container);
-            scheduler.AddLastChangedItem(container.ListElement.KeyToString(), 48, 47);
+            scheduler.ChangeProductionCW(container.ListElement.KeyToString(), 47, 2021, false);
 
             //Act
             var result = scheduler.GetLastChangedItem();
 
             //Assert
-            Assert.Equal(47, result.CwNow);
-            Assert.Equal(48, result.CwLast);
+            Assert.Equal(47, result.NewProductionCW);
+            Assert.Equal(48, result.OldProdutionCW);
             Assert.Equal(container.ListElement.KeyToString(), result.Key);
         }
 
         [Fact]
-        public void GetLastChangedItem_null_Test()
+        public void GetLastChangedItem_NoLastChangedItemExists_null_Test()
         {
             //Arrange
             OrderScheduler scheduler = new();
@@ -118,7 +134,7 @@ namespace DashSharedTest
             OrderScheduler scheduler = new();
             OrderContainer container = new(ManageOrdersTestFixture.GetPrioListElement());
             scheduler.AddOrder(container);
-            scheduler.AddLastChangedItem(container.ListElement.KeyToString(), 48, 47);
+            scheduler.ChangeProductionCW(container.ListElement.KeyToString(), 47, 2021, false);
 
             //Act
             scheduler.LastChangedUndid();
@@ -127,6 +143,5 @@ namespace DashSharedTest
             Assert.Empty(scheduler.lastChanged);
         }
 
-        
     }
 }
