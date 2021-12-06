@@ -1,0 +1,71 @@
+﻿@using BlazorTest.Models
+
+<ul class="@dropZone @dropClass"
+    ondragover="event.preventDefault();"
+    ondragstart="event.dataTransfer.setData('', event.target.id);"
+    @ondrop="HandleDrop"
+    @ondragenter="HandleDragEnter"
+    @ondragleave="HandleDragLeave">
+    <h5>@State (@Models.Count())<br />KW @CalendarWeek</h5>
+    <hr />
+    @foreach (var task in Models)
+    {
+        <DataComponent DataModel="task"></DataComponent>
+    }
+</ul>
+
+@code {
+    [CascadingParameter] DataModelContainer Container { get; set; }
+    [Parameter] public TaskState State { get; set; }
+    [Parameter] public TaskState[] AllowedStates { get; set; }
+    [Parameter] public int CalendarWeek { get; set; }
+
+    List<DataModel> Models = new();
+    string dropClass = string.Empty;
+    string dropZone = "dropzone ";
+
+    protected override void OnParametersSet()
+    {
+        Models.Clear();
+
+        switch (State)
+        {
+            case TaskState.Scheduled:
+                    Models.AddRange(Container.Models.Where(x => x.State == State && CalendarWeek == x.Cw));
+                break;
+
+                default:
+                    Models.AddRange(Container.Models.Where(x => x.State == State));
+                    dropZone = "dropzonenew ";
+                    break;
+        }
+    }
+
+
+    private void HandleDragEnter()
+    {
+        if (State == Container.Payload.State) return;
+
+        if (AllowedStates != null && !AllowedStates.Contains(Container.Payload.State))
+        {
+            dropClass = "no-drop";
+        }
+        else
+        {
+            dropClass = "can-drop";
+        }
+    }
+
+    private void HandleDragLeave()
+    {
+        dropClass = "";
+    }
+
+     private async Task HandleDrop()
+    {
+        dropClass = "";
+        if (AllowedStates != null && !AllowedStates.Contains(Container.Payload.State)) return;
+
+        await Container.UpdateOrderAsync(State, CalendarWeek);
+    }
+}
