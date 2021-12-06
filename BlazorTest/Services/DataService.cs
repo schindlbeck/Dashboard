@@ -11,9 +11,9 @@ namespace BlazorTest.Services
 
         public DataService(DashDbContext context)
         {
-            Initialize();
-
             DbContext = context;
+
+            Initialize();
         }
 
         public List<int> CalendarWeeks { get; internal set; } = new();
