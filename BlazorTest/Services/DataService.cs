@@ -1,14 +1,19 @@
 ﻿using BlazorTest.Models;
+using Dash.Data;
 
 namespace BlazorTest.Services
 {
     public class DataService
     {
         public List<DataModel> DataModels = new();
+        public DashDbContext DbContext { get; set; }
 
         public DataService()
         {
             Initialize();
+
+            var factory = new DashDbContextFactory();
+            DbContext = factory.CreateDbContext(Array.Empty<string>());
         }
 
         public List<int> CalendarWeeks { get; internal set; } = new();
@@ -21,7 +26,9 @@ namespace BlazorTest.Services
             DataModels.Add(new DataModel { Id = 4, Name = "Grün", Cw = 4 });
             DataModels.Add(new DataModel { Id = 5, Name = "Lila", Cw = 5 });
 
-            CalendarWeeks.AddRange(DataModels.Select(dm => dm.Cw).OrderBy(w => w).Distinct());
+            var weeks = DbContext.WorkWeeks.Select(w => w.CalendarWeek).Distinct().ToList();
+
+            CalendarWeeks.AddRange(weeks);
         }
     }
 }
