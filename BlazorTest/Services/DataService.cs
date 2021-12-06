@@ -1,6 +1,7 @@
 ﻿using BlazorTest.Models;
 using Dash.Data;
 
+
 namespace BlazorTest.Services
 {
     public class DataService
@@ -8,12 +9,11 @@ namespace BlazorTest.Services
         public List<DataModel> DataModels = new();
         public DashDbContext DbContext { get; set; }
 
-        public DataService()
+        public DataService(DashDbContext context)
         {
             Initialize();
 
-            var factory = new DashDbContextFactory();
-            DbContext = factory.CreateDbContext(Array.Empty<string>());
+            DbContext = context;
         }
 
         public List<int> CalendarWeeks { get; internal set; } = new();
