@@ -1,0 +1,21 @@
+﻿@using BlazorServer.Models
+
+<h5>@DataModel.Name</h5>
+<li class="draggable" draggable="true" title="@DataModel.Name" ondragstart="@(()=>HandleDragStart(DataModel))">
+    <p class="description">
+        Beschreibung<br/>
+        @DataModel.Cw<br/>
+        <small>Update:  @DateTime.Now.ToShortTimeString()</small>
+    </p>
+</li>
+
+@code {
+    [CascadingParameter] DataModelContainer Container { get; set; }
+    [Parameter] public DataModel DataModel { get; set; }
+
+    private void HandleDragStart(DataModel dragedModel)
+    {
+        Container.Payload = dragedModel;
+    }
+
+}
