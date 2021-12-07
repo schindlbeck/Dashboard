@@ -20,6 +20,7 @@ namespace BlazorServer.Services
 
         private void Initialize()
         {
+            //TODO : Models -> Orders from Excel
             DataModels.Add(new DataModel { Id = 1, Name = "Blau", Cw = 1 });
             DataModels.Add(new DataModel { Id = 2, Name = "Rot", Cw = 2 });
             DataModels.Add(new DataModel { Id = 3, Name = "Gelb", Cw = 3 });

@@ -1,9 +1,8 @@
 ﻿@using BlazorServer.Models
 
-<h5>@DataModel.Name</h5>
 <li class="draggable" draggable="true" title="@DataModel.Name" ondragstart="@(()=>HandleDragStart(DataModel))">
     <p class="description">
-        Beschreibung<br/>
+        @DataModel.Name<br/>
         @DataModel.Cw<br/>
         <small>Update:  @DateTime.Now.ToShortTimeString()</small>
     </p>
