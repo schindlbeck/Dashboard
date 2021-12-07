@@ -28,6 +28,8 @@ namespace Dash.Data
         public DbSet<DbWorkWeek> WorkWeeks { get; set; }
         public DbSet<DbWorkDay> WorkDays { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
+        public DbSet<PriorityWeek> PrioWeeks { get; set; }
+        public DbSet<Order> PriotizedOrders { get; set; }
 
     }
     public class DashDbContextFactory : IDesignTimeDbContextFactory<DashDbContext>

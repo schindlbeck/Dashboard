@@ -16,7 +16,7 @@ namespace Dash.DemoApp.UserControls
 
         public WeekContainer WeekContainer { get; init; }
 
-        public WeekControl(DbWorkWeek workWeek, OrderScheduler scheduler, PriorityDbContext dbContext, DragDrop dragDrop)
+        public WeekControl(DbWorkWeek workWeek, OrderScheduler scheduler, DashDbContext dbContext, DragDrop dragDrop)
         {
 
             WeekContainer = new(workWeek, scheduler, dbContext);

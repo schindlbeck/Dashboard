@@ -1,4 +1,5 @@
 ﻿using Dash.Data;
+using Dash.Data.Models;
 using Dash.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,9 +22,9 @@ namespace DashSharedTest
         public async void AddOrderInitialized_Test()
         {
             //Arrange
-            var optionsBuilder = new DbContextOptionsBuilder<PriorityDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
             optionsBuilder.UseInMemoryDatabase("Test1");
-            var dbContext = new PriorityDbContext(optionsBuilder.Options);
+            var dbContext = new DashDbContext(optionsBuilder.Options);
 
             WeekContainer container = new(WeekContainerTestFixture.GetDbWorkWeek(), new OrderScheduler(), dbContext);
 
@@ -42,13 +43,13 @@ namespace DashSharedTest
         public async void AddOrderAfterDragDrop_OrderNotAlreadyExists_AddOrder_Test()
         {
             //Arrange
-            var optionsBuilder = new DbContextOptionsBuilder<PriorityDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
             optionsBuilder.UseInMemoryDatabase("Test2");
-            var dbContext = new PriorityDbContext(optionsBuilder.Options);
+            var dbContext = new DashDbContext(optionsBuilder.Options);
 
             var scheduler = new OrderScheduler();
             scheduler.AddOrder(new OrderContainer(new PrioListElement() { DeliveryCW = 49, DeliveryDate = new DateTime(2021, 12, 9), OrderNr = "A001", Project = "P1", TimeTotal = 3500 }));
-            dbContext.Orders.Add(new Order() { ProductionCW = 49, DeliveryDate = new DateTime(2021, 12, 9), TimeTotal = 3500, Key = "P1: A001" });
+            dbContext.PriotizedOrders.Add(new Order() { ProductionCW = 49, DeliveryDate = new DateTime(2021, 12, 9), TimeTotal = 3500, Key = "P1: A001" });
 
             WeekContainer container = new(WeekContainerTestFixture.GetDbWorkWeek(), scheduler, dbContext);
             
@@ -64,9 +65,9 @@ namespace DashSharedTest
         public async void AddOrderAfterDragDrop_OrderAlreadyExists_OrderNotAdded_Test()
         {
             //Arrange
-            var optionsBuilder = new DbContextOptionsBuilder<PriorityDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
             optionsBuilder.UseInMemoryDatabase("Test3");
-            var dbContext = new PriorityDbContext(optionsBuilder.Options);
+            var dbContext = new DashDbContext(optionsBuilder.Options);
 
             var scheduler = new OrderScheduler();
 
@@ -84,9 +85,9 @@ namespace DashSharedTest
         public async void RemoveOrder_Test()
         {
             //Arrange
-            var optionsBuilder = new DbContextOptionsBuilder<PriorityDbContext>();
-            optionsBuilder.UseInMemoryDatabase("Test3");
-            var dbContext = new PriorityDbContext(optionsBuilder.Options);
+            var optionsBuilder = new DbContextOptionsBuilder<DashDbContext>();
+            optionsBuilder.UseInMemoryDatabase("Test4");
+            var dbContext = new DashDbContext(optionsBuilder.Options);
 
             var scheduler = new OrderScheduler();
 

@@ -17,9 +17,9 @@ namespace Dash.Shared
         
         public int MinutesBooked { get { return Orders.Sum(s => s.ListElement.TimeTotal); } }
 
-        private readonly PriorityDbContext dbContext;
+        private readonly DashDbContext dbContext;
 
-        public WeekContainer(DbWorkWeek week, OrderScheduler scheduler, PriorityDbContext dbContext)
+        public WeekContainer(DbWorkWeek week, OrderScheduler scheduler, DashDbContext dbContext)
         {
             Week = week;
             Orders = new();
@@ -27,7 +27,7 @@ namespace Dash.Shared
             this.dbContext = dbContext;
             dbContext.Database.EnsureCreated();
 
-            AddWeekToDb();
+            //AddWeekToDb();
         }
 
         public async Task AddOrderInitialized(OrderContainer order)
@@ -74,36 +74,37 @@ namespace Dash.Shared
             {
                 Orders.Remove(removedOrder);
 
-                await RemoveOrderInDb(removedOrder);
+                //await RemoveOrderInDb(removedOrder);
             }
         }
 
-        private async void AddWeekToDb()
-        {
-            dbContext.Weeks.Add(new Week() { CalendarWeek = Week.CalendarWeek, ProductionMinutes = Week.ProductionMinutes, Year = Week.Year, Orders = new() });
-            await dbContext.SaveChangesAsync();
-        }
+        //TODO : redundant?
+        //private async void AddWeekToDb()
+        //{
+        //    dbContext.PrioWeeks.Add(new PriorityWeek() { CalendarWeek = Week.CalendarWeek, ProductionMinutes = Week.ProductionMinutes, Year = Week.Year, Orders = new() });
+        //    await dbContext.SaveChangesAsync();
+        //}
 
         private async Task ChangeProductionCWInDb(string key)
         {
-            dbContext.Orders.First(o => o.Key.Equals(key)).ProductionCW = Week.CalendarWeek;
+            dbContext.PriotizedOrders.First(o => o.Key.Equals(key)).ProductionCW = Week.CalendarWeek;
             await dbContext.SaveChangesAsync();
         }
 
         internal async Task AddOrderToDbAsync(Order dbOrder)
         {
-            dbContext.Orders.Add(dbOrder);
-            dbContext.Weeks.First(w => w.CalendarWeek == Week.CalendarWeek && w.Year == Week.Year).Orders.Add(dbOrder);
+            dbContext.PriotizedOrders.Add(dbOrder);
+            //dbContext.PrioWeeks.First(w => w.CalendarWeek == Week.CalendarWeek && w.Year == Week.Year).Orders.Add(dbOrder);
 
             await dbContext.SaveChangesAsync();
         }
 
-        private async Task RemoveOrderInDb(OrderContainer order)
-        {
-            var removedOrder = dbContext.Weeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.FirstOrDefault(o => order.ListElement.KeyToString().Equals(o.Key));
-            dbContext.Weeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.Remove(removedOrder);
+        //private async Task RemoveOrderInDb(OrderContainer order)
+        //{
+        //    var removedOrder = dbContext.PrioWeeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.FirstOrDefault(o => order.ListElement.KeyToString().Equals(o.Key));
+        //    dbContext.PrioWeeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.Remove(removedOrder);
 
-            await dbContext.SaveChangesAsync();
-        }
+        //    await dbContext.SaveChangesAsync();
+        //}
     }
 }
