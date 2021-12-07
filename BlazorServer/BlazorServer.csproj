@@ -7,6 +7,29 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Content Remove="appsettings.GSNIT1NTB202105.json" />
+	  <Content Remove="appsettings.GSRGB1NTB201901.json" />
+	  <Content Remove="appsettings.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="appsettings.GSNIT1NTB202105.json" />
+	  <_ContentIncludedByDefault Remove="appsettings.GSRGB1NTB201901.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="appsettings.GSNIT1NTB202105.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Include="appsettings.GSRGB1NTB201901.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Include="appsettings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\Dash.Data\Dash.Data.csproj" />
 		<ProjectReference Include="..\Dash.Shared\Dash.Shared.csproj" />
 

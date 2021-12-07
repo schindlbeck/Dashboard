@@ -1,18 +1,19 @@
 ﻿@using BlazorServer.Models
+@using Dash.Data
+@using Dash.Shared
 
-<li class="draggable" draggable="true" title="@DataModel.Name" ondragstart="@(()=>HandleDragStart(DataModel))">
+<li class="draggable" draggable="true" title="@DataModel.ListElement.KeyToString()" ondragstart="@(()=>HandleDragStart(DataModel))">
     <p class="description">
-        @DataModel.Name<br/>
-        @DataModel.Cw<br/>
-        <small>Update:  @DateTime.Now.ToShortTimeString()</small>
+        @DataModel.ListElement.KeyToString()<br/>
+        @DataModel.ProductionCW<br/>
     </p>
 </li>
 
 @code {
     [CascadingParameter] DataModelContainer Container { get; set; }
-    [Parameter] public DataModel DataModel { get; set; }
+    [Parameter] public OrderContainer DataModel { get; set; }
 
-    private void HandleDragStart(DataModel dragedModel)
+    private void HandleDragStart(OrderContainer dragedModel)
     {
         Container.Payload = dragedModel;
     }

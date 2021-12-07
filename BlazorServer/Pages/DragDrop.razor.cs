@@ -1,11 +1,13 @@
 ﻿using BlazorServer.Models;
+using Dash.Data;
+using Dash.Shared;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorServer.Pages
 {
     public partial class DragDrop
     {
-        List<DataModel> DataModels = new();
+        List<OrderContainer> DataModels = new();
         List<int> CalendarWeeks = new();
         string lastTask = string.Empty;
 

@@ -1,6 +1,7 @@
 ﻿@page "/dragdrop"
 @using BlazorServer.Models
 @using BlazorServer.Shared
+@using Dash.Shared
 
 @inject BlazorServer.Services.DataService service
 
@@ -27,6 +28,6 @@
 <p>
     @foreach (var item in DataModels)
     {
-        <a> @item.Name @item.Cw @item.Cw</a> <br />
+        <a> @item.ListElement.KeyToString() @item.ProductionCW @item.ListElement.TimeTotal</a> <br />
     }
 </p>

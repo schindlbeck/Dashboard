@@ -1,4 +1,5 @@
 ﻿@using BlazorServer.Models
+@using Dash.Data
 
 <div class="jobs-container">
     <CascadingValue Value="this">
@@ -6,20 +7,3 @@
     </CascadingValue>
 </div>
 
-@code {
-    [Parameter] public List<DataModel> Models { get; set; }
-    [Parameter] public RenderFragment ChildContent { get; set; }
-    [Parameter] public EventCallback<DataModel> OnStateUpdate { get; set; }
-    [Parameter] public DataModel Payload { get; set; }
-
-    public async Task UpdateOrderAsync(TaskState newType, int cw)
-    {
-        var dataModel = Models.SingleOrDefault(x => x.Id == Payload.Id);
-        if (dataModel != null)
-        {
-            dataModel.State = newType;
-            dataModel.Cw = cw;
-            await OnStateUpdate.InvokeAsync(Payload);
-        }
-    }
-}

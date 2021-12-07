@@ -10,6 +10,9 @@
     <Content Remove="appsettings.GSNIT1NTB202105.json" />
     <Content Remove="appsettings.GSRGB1NTB201901.json" />
     <Content Remove="appsettings.json" />
+    <Content Remove="wwwroot\appsettings.GSNIT1NTB202105.json" />
+    <Content Remove="wwwroot\appsettings.GSRGB1NTB201901.json" />
+    <Content Remove="wwwroot\appsettings.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +23,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\appsettings.GSNIT1NTB202105.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\appsettings.GSRGB1NTB201901.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
