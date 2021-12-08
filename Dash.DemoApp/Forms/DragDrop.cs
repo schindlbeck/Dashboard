@@ -17,7 +17,6 @@ namespace Dash.DemoApp.Forms
     public partial class DragDrop : Form
     {
         public DashDbContext DashContext { get; set; }
-        //public PriorityDbContext PriorityContext { get; set; }
         public IConfigurationRoot Configuration { get; set; }
 
         public Dictionary<string, OrderControl> OrderControls { get; } = new();
@@ -32,12 +31,8 @@ namespace Dash.DemoApp.Forms
 
             DashContext = dbDashContext;
 
-            //DashDbContextFactorySqLite factory = new();
-            //PriorityContext = factory.CreateDbContext(null);
-            //PriorityContext.Database.EnsureCreated();
-
             scheduler = new OrderScheduler();
-            prioList = ManageOrders.GetPrioList(Configuration);
+            prioList = ManageOrders.GetPrioList(Configuration["ConnectionStrings:DefaultExcelFileConnection"], Configuration["Files:DefaultExcelFile"]);
 
             InitializeComponent();
         }

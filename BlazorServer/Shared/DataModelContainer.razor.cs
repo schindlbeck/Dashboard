@@ -7,10 +7,10 @@ namespace BlazorServer.Shared
 {
     public partial class DataModelContainer
     {
-        public List<OrderContainer> Models { get; set; }
-        public RenderFragment ChildContent { get; set; }
-        public EventCallback<OrderContainer> OnStateUpdate { get; set; }
-        public OrderContainer Payload { get; set; }
+        [Parameter] public List<OrderContainer> Models { get; set; }
+        [Parameter] public RenderFragment ChildContent { get; set; }
+        [Parameter] public EventCallback<OrderContainer> OnStateUpdate { get; set; }
+        [Parameter] public OrderContainer Payload { get; set; }
 
         public async Task UpdateOrderAsync(TaskState newType, int cw)
         {

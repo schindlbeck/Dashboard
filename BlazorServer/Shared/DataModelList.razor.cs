@@ -1,14 +1,15 @@
 ﻿using BlazorServer.Models;
 using Dash.Shared;
+using Microsoft.AspNetCore.Components;
 
 namespace BlazorServer.Shared
 {
     public partial class DataModelList
     {
-        DataModelContainer Container { get; set; }
-        public TaskState State { get; set; }
-        public TaskState[] AllowedStates { get; set; }
-        public int CalendarWeek { get; set; }
+        [CascadingParameter] public DataModelContainer Container { get; set; }
+        [Parameter] public TaskState State { get; set; }
+        [Parameter] public TaskState[] AllowedStates { get; set; }
+        [Parameter] public int CalendarWeek { get; set; }
 
         List<OrderContainer> Models = new();
         string dropClass = string.Empty;

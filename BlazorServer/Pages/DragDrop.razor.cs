@@ -16,9 +16,9 @@ namespace BlazorServer.Pages
             DataModels = service.DataModels;
             CalendarWeeks.AddRange(service.CalendarWeeks);
         }
-        void HandleStateUpdate(DataModel model)
+        void HandleStateUpdate(OrderContainer model)
         {
-            lastTask = model.Name;
+            lastTask = model.ListElement.KeyToString();
         }
     }
 }

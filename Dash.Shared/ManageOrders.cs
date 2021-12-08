@@ -11,7 +11,7 @@ namespace Dash.Shared
 {
     public static class ManageOrders
     {
-        public static List<PrioListElement> GetPrioList(IConfigurationRoot Configuration)
+        public static List<PrioListElement> GetPrioList(string conString1, string conString2)
         {
             int tableStartIndex = 4;
             int tableEndIndex = 50;
@@ -21,7 +21,7 @@ namespace Dash.Shared
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             byte[] bin;
 
-            bin = File.ReadAllBytes(Configuration["ConnectionStrings:DefaultExcelFileConnection"] + Configuration["Files:DefaultExcelFile"]);
+            bin = File.ReadAllBytes(conString1 + conString2);
 
             MemoryStream stream = new(bin);
             ExcelPackage excelPackage = new(stream);
