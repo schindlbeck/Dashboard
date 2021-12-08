@@ -8,6 +8,7 @@
     @ondrop="HandleDrop"
     @ondragenter="HandleDragEnter"
     @ondragleave="HandleDragLeave">
+
     @if(@CalendarWeek != 0)
     {
         <h5>@State (@Models.Sum(m => m.ListElement.TimeTotal)/@Week.ProductionMinutes)<br />KW @CalendarWeek</h5>

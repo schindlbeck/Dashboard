@@ -29,15 +29,35 @@ namespace BlazorServer.Services
             //TODO : Configuration Enviroment Appsettings
             DataModels = ManageOrders.GetOrders(ManageOrders.GetPrioList(_configuration["ConnectionStrings:DefaultExcelFileConnection"], _configuration["Files:DefaultExcelFile"]));
 
-            //TODO : Db data not in service, no async
-            Weeks = DbContext.WorkWeeks.ToList();
+            
+            Weeks = GetWeeksDisplayed();
+            //Weeks = DbContext.WorkWeeks.ToList();
 
             var calendarWeeks = Weeks.
                 OrderBy(w => w.Year).
                 ThenBy(w => w.CalendarWeek).
                 Select(w => w.CalendarWeek).ToList();
-            
+
             CalendarWeeks.AddRange(calendarWeeks);
+        }
+
+        private List<DbWorkWeek> GetWeeksDisplayed()
+        {
+            //TODO : Db data not in service, no async
+            var weeks = DbContext.WorkWeeks.ToList();
+
+            //TODO : cw later dateNow
+            var currentCw = 41;
+            var currentYear = 2021;
+
+            //later other source
+            var prioListWeeks = DataModels.Select(w => Convert.ToInt32($"{w.ListElement.DeliveryDate.Year}{w.ListElement.DeliveryCW}")).ToList();
+
+            var weeksDisplayed = weeks.Where(w => (w.CalendarWeek >= currentCw && w.Year == currentYear)
+                                                                || w.Year > currentYear
+                                                                || prioListWeeks.Contains(Convert.ToInt32($"{w.Year}{w.CalendarWeek}")))
+                                                                .ToList();
+            return weeksDisplayed;
         }
     }
 }
