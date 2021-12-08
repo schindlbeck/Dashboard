@@ -29,9 +29,12 @@ namespace BlazorServer.Services
             //TODO : Configuration Enviroment Appsettings
             DataModels = ManageOrders.GetOrders(ManageOrders.GetPrioList(_configuration["ConnectionStrings:DefaultExcelFileConnection"], _configuration["Files:DefaultExcelFile"]));
 
+            CheckDataModelsState();
+
+            //TODO : delete old priotization/add priotizides orders
+
             
             Weeks = GetWeeksDisplayed();
-            //Weeks = DbContext.WorkWeeks.ToList();
 
             var calendarWeeks = Weeks.
                 OrderBy(w => w.Year).
@@ -39,6 +42,22 @@ namespace BlazorServer.Services
                 Select(w => w.CalendarWeek).ToList();
 
             CalendarWeeks.AddRange(calendarWeeks);
+        }
+
+        private void CheckDataModelsState()
+        {
+            var prioritizedOrders = DbContext.PriotizedOrders.ToList();
+
+            foreach (var order in DataModels)
+            {
+                if (prioritizedOrders.Exists(o => o.Key.Equals(order.ListElement.KeyToString())))
+                {
+                    var productionCW = prioritizedOrders.First(o => o.Key.Equals(order.ListElement.KeyToString())).ProductionCW;
+
+                    order.ProductionCW = productionCW;
+                    order.State = TaskState.Scheduled;
+                }
+            }
         }
 
         private List<DbWorkWeek> GetWeeksDisplayed()

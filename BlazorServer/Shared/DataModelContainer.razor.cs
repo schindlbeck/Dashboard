@@ -12,6 +12,13 @@ namespace BlazorServer.Shared
         [Parameter] public EventCallback<OrderContainer> OnStateUpdate { get; set; }
         [Parameter] public OrderContainer Payload { get; set; }
 
+        private DashDbContext dbContext;
+
+        public DataModelContainer(DashDbContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+
         public async Task UpdateOrderAsync(TaskState newType, int cw)
         {
             var dataModel = Models.SingleOrDefault(x => x.ListElement.KeyToString() == Payload.ListElement.KeyToString());
