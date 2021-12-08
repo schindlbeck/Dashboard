@@ -17,7 +17,7 @@ namespace BlazorServer.Shared
             var dataModel = Models.SingleOrDefault(x => x.ListElement.KeyToString() == Payload.ListElement.KeyToString());
             if (dataModel != null)
             {
-                //dataModel.State = newType;
+                dataModel.State = newType;
                 dataModel.ProductionCW = cw;
                 await OnStateUpdate.InvokeAsync(Payload);
             }
