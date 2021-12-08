@@ -1,12 +1,20 @@
 ﻿@using BlazorServer.Models
 
+@inject BlazorServer.Services.DataService service
+
 <ul class="@dropZone @dropClass"
     ondragover="event.preventDefault();"
     ondragstart="event.dataTransfer.setData('', event.target.id);"
     @ondrop="HandleDrop"
     @ondragenter="HandleDragEnter"
     @ondragleave="HandleDragLeave">
-    <h5>@State (@Models.Count())<br />KW @CalendarWeek</h5>
+    @if(@CalendarWeek != 0)
+    {
+        <h5>@State (@Models.Sum(m => m.ListElement.TimeTotal)/@Week.ProductionMinutes)<br />KW @CalendarWeek</h5>
+    }else{
+        <h5>@State <br /></h5>
+    }
+    
     <hr />
     @foreach (var task in Models)
     {

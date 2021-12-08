@@ -28,6 +28,6 @@
 <p>
     @foreach (var item in DataModels)
     {
-        <a> @item.ListElement.KeyToString() @item.ProductionCW @item.ListElement.TimeTotal</a> <br />
+        <a> @item.ListElement.KeyToString() Produtionweek: @item.ProductionCW / Deliveryweek: @item.ListElement.DeliveryCW Timetotal: @item.ListElement.TimeTotal</a> <br />
     }
 </p>

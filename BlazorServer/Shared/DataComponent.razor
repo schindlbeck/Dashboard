@@ -5,7 +5,8 @@
 <li class="draggable" draggable="true" title="@DataModel.ListElement.KeyToString()" ondragstart="@(()=>HandleDragStart(DataModel))">
     <p class="description">
         @DataModel.ListElement.KeyToString()<br/>
-        @DataModel.ProductionCW<br/>
+        Productionweek: @DataModel.ProductionCW<br/>
+        Deliveryweek: @DataModel.ListElement.DeliveryCW<br/>
     </p>
 </li>
 

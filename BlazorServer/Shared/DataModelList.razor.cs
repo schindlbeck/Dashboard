@@ -1,4 +1,5 @@
 ﻿using BlazorServer.Models;
+using Dash.Data.Models;
 using Dash.Shared;
 using Microsoft.AspNetCore.Components;
 
@@ -10,6 +11,8 @@ namespace BlazorServer.Shared
         [Parameter] public TaskState State { get; set; }
         [Parameter] public TaskState[] AllowedStates { get; set; }
         [Parameter] public int CalendarWeek { get; set; }
+
+        [Parameter] public DbWorkWeek Week {get; set; }
 
         List<OrderContainer> Models = new();
         string dropClass = string.Empty;
@@ -30,6 +33,9 @@ namespace BlazorServer.Shared
                     dropZone = "dropzonenew ";
                     break;
             }
+
+            if(CalendarWeek != 0)
+            Week = service.Weeks.First(w => w.CalendarWeek == CalendarWeek);
         }
 
 

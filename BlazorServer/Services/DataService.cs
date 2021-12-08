@@ -1,5 +1,6 @@
 ﻿using BlazorServer.Models;
 using Dash.Data;
+using Dash.Data.Models;
 using Dash.Shared;
 using System.Data.Entity;
 using System.Threading.Tasks;
@@ -20,8 +21,8 @@ namespace BlazorServer.Services
            Initialize();
         }
 
-
         public List<int> CalendarWeeks { get; internal set; } = new();
+        public List<DbWorkWeek> Weeks { get; internal set; } = new();
 
         private void Initialize()
         {
@@ -29,12 +30,14 @@ namespace BlazorServer.Services
             DataModels = ManageOrders.GetOrders(ManageOrders.GetPrioList(_configuration["ConnectionStrings:DefaultExcelFileConnection"], _configuration["Files:DefaultExcelFile"]));
 
             //TODO : Db data not in service, no async
-            var weeks = DbContext.WorkWeeks.
+            Weeks = DbContext.WorkWeeks.ToList();
+
+            var calendarWeeks = Weeks.
                 OrderBy(w => w.Year).
-                ThenBy(w => w.CalendarWeek.ToString()).
+                ThenBy(w => w.CalendarWeek).
                 Select(w => w.CalendarWeek).ToList();
             
-            CalendarWeeks.AddRange(weeks);
+            CalendarWeeks.AddRange(calendarWeeks);
         }
     }
 }
