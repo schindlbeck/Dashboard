@@ -1,6 +1,8 @@
 ﻿using BlazorServer.Models;
 using Dash.Data;
 using Dash.Shared;
+using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace BlazorServer.Services
 {
@@ -14,25 +16,22 @@ namespace BlazorServer.Services
         {
             DbContext = context;
             _configuration = configuration;
-            var sepp = DbContext.WorkWeeks.ToList();
 
-            Initialize();
+           Initialize();
         }
+
 
         public List<int> CalendarWeeks { get; internal set; } = new();
 
         private void Initialize()
         {
-            DataModels.Add(new OrderContainer(new PrioListElement { DeliveryDate = new DateTime(2021, 12, 08), Project = "A1", OrderNr = "a1", TimeTotal = 3500 }));
-            DataModels.Add(new OrderContainer(new PrioListElement { DeliveryDate = new DateTime(2021, 12, 15), Project = "A2", OrderNr = "a2", TimeTotal = 3500 }));
-            DataModels.Add(new OrderContainer(new PrioListElement { DeliveryDate = new DateTime(2021, 12, 08), Project = "A3", OrderNr = "a3", TimeTotal = 3500 }));
+            //TODO : Configuration Enviroment Appsettings
+            DataModels = ManageOrders.GetOrders(ManageOrders.GetPrioList(_configuration["ConnectionStrings:DefaultExcelFileConnection"], _configuration["Files:DefaultExcelFile"]));
 
-            //TODO : Models -> Orders from Excel
-            //DataModels = ManageOrders.GetOrders(ManageOrders.GetPrioList(_configuration["ConnectionStrings:DefaultExcelFileConnection"], _configuration["Files:DefaultExcelFile"]));
-
-            //TODO: whats the problem?!!??!?!?!
+            //TODO : Db data not in service, no async
             var weeks = DbContext.WorkWeeks.
-                //OrderBy(w => Convert.ToInt32(w.Year.ToString() + w.CalendarWeek.ToString("00"))).
+                OrderBy(w => w.Year).
+                ThenBy(w => w.CalendarWeek.ToString()).
                 Select(w => w.CalendarWeek).ToList();
             
             CalendarWeeks.AddRange(weeks);
