@@ -27,6 +27,6 @@ namespace Dash.Shared
         }
     }
 
-    public enum TaskState { New, Scheduled, InProgress, Finished };
+    public enum TaskState { Scheduled, New, InProgress, Finished };
 
 }

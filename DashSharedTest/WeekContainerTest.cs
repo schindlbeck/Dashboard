@@ -97,7 +97,7 @@ namespace DashSharedTest
             scheduler.Orders.First().ProductionCW = 47;
 
             //Act
-            await container.RemoveOrder();
+            container.RemoveOrder();
 
             //Assert
             Assert.Empty(container.Orders);

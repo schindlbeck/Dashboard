@@ -74,6 +74,8 @@ namespace Dash.DemoApp.Forms
 
             orderContainer = ManageOrders.CheckOrdersAgainstPrioritization(orderContainer, prioritizedOrders);
 
+            DashContext.PriotizedOrders.RemoveRange(prioritizedOrders);
+
             foreach (var container in orderContainer)
             {
                 OrderControl control = new(container);
@@ -121,14 +123,14 @@ namespace Dash.DemoApp.Forms
             flowLayoutPanelMain.Controls.Add(GetFlowPanel(newWeek));
         }
 
-        private async void BtnUndo_Click(object sender, EventArgs e)
+        private void BtnUndo_Click(object sender, EventArgs e)
         {
             var lastChanged = scheduler.GetLastChangedItem();
 
             if (lastChanged is not null)
             {
                 weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == lastChanged.OldProdutionCW).AddOrder(lastChanged.Key, true);
-                await weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == lastChanged.NewProductionCW).RemoveOrder();
+                weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == lastChanged.NewProductionCW).RemoveOrder();
 
                 scheduler.LastChangedUndid();
             }

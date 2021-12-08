@@ -1,5 +1,6 @@
 ﻿using Dash.Data;
 using Dash.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Dash.Shared
         public OrderScheduler Scheduler { get; set; }
 
         public int ProductionMinutes { get { return Week.ProductionMinutes; } }
-        
+
         public int MinutesBooked { get { return Orders.Sum(s => s.ListElement.TimeTotal); } }
 
         private readonly DashDbContext dbContext;
@@ -25,9 +26,6 @@ namespace Dash.Shared
             Orders = new();
             Scheduler = scheduler;
             this.dbContext = dbContext;
-            dbContext.Database.EnsureCreated();
-
-            //AddWeekToDb();
         }
 
         public async Task AddOrderInitialized(OrderContainer order)
@@ -36,7 +34,10 @@ namespace Dash.Shared
             Orders.Add(order);
             var dbOrder = new Order() { DeliveryDate = order.ListElement.DeliveryDate, Key = order.ListElement.KeyToString(), TimeTotal = order.ListElement.TimeTotal, ProductionCW = Week.CalendarWeek };
 
-            await AddOrderToDbAsync(dbOrder);
+            if (dbContext.PriotizedOrders.Contains(dbOrder))
+                await ChangeOrderInDb(dbOrder);
+            else
+                await AddOrderToDbAsync(dbOrder);
         }
 
         public async Task<OrderContainer> AddOrderAfterDragDrop(string key, bool isUndo)
@@ -64,7 +65,7 @@ namespace Dash.Shared
             return order;
         }
 
-        public async Task RemoveOrder()
+        public void RemoveOrder()
         {
             var schedulerOrders = Scheduler.Orders.Where(o => o.ProductionCW == Week.CalendarWeek).ToList();
 
@@ -73,17 +74,8 @@ namespace Dash.Shared
             if (removedOrder is not null)
             {
                 Orders.Remove(removedOrder);
-
-                //await RemoveOrderInDb(removedOrder);
             }
         }
-
-        //TODO : redundant?
-        //private async void AddWeekToDb()
-        //{
-        //    dbContext.PrioWeeks.Add(new PriorityWeek() { CalendarWeek = Week.CalendarWeek, ProductionMinutes = Week.ProductionMinutes, Year = Week.Year, Orders = new() });
-        //    await dbContext.SaveChangesAsync();
-        //}
 
         private async Task ChangeProductionCWInDb(string key)
         {
@@ -94,17 +86,17 @@ namespace Dash.Shared
         internal async Task AddOrderToDbAsync(Order dbOrder)
         {
             dbContext.PriotizedOrders.Add(dbOrder);
-            //dbContext.PrioWeeks.First(w => w.CalendarWeek == Week.CalendarWeek && w.Year == Week.Year).Orders.Add(dbOrder);
 
             await dbContext.SaveChangesAsync();
         }
 
-        //private async Task RemoveOrderInDb(OrderContainer order)
-        //{
-        //    var removedOrder = dbContext.PrioWeeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.FirstOrDefault(o => order.ListElement.KeyToString().Equals(o.Key));
-        //    dbContext.PrioWeeks.First(w => w.CalendarWeek == Week.CalendarWeek).Orders.Remove(removedOrder);
+        private async Task ChangeOrderInDb(Order dbOrder)
+        {
+            dbContext.PriotizedOrders.First(o => o.Key == dbOrder.Key).ProductionCW = Week.CalendarWeek;
 
-        //    await dbContext.SaveChangesAsync();
-        //}
+            await dbContext.SaveChangesAsync();
+        }
+
+
     }
 }
