@@ -21,10 +21,7 @@ namespace BlazorServer.Shared
                 dataModel.State = newType;
                 dataModel.ProductionCW = cw;
                 await OnStateUpdate.InvokeAsync(Payload);
-
             }
-        }
-
-        
+        }  
     }
 }

@@ -31,9 +31,6 @@ namespace BlazorServer.Services
 
             CheckDataModelsState();
 
-            //TODO : delete old priotization/add priotized orders
-
-            
             Weeks = GetWeeksDisplayed();
 
             var calendarWeeks = Weeks.
