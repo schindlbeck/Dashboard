@@ -11,7 +11,7 @@ namespace BlazorServer.Services
     {
         public List<OrderContainer> DataModels = new();
         public DashDbContext DbContext { get; set; }
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public DataService(DashDbContext context, IConfiguration configuration)
         {
@@ -31,7 +31,7 @@ namespace BlazorServer.Services
 
             CheckDataModelsState();
 
-            //TODO : delete old priotization/add priotizides orders
+            //TODO : delete old priotization/add priotized orders
 
             
             Weeks = GetWeeksDisplayed();

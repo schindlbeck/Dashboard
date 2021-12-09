@@ -1,6 +1,8 @@
 ﻿@using BlazorServer.Models
+@using Dash.Data
 
 @inject BlazorServer.Services.DataService service
+@inject DashDbContext dbContext
 
 <ul class="@dropZone @dropClass"
     ondragover="event.preventDefault();"

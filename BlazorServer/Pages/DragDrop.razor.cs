@@ -8,7 +8,7 @@ namespace BlazorServer.Pages
     public partial class DragDrop
     {
         List<OrderContainer> DataModels = new();
-        List<int> CalendarWeeks = new();
+        readonly List<int> CalendarWeeks = new();
         string lastTask = string.Empty;
 
         protected override void OnInitialized()
