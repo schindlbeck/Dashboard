@@ -1,0 +1,22 @@
+﻿@using BlazorServer.Models
+@using Dash.Data
+@using Dash.Shared
+
+<li class="draggable" draggable="true" title="@DataModel.ListElement.KeyToString()" ondragstart="@(()=>HandleDragStart(DataModel))">
+    <p class="description">
+        @DataModel.ListElement.KeyToString()<br/>
+        Productionweek: @DataModel.ProductionCW<br/>
+        Deliveryweek: @DataModel.ListElement.DeliveryCW<br/>
+    </p>
+</li>
+
+@code {
+    [CascadingParameter] DataModelContainer Container { get; set; }
+    [Parameter] public OrderContainer DataModel { get; set; }
+
+    private void HandleDragStart(OrderContainer dragedModel)
+    {
+        Container.Payload = dragedModel;
+    }
+
+}

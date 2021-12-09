@@ -12,6 +12,8 @@ namespace Dash.Shared
         public int ProductionCW { get; set; }
         public int CurrentYear { get; set; }
 
+        public TaskState State { get; set; }
+
         public OrderContainer(PrioListElement element)
         {
             ListElement = element;
@@ -24,4 +26,7 @@ namespace Dash.Shared
             OrderProductionCWChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+
+    public enum TaskState { New, Scheduled, InProgress, Finished };
+
 }

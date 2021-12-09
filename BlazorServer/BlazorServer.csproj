@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Remove="appsettings.GSNIT1NTB202105.json" />
+	  <Content Remove="appsettings.GSRGB1NTB201901.json" />
+	  <Content Remove="appsettings.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="appsettings.GSNIT1NTB202105.json" />
+	  <_ContentIncludedByDefault Remove="appsettings.GSRGB1NTB201901.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="appsettings.GSNIT1NTB202105.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Include="appsettings.GSRGB1NTB201901.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Include="appsettings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Dash.Data\Dash.Data.csproj" />
+		<ProjectReference Include="..\Dash.Shared\Dash.Shared.csproj" />
+
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
+
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,33 @@
+﻿@page "/dragdrop"
+@using BlazorServer.Models
+@using BlazorServer.Shared
+@using Dash.Shared
+
+@inject BlazorServer.Services.DataService service
+
+<h1>Drag and Drop</h1>
+
+<DataModelContainer Models="@DataModels" OnStateUpdate="HandleStateUpdate">
+     
+    <DataModelList 
+        State="TaskState.New" 
+        AllowedStates="@(new TaskState[]{TaskState.Scheduled})">
+    </DataModelList>
+
+     @foreach(var cw in CalendarWeeks)
+    {
+        <DataModelList 
+            State="TaskState.Scheduled" 
+            CalendarWeek="@cw" 
+            AllowedStates="@(new TaskState[]{TaskState.New, TaskState.Scheduled})">
+        </DataModelList>
+    }
+
+</DataModelContainer>
+
+<p>
+    @foreach (var item in DataModels)
+    {
+        <a> @item.ListElement.KeyToString() Produtionweek: @item.ProductionCW / Deliveryweek: @item.ListElement.DeliveryCW Timetotal: @item.ListElement.TimeTotal</a> <br />
+    }
+</p>

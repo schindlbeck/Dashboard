@@ -17,7 +17,6 @@ namespace Dash.DemoApp.Forms
     public partial class DragDrop : Form
     {
         public DashDbContext DashContext { get; set; }
-        public PriorityDbContext PriorityContext { get; set; }
         public IConfigurationRoot Configuration { get; set; }
 
         public Dictionary<string, OrderControl> OrderControls { get; } = new();
@@ -32,12 +31,8 @@ namespace Dash.DemoApp.Forms
 
             DashContext = dbDashContext;
 
-            DashDbContextFactorySqLite factory = new();
-            PriorityContext = factory.CreateDbContext(null);
-            PriorityContext.Database.EnsureCreated();
-
             scheduler = new OrderScheduler();
-            prioList = ManageOrders.GetPrioList(Configuration);
+            prioList = ManageOrders.GetPrioList(Configuration["ConnectionStrings:DefaultExcelFileConnection"], Configuration["Files:DefaultExcelFile"]);
 
             InitializeComponent();
         }
@@ -57,11 +52,11 @@ namespace Dash.DemoApp.Forms
             var currentYear = 2021;
 
             //later other source
-            var prioListWeeks = prioList.Select(w => Convert.ToInt32(w.DeliveryDate.Year.ToString() + w.DeliveryCW.ToString())).ToList();
+            var prioListWeeks = prioList.Select(w => Convert.ToInt32($"{w.DeliveryDate.Year}{w.DeliveryCW}")).ToList();
 
             var weeksDisplayed1 = workScheduleWeeks.Where(w => (w.CalendarWeek >= currentCw && w.Year == currentYear)
                                                                 || w.Year > currentYear
-                                                                || prioListWeeks.Contains(Convert.ToInt32(w.Year.ToString() + w.CalendarWeek.ToString())))
+                                                                || prioListWeeks.Contains(Convert.ToInt32($"{w.Year}{w.CalendarWeek}")))
                                                                 .ToList();
 
             foreach (var week in weeksDisplayed1)
@@ -72,13 +67,14 @@ namespace Dash.DemoApp.Forms
 
         private async Task AddOrders()
         {
-            var prioritizedWeeks = await PriorityContext.Weeks.ToListAsync();
-            var prioritizedOrders = await PriorityContext.Orders.ToListAsync();
+            var prioritizedOrders = await DashContext.PriotizedOrders.ToListAsync();
 
             //later other source
             var orderContainer = ManageOrders.GetOrders(prioList);
 
             orderContainer = ManageOrders.CheckOrdersAgainstPrioritization(orderContainer, prioritizedOrders);
+
+            DashContext.PriotizedOrders.RemoveRange(prioritizedOrders);
 
             foreach (var container in orderContainer)
             {
@@ -100,7 +96,7 @@ namespace Dash.DemoApp.Forms
 
         private WeekControl GetFlowPanel(DbWorkWeek week)
         {
-            WeekControl weekControl = new(week, scheduler, PriorityContext, this);
+            WeekControl weekControl = new(week, scheduler, DashContext, this);
 
             weekcontrols.Add(weekControl);
             return weekControl;
@@ -127,14 +123,14 @@ namespace Dash.DemoApp.Forms
             flowLayoutPanelMain.Controls.Add(GetFlowPanel(newWeek));
         }
 
-        private async void BtnUndo_Click(object sender, EventArgs e)
+        private void BtnUndo_Click(object sender, EventArgs e)
         {
             var lastChanged = scheduler.GetLastChangedItem();
 
             if (lastChanged is not null)
             {
                 weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == lastChanged.OldProdutionCW).AddOrder(lastChanged.Key, true);
-                await weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == lastChanged.NewProductionCW).RemoveOrder();
+                weekcontrols.First(w => w.WeekContainer.Week.CalendarWeek == lastChanged.NewProductionCW).RemoveOrder();
 
                 scheduler.LastChangedUndid();
             }
