@@ -1,0 +1,45 @@
+﻿@page "/overview"
+@using BlazorServer.Models
+@using BlazorServer.Shared
+@using Dash.Shared
+
+@inject BlazorServer.Services.DataService service
+
+<h1>Overview: Orders</h1>
+
+<div></div>
+
+@if (@Orders.Count == 0)
+{
+    <p><em>No orders found!</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>OrderNr</th>
+                <th>Delivery Date</th>
+                <th>Delivery CW</th>
+                <th>Position</th>
+                <th>Quantity</th>
+                <th>Time Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in @Orders)
+            {
+                <tr>
+                    <td>@order.ListElement.Project</td>
+                    <td>@order.ListElement.OrderNr</td>
+                    <td>@order.ListElement.DeliveryDate</td>
+                    <td>@order.ListElement.DeliveryCW</td>
+                    <td>@order.ListElement.Position</td>
+                    <td>@order.ListElement.Quantity</td>
+                    <td>@order.ListElement.TimeTotal</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
