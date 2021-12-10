@@ -23,10 +23,14 @@ namespace BlazorServer.Shared
         {
             Models.Clear();
 
+            if (CalendarWeek != 0)
+                Week = service.Weeks.First(w => w.CalendarWeek == CalendarWeek);
+
             switch (State)
             {
                 case TaskState.Scheduled:
                     Models.AddRange(Container.Models.Where(x => x.State == State && CalendarWeek == x.ProductionCW));
+                    SetDropzone();
                     break;
 
                 default:
@@ -34,11 +38,14 @@ namespace BlazorServer.Shared
                     dropZone = "dropzonenew ";
                     break;
             }
-
-            if(CalendarWeek != 0)
-            Week = service.Weeks.First(w => w.CalendarWeek == CalendarWeek);
         }
 
+        private void SetDropzone()
+        {
+            if (Models.Sum(m => m.ListElement.TimeTotal) > Week.ProductionMinutes) dropZone = "dropzoneoverload";
+            else if (Models.Sum(m => m.ListElement.TimeTotal) > Week.ProductionMinutes * 0.9) dropZone = "dropzonenearlyfull";
+            else dropZone = "dropzone";
+        }
 
         private void HandleDragEnter()
         {
@@ -57,6 +64,7 @@ namespace BlazorServer.Shared
         private void HandleDragLeave()
         {
             dropClass = "";
+            SetDropzone();
         }
 
         private async Task HandleDrop()
@@ -66,6 +74,8 @@ namespace BlazorServer.Shared
             if (AllowedStates != null && !AllowedStates.Contains(dataModel.State)) return;
 
             await Container.UpdateOrderAsync(State, CalendarWeek);
+
+            SetDropzone();
 
             await UpdateDatabase(dataModel);
         }

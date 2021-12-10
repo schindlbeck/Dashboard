@@ -26,7 +26,6 @@ namespace BlazorServer.Services
 
         private void Initialize()
         {
-            //TODO : Configuration Enviroment Appsettings
             DataModels = ManageOrders.GetOrders(ManageOrders.GetPrioList(_configuration["ConnectionStrings:DefaultExcelFileConnection"], _configuration["Files:DefaultExcelFile"]));
 
             CheckDataModelsState();

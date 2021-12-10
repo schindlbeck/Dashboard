@@ -29,6 +29,20 @@
     list-style: none;
 }
 
+.dropzoneoverload {
+    padding: 15px;
+    border: 1px dashed #75868a;
+    background: #ba5757;
+    list-style: none;
+}
+
+.dropzonenearlyfull {
+    padding: 15px;
+    border: 1px dashed #75868a;
+    background: #e4c76a;
+    list-style: none;
+}
+
 .no-drop {
     border: 3px dashed red;
 }
@@ -37,6 +51,7 @@
     border: 3px dashed green;
 }
 
+/* Ordercomponent*/
 .draggable {
     margin-bottom: 20px;
     padding: 10px 10px;
@@ -49,6 +64,36 @@
 }
 
     .draggable:active {
+        cursor: grabbing;
+    }
+
+.draggableok {
+    margin-bottom: 20px;
+    padding: 10px 10px;
+    border: 1px solid #424d5c;
+    cursor: grab;
+    background: #75bf86;
+    color: #ffffff;
+    border-radius: 5px;
+    width: 200px;
+}
+
+    .draggableok:active {
+        cursor: grabbing;
+    }
+
+.draggablelate {
+    margin-bottom: 20px;
+    padding: 10px 10px;
+    border: 1px solid #424d5c;
+    cursor: grab;
+    background: #ba5757;
+    color: #ffffff;
+    border-radius: 5px;
+    width: 200px;
+}
+
+    .draggablelate:active {
         cursor: grabbing;
     }
 
