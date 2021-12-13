@@ -13,12 +13,11 @@
 
     @if(@CalendarWeek != 0)
     {
-        <h5>@State (@Models.Sum(m => m.ListElement.TimeTotal)/@Week.ProductionMinutes)<br />KW @CalendarWeek</h5>
+        <h5>@State (@Models.Sum(m => m.ListElement.TimeTotal)/@Week.ProductionMinutes)<br/>KW @CalendarWeek</h5>
     }else{
-        <h5>@State <br /></h5>
+        <h5>@State <br/></h5>
     }
-    
-    <hr />
+    <hr/>
 
     @foreach (var task in Models)
     {

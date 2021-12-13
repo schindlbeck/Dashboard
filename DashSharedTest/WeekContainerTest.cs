@@ -51,6 +51,7 @@ namespace DashSharedTest
             var prioelement = new PrioListElement() { DeliveryCW = 49, DeliveryDate = new DateTime(2021, 12, 9), OrderNr = "A001", Project = "P1", TimeTotal = 3500 };
             scheduler.AddOrder(new OrderContainer(prioelement));
             dbContext.PriotizedOrders.Add(new Order() { ProductionCW = 49, DeliveryDate = new DateTime(2021, 12, 9), TimeTotal = 3500, Key = prioelement.KeyToString() });
+            dbContext.SaveChanges();
 
             WeekContainer container = new(WeekContainerTestFixture.GetDbWorkWeek(), scheduler, dbContext);
             

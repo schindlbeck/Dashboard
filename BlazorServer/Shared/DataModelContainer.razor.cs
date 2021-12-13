@@ -13,18 +13,18 @@ namespace BlazorServer.Shared
         [Parameter] public EventCallback<OrderContainer> OnStateUpdate { get; set; }
         [Parameter] public OrderContainer Payload { get; set; }
 
-        public event EventHandler<OrderContainer> OnOrderUpdate;
+        //public event EventHandler<OrderContainer> OnOrderUpdate;
 
         public async Task UpdateOrderAsync(TaskState newType, int cw)
         {
-            var dataModel = Models.SingleOrDefault(x => x.ListElement.KeyToString() == Payload.ListElement.KeyToString());
+            var dataModel = Models.SingleOrDefault(x => x.ListElement.KeyToString().Equals(Payload.ListElement.KeyToString()));
             if (dataModel != null)
             {
                 dataModel.State = newType;
                 dataModel.ProductionCW = cw;
                 await OnStateUpdate.InvokeAsync(Payload);
 
-                OnOrderUpdate?.Invoke(this, dataModel);
+                //OnOrderUpdate?.Invoke(this, dataModel);
             }
         }  
     }

@@ -10,15 +10,15 @@
 <DataModelContainer Models="@DataModels" OnStateUpdate="HandleStateUpdate">
      
     <DataModelList 
-        State="TaskState.New" 
+        State="TaskState.New"
         AllowedStates="@(new TaskState[]{TaskState.Scheduled})">
     </DataModelList>
 
      @foreach(var cw in CalendarWeeks)
     {
         <DataModelList 
-            State="TaskState.Scheduled" 
-            CalendarWeek="@cw" 
+            State="TaskState.Scheduled"
+            CalendarWeek="@cw"
             AllowedStates="@(new TaskState[]{TaskState.New, TaskState.Scheduled})">
         </DataModelList>
     }
