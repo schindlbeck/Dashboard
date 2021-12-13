@@ -12,6 +12,8 @@ builder.Configuration.AddJsonFile($"appsettings.{Environment.MachineName}.json",
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<DataService>();
+
+builder.Services.AddHealthChecks().AddDbContextCheck<DashDbContext>();
 builder.Services.AddDbContext<DashDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSqlConnection")));
 
 var app = builder.Build();
@@ -32,5 +34,10 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHealthChecks("/health");
+});
 
 app.Run();
