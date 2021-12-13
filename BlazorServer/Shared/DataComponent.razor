@@ -2,7 +2,8 @@
 @using Dash.Data
 @using Dash.Shared
 
-<li class="@draggable" draggable="true" title="@DataModel.ListElement.KeyToString()" ondragstart="@(()=>HandleDragStart(DataModel))" ondrop="@(() => HandleDragDrop(DataModel))">
+
+<li class="@draggable" draggable="true" title="@DataModel.ListElement.KeyToString()" ondragstart="@(()=>HandleDragStart(DataModel))")">
     <p class="description">
         @DataModel.ListElement.KeyToString()<br/>
         Productionweek: @DataModel.ProductionCW<br/>

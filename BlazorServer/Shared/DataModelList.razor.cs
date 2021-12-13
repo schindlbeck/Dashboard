@@ -40,13 +40,6 @@ namespace BlazorServer.Shared
             }
         }
 
-        private void SetDropzone()
-        {
-            if (Models.Sum(m => m.ListElement.TimeTotal) > Week.ProductionMinutes) dropZone = "dropzoneoverload";
-            else if (Models.Sum(m => m.ListElement.TimeTotal) > Week.ProductionMinutes * 0.9) dropZone = "dropzonenearlyfull";
-            else dropZone = "dropzone";
-        }
-
         private void HandleDragEnter()
         {
             if (State == Container.Payload.State) return;
@@ -105,5 +98,11 @@ namespace BlazorServer.Shared
             await dbContext.SaveChangesAsync();
         }
 
+        private void SetDropzone()
+        {
+            if (Models.Sum(m => m.ListElement.TimeTotal) > Week.ProductionMinutes) dropZone = "dropzoneoverload";
+            else if (Models.Sum(m => m.ListElement.TimeTotal) > Week.ProductionMinutes * 0.9) dropZone = "dropzonenearlyfull";
+            else dropZone = "dropzone";
+        }
     }
 }
