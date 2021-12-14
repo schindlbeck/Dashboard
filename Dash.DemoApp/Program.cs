@@ -21,6 +21,7 @@ namespace Dash.DemoApp
                       .WriteTo.File(@".\\log\\log.txt", rollingInterval: RollingInterval.Day)
                       .WriteTo.Console()
                       //.WriteTo.Debug()
+                      
                       .CreateLogger();
 
             Log.Information("Starting: {0}", Application.ProductName);

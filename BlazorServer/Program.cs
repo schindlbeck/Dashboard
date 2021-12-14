@@ -1,12 +1,22 @@
-using BlazorServer.Data;
 using BlazorServer.Services;
 using Dash.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile($"appsettings.{Environment.MachineName}.json", true, true);
+
+Log.Logger = new LoggerConfiguration()
+               //.ReadFrom.Configuration(); //Configuration 
+               .MinimumLevel.Debug()
+               .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+               .Enrich.FromLogContext()
+               .WriteTo.File(@".\\log\\log.txt", rollingInterval: RollingInterval.Day)
+               .WriteTo.Seq("http://localhost:8081")
+               .CreateLogger();
+
+builder.Logging.AddSerilog();
+
 
 // Add services to the container.
 builder.Services.AddRazorPages();

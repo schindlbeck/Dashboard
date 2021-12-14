@@ -25,6 +25,7 @@ else
                 <th>Position</th>
                 <th>Quantity</th>
                 <th>Time Total</th>
+                <th>Progress</th>
             </tr>
         </thead>
         <tbody>
@@ -33,11 +34,14 @@ else
                 <tr>
                     <td>@order.ListElement.Project</td>
                     <td>@order.ListElement.OrderNr</td>
-                    <td>@order.ListElement.DeliveryDate</td>
+                    <td>@order.ListElement.DeliveryDate.ToShortDateString()</td>
                     <td>@order.ListElement.DeliveryCW</td>
                     <td>@order.ListElement.Position</td>
                     <td>@order.ListElement.Quantity</td>
                     <td>@order.ListElement.TimeTotal</td>
+                    <td>
+                        <progress value="@order.ListElement.TimeDone" max="@order.ListElement.TimeTotal"></progress>
+                    </td>
                 </tr>
             }
         </tbody>
