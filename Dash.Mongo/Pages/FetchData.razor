@@ -1,48 +1,48 @@
 ﻿@page "/fetchdata"
 
+@inject MongoDbService mongoService
+
 <PageTitle>Weather forecast</PageTitle>
 
 @using Dash.Mongo.Data
-@inject WeatherForecastService ForecastService
+@using Dash.Mongo.Models
+@using Dash.Mongo.Services
+@using EMobility.Models
 
 <h1>Weather forecast</h1>
 
 <p>This component demonstrates fetching data from a service.</p>
 
-@if (forecasts == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<EditForm Model="@sessionModel" OnValidSubmit="@HandleValidSubmit">
+    <p></p>
+    <label>
+        Location:
+        <InputText id="location" @bind-Value="sessionModel.Location"/>
+    </label>
+
+     <label>
+        TransWH:
+        <InputText id="transWh" @bind-Value="sessionModel.TransWH"/>
+    </label>
+
+    <label>
+        Timestamp:
+        <InputDate id="timestamp" @bind-Value="sessionModel.TimeStamp" />
+    </label>
+
+    <label>
+        AuthID:
+        <InputText id="authid" @bind-Value="sessionModel.AuthId"/>
+    </label>
+
+    <label>
+        Duration:
+        <InputText id="duration" @bind-Value="sessionModel.Duration"/>
+    </label>
+
+    <button type="submit">Add Session</button>
+
+</EditForm>
+
 }
 
-@code {
-    private WeatherForecast[]? forecasts;
-
-    protected override async Task OnInitializedAsync()
-    {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
-    }
-}

@@ -8,7 +8,7 @@ namespace EMobility.Models
 {
     public class ChargingSession
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Location { get; set; } = string.Empty;
         public string TransactionWH { get; set; } = string.Empty;
         public DateTime TimeStamp { get; set; }
@@ -17,3 +17,4 @@ namespace EMobility.Models
 
     }
 }
+    
