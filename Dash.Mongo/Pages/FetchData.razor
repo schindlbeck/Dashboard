@@ -17,27 +17,18 @@
     <p></p>
     <label>
         Location:
-        <InputText id="location" @bind-Value="sessionModel.Location"/>
-    </label>
-
-     <label>
-        TransWH:
-        <InputText id="transWh" @bind-Value="sessionModel.TransWH"/>
+        <InputText id="location" @bind-Value="sessionModel.StationLocation"/>
     </label>
 
     <label>
-        Timestamp:
-        <InputDate id="timestamp" @bind-Value="sessionModel.TimeStamp" />
+        cpId:
+        <InputText id="cpId" @bind-Value="sessionModel.CpId"/>
     </label>
 
-    <label>
-        AuthID:
-        <InputText id="authid" @bind-Value="sessionModel.AuthId"/>
-    </label>
 
     <label>
-        Duration:
-        <InputText id="duration" @bind-Value="sessionModel.Duration"/>
+        Url:
+        <InputText id="duration" @bind-Value="sessionModel.StationUrl"/>
     </label>
 
     <button type="submit">Add Session</button>

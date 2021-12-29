@@ -6,7 +6,7 @@ namespace Dash.Mongo.Pages
 {
     public partial class FetchData : ComponentBase
     {
-        private ChargingSession chargingSession;
+        private ChargingStationModel chargingSession;
         private SessionModel sessionModel;
 
         protected override async Task OnInitializedAsync()
@@ -16,13 +16,11 @@ namespace Dash.Mongo.Pages
 
         private void HandleValidSubmit()
         {
-            chargingSession = new ChargingSession()
+            chargingSession = new ChargingStationModel()
             {
-                Location = sessionModel.Location,
-                TransactionWH = sessionModel.TransWH,
-                TimeStamp = sessionModel.TimeStamp,
-                AuthId = sessionModel.AuthId,
-                Duration = sessionModel.Duration
+                StationLocation = sessionModel.StationLocation,
+                StationUrl = sessionModel.StationUrl,
+                CpId = sessionModel.CpId
             };
 
             mongoService.AddChargingSession(chargingSession);

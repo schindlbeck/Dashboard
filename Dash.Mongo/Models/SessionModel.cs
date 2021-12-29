@@ -1,17 +1,15 @@
-﻿namespace Dash.Mongo.Models
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Dash.Mongo.Models
 {
     public class SessionModel
     {
-        public string Location { get; set; }
+        public string StationLocation { get; set; } = string.Empty;
 
-        public string TransWH { get; set; }
+        public string StationUrl { get; set; } = string.Empty;
 
-        public DateTime TimeStamp { get; set; } = DateTime.Now;
-
-        public string AuthId { get; set; }
-
-        public string Duration { get; set; }
-
+        public string CpId { get; set; } = string.Empty;
 
     }
 }

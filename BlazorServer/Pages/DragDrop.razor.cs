@@ -1,7 +1,4 @@
-﻿using BlazorServer.Models;
-using Dash.Data;
-using Dash.Shared;
-using Microsoft.AspNetCore.Components;
+﻿using Dash.Shared;
 
 namespace BlazorServer.Pages
 {
