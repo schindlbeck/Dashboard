@@ -1,6 +1,7 @@
 ﻿using EMobility.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Serilog;
 
 namespace Dash.Mongo.Services
 {
@@ -9,7 +10,9 @@ namespace Dash.Mongo.Services
         IMongoCollection<ChargingStationModel> _collection;
         public MongoDbService(IConfiguration configuration)
         {
-            var client = new MongoClient("mongodb+srv://lado:admin1910@emobility.dcut9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+            var connectionString = configuration.GetConnectionString("MongoDbConnection");
+            Log.Information("Connection: {cs}",connectionString );
+            var client = new MongoClient(connectionString);
             var database = client.GetDatabase("Supercharger");
             _collection = database.GetCollection<ChargingStationModel>("ChargingStations");
         }
