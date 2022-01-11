@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dash.DemoApp", "Dash.DemoAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorServer", "BlazorServer\BlazorServer.csproj", "{0EB8FFC1-4AC2-4A12-8A89-DF35ED3C8027}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dash.Mongo", "Dash.Mongo\Dash.Mongo.csproj", "{630D53A4-640E-40EF-B991-C44A2E0D4DBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dash.Mongo", "Dash.Mongo\Dash.Mongo.csproj", "{630D53A4-640E-40EF-B991-C44A2E0D4DBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAuthTest", "BlazorAuthTest\BlazorAuthTest.csproj", "{786721D7-F645-4A3D-94D6-EF25E86C3288}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{630D53A4-640E-40EF-B991-C44A2E0D4DBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{630D53A4-640E-40EF-B991-C44A2E0D4DBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{630D53A4-640E-40EF-B991-C44A2E0D4DBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{786721D7-F645-4A3D-94D6-EF25E86C3288}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{786721D7-F645-4A3D-94D6-EF25E86C3288}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{786721D7-F645-4A3D-94D6-EF25E86C3288}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{786721D7-F645-4A3D-94D6-EF25E86C3288}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

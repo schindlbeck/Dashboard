@@ -1,0 +1,23 @@
+﻿@page "/administration"
+@using Microsoft.AspNetCore.Authorization;
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<IdentityUser> _UserManager
+@inject RoleManager<IdentityRole> _RoleManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<h3>Administration</h3>
+<AuthorizeView>
+    <Authorized>
+        @if (@context.User.IsInRole(ADMINISTRATION_ROLE))
+        {
+            <p>You are in @ADMINISTRATION_ROLE </p>
+        }
+        else
+        {
+            <p>You're not signed in as a user in @ADMINISTRATION_ROLE.</p>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>You're not loggged in.</p>
+    </NotAuthorized>
+</AuthorizeView>
