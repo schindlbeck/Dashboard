@@ -19,32 +19,21 @@ internal class Manage
 
         DirectoryDbContextFactory factory = new();
         service = new(factory.CreateDbContext(Array.Empty<string>()));
-        //dir = configuration["Path"];
-        dir = configuration["PathTest"];
+        dir = configuration["Path"];
     }
 
     public void Execute()
     {
-        //TODO : one more folder level
         var di = new DirectoryInfo(dir);
-        ManageDirectories(di, "2022");
-        ManageFiles(di);
 
-        Console.ReadLine();
-    }
+        var dirYears = (di.GetDirectories()).Where(d => d.Name.Length == 4 && (d.Name.StartsWith("19") || d.Name.StartsWith("20")));
 
-    private static void ManageFiles(DirectoryInfo di)
-    {
-        var files = di.GetFiles();
-
-        Console.WriteLine("Files:");
-
-        foreach (var file in files)
+        foreach(var year in dirYears)
         {
-            Console.WriteLine($"{file.Name} size: {file.Length} bytes");
+            ManageDirectories(year, year.Name);
         }
 
-        Console.WriteLine(Environment.NewLine);
+        Console.ReadLine();
     }
 
     private void ManageDirectories(DirectoryInfo di, string year)
@@ -77,5 +66,19 @@ internal class Manage
         };
 
         service.Add(directory);
+    }
+
+    private static void ManageFiles(DirectoryInfo di)
+    {
+        var files = di.GetFiles();
+
+        Console.WriteLine("Files:");
+
+        foreach (var file in files)
+        {
+            Console.WriteLine($"{file.Name} size: {file.Length} bytes");
+        }
+
+        Console.WriteLine(Environment.NewLine);
     }
 }
