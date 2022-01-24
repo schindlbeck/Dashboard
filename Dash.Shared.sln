@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dash.Mongo", "Dash.Mongo\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAuthTest", "BlazorAuthTest\BlazorAuthTest.csproj", "{786721D7-F645-4A3D-94D6-EF25E86C3288}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Directory.CLI", "Directory.CLI\Directory.CLI.csproj", "{807A85BB-BFE8-43FC-96F1-B2443E72A941}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,10 +51,6 @@ Global
 		{786721D7-F645-4A3D-94D6-EF25E86C3288}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{786721D7-F645-4A3D-94D6-EF25E86C3288}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{786721D7-F645-4A3D-94D6-EF25E86C3288}.Release|Any CPU.Build.0 = Release|Any CPU
-		{807A85BB-BFE8-43FC-96F1-B2443E72A941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{807A85BB-BFE8-43FC-96F1-B2443E72A941}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{807A85BB-BFE8-43FC-96F1-B2443E72A941}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{807A85BB-BFE8-43FC-96F1-B2443E72A941}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
