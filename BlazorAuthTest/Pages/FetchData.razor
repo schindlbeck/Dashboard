@@ -3,7 +3,9 @@
 <PageTitle>Weather forecast</PageTitle>
 
 @using BlazorAuthTest.Data
+@attribute [Authorize(Policy = Policies.IsUser)]
 @inject WeatherForecastService ForecastService
+
 
 <h1>Weather forecast</h1>
 

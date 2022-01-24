@@ -19,15 +19,17 @@ namespace EMobility.Data
         public DateTime Created { get; set; } = DateTime.UtcNow;
         public DateTime LastUpdate { get; set; } = DateTime.UtcNow;
 
-        public int SessionId { get; init; }
+        public int SessionId { get; init; } = 5;
+        public int ConnectionId { get; init; } = 5;
+
 
         public DateTime StartDate { get; init; } = DateTime.UtcNow;
 
-        public TimeSpan LocalStartTime { get; init; }   // local time
+        public TimeSpan LocalStartTime { get; init; } = DateTime.Now.TimeOfDay;  // local time
 
         public TimeSpan DurationOf { get; init; }
 
-        public Decimal Energy { get; init; }
+        public int Energy { get; init; }
 
         public string? RfidTag { get; init; }
 

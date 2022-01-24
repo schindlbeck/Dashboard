@@ -1,3 +1,4 @@
+using BlazorAuthTest;
 using BlazorAuthTest.Areas.Identity;
 using BlazorAuthTest.Data;
 using Microsoft.AspNetCore.Components;
@@ -22,13 +23,12 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<WeatherForecastService>();
 
-builder.Services.AddAuthorizationCore(opt =>
+builder.Services.AddAuthorization(options =>
 {
-    opt.AddPolicy("pageview-policy", policy =>
-    {
-        policy.RequireClaim("ViewIndexPage", "yes");
-    });
+    options.AddPolicy(Policies.IsAdmin, Policies.IsAdminPolicy());
+    options.AddPolicy(Policies.IsUser, Policies.IsUserPolicy());
 });
+
 
 var app = builder.Build();
 

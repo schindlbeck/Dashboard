@@ -17,18 +17,20 @@
     <p></p>
     <label>
         Location:
-        <InputText id="location" @bind-Value="sessionModel.StationLocation"/>
+        <InputText id="location" @bind-Value="sessionModel.Location" />
     </label>
 
     <label>
-        cpId:
-        <InputText id="cpId" @bind-Value="sessionModel.CpId"/>
+        Rfid:
+        <InputText id="cpId" @bind-Value="sessionModel.Rfid" />
     </label>
-
-
     <label>
-        Url:
-        <InputText id="duration" @bind-Value="sessionModel.StationUrl"/>
+        Energy:
+        <InputNumber id="duration" @bind-Value="sessionModel.Energy" />
+    </label>
+    <label>
+        Date:
+        <InputDate id="date" @bind-Value="sessionModel.DateTime" />
     </label>
 
     <button type="submit">Add Session</button>

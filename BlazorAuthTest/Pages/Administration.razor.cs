@@ -6,7 +6,8 @@ namespace BlazorAuthTest.Pages;
 public partial class Administration
 {
     [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
-    string ADMINISTRATION_ROLE = "Admin";
+
+    readonly string ADMINISTRATION_ROLE = "Admin";
     System.Security.Claims.ClaimsPrincipal CurrentUser;
     protected override async Task OnInitializedAsync()
     {

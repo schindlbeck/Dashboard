@@ -1,4 +1,5 @@
 ﻿using Dash.Mongo.Models;
+using EMobility.Data;
 using EMobility.Models;
 using Microsoft.AspNetCore.Components;
 
@@ -6,7 +7,7 @@ namespace Dash.Mongo.Pages
 {
     public partial class FetchData : ComponentBase
     {
-        private ChargingStationModel chargingSession;
+        private ChargingSessionMongoDbModel chargingSession;
         private SessionModel sessionModel;
 
         protected override async Task OnInitializedAsync()
@@ -16,11 +17,13 @@ namespace Dash.Mongo.Pages
 
         private void HandleValidSubmit()
         {
-            chargingSession = new ChargingStationModel()
+            chargingSession = new ChargingSessionMongoDbModel()
             {
-                StationLocation = sessionModel.StationLocation,
-                StationUrl = sessionModel.StationUrl,
-                CpId = sessionModel.CpId
+                Location = sessionModel.Location,
+                RfidTag = sessionModel.Rfid,
+                Energy = sessionModel.Energy,
+                DurationOf = (new DateTime(2022, 01, 5, 4, 30, 0)).TimeOfDay,
+                StartDate = sessionModel.DateTime
             };
 
             mongoService.AddChargingSession(chargingSession);
