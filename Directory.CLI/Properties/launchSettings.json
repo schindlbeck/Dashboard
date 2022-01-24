@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Directory.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "du"
+    }
+  }
+}
