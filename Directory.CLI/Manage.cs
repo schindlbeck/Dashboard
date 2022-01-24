@@ -1,17 +1,33 @@
 ﻿namespace Directory.CLI;
 
+using Directory.CLI.Data;
+using Directory.CLI.Data.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 
 internal class Manage
 {
-    private const string DIR = @"C:\Users\lado\source\repos\EvMobility";
+    private readonly string dir;
+    private readonly DirectorySizeService service;
 
-    public static void Execute()
+    public Manage()
+    {
+        var configuration = new ConfigurationBuilder()
+       .AddJsonFile("appsettings.json")
+       .Build();
+
+        DirectoryDbContextFactory factory = new();
+        service = new(factory.CreateDbContext(Array.Empty<string>()));
+        //dir = configuration["Path"];
+        dir = configuration["PathTest"];
+    }
+
+    public void Execute()
     {
         //TODO : one more folder level
-        var di = new DirectoryInfo(DIR);
-        ManageDirectories(di);
+        var di = new DirectoryInfo(dir);
+        ManageDirectories(di, "2022");
         ManageFiles(di);
 
         Console.ReadLine();
@@ -31,7 +47,7 @@ internal class Manage
         Console.WriteLine(Environment.NewLine);
     }
 
-    private static void ManageDirectories(DirectoryInfo di)
+    private void ManageDirectories(DirectoryInfo di, string year)
     {
         var directories = di.GetDirectories();
         Console.WriteLine("Directories:");
@@ -44,10 +60,22 @@ internal class Manage
                 totalsize += file.Length;
             }
 
+            AddToDb(d, totalsize, year);
             Console.WriteLine($"{d.Name} size: {totalsize} bytes");
         }
 
         Console.WriteLine(Environment.NewLine);
+    }
 
+    private void AddToDb(DirectoryInfo dir, long size, string year)
+    {
+        DirectorySize directory = new()
+        {
+            Size = size,
+            Project = dir.Name,
+            Year = year
+        };
+
+        service.Add(directory);
     }
 }

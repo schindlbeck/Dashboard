@@ -6,6 +6,7 @@ class Program
 {
     static int Main(string[] args)
     {
+        Manage manager = new();
         var rootCommand = new RootCommand();
         
 
@@ -17,7 +18,7 @@ class Program
 
 
         //CommandHandler
-        diskUsageCommand.Handler = CommandHandler.Create(Manage.Execute);
+        diskUsageCommand.Handler = CommandHandler.Create(manager.Execute);
 
         //Return
         try
