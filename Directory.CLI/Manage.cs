@@ -68,17 +68,4 @@ internal class Manage
         service.Add(directory);
     }
 
-    private static void ManageFiles(DirectoryInfo di)
-    {
-        var files = di.GetFiles();
-
-        Console.WriteLine("Files:");
-
-        foreach (var file in files)
-        {
-            Console.WriteLine($"{file.Name} size: {file.Length} bytes");
-        }
-
-        Console.WriteLine(Environment.NewLine);
-    }
 }
